@@ -14,6 +14,14 @@ add_action( 'after_setup_theme', function () {
 	$GLOBALS['content_width'] = 880;
 } );
 
+add_filter( 'body_class', function ( $classes ) {
+	$today = current_datetime();
+	$month = (int) $today->format( 'n' );
+	$day   = (int) $today->format( 'j' );
+	if ( 12 === $month && $day >= 5 && $day <= 26 ) { $classes[] = 'holiday-season'; }
+	return $classes;
+} );
+
 add_action( 'widgets_init', function () {
 	$areas = array( 'sidebar-1' => 'Barra lateral', 'header-widget' => 'Idiomas no cabeçalho' );
 	// Mantém os IDs das áreas existentes para aproveitar os widgets já cadastrados.

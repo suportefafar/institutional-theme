@@ -11,6 +11,10 @@
 <a class="skip-link screen-reader-text" href="#main-content">Pular para o conteúdo</a>
 <header class="site-header">
 	<div class="institution-bar"><div class="site-container institution-inner"><a href="https://ufmg.br/">Universidade Federal de Minas Gerais</a></div></div>
+	<div class="holiday-banner" role="note" aria-label="Mensagem de boas festas">
+		<span class="holiday-banner__lights" aria-hidden="true"></span>
+		<p><span aria-hidden="true">✦</span> Boas festas da Faculdade de Farmácia da UFMG <span aria-hidden="true">✦</span></p>
+	</div>
 	<div class="site-container masthead">
 		<div class="site-branding">
 			<?php fafar_site_logo(); ?>

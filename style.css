@@ -32,11 +32,20 @@ p{margin:0 0 var(--space-4);text-align:start}
 .institution-bar{background:var(--color-gray-100);color:var(--color-gray-600);font-size:var(--text-xs);border-bottom:1px solid var(--border-color)}
 .institution-inner{display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:var(--space-4);padding-block:var(--space-2)}
 .institution-bar a{color:inherit;text-decoration:none}
+.holiday-banner{display:none}
+.holiday-season .holiday-banner{position:relative;overflow:hidden;min-height:42px;display:grid;place-items:center;padding:10px 1rem 8px;background:#173f32;color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.045em;text-align:center}
+.holiday-season .holiday-banner p{margin:0;display:flex;align-items:center;justify-content:center;gap:.75rem}
+.holiday-season .holiday-banner p span{color:#f2b600;font-size:.8rem}
+.holiday-season .holiday-banner__lights{position:absolute;inset:0 0 auto;height:5px;background:radial-gradient(ellipse at 50% 0%,transparent 0 48%,rgba(222,236,218,.6) 50% 53%,transparent 55%) center top/78px 12px repeat-x}
+.holiday-season .holiday-banner__lights::after{content:'';position:absolute;inset:2px 0 auto;height:7px;background:radial-gradient(circle,#f2b600 0 2px,transparent 2.7px) 10px 0/78px 10px repeat-x}
+.holiday-season .holiday-banner p span:first-child{font-size:.65rem}
+.holiday-season .holiday-banner p span:last-child{font-size:.65rem}
 .site-header{background:var(--color-white)}
 .masthead{display:flex;align-items:center;justify-content:space-between;gap:var(--space-8);padding-block:var(--space-8)}
 .site-branding{display:flex;align-items:center;gap:var(--space-5);min-width:0}
 .custom-logo{max-width:150px;max-height:80px;width:auto;object-fit:contain}
-.custom-logo-link{flex-shrink:0}
+.custom-logo-link{position:relative;display:inline-block;flex-shrink:0}
+.holiday-season .custom-logo-link::after{content:'';position:absolute;z-index:1;top:-9px;left:6%;width:40%;aspect-ratio:64/52;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 52'%3E%3Cpath fill='%23b92332' d='M7 38C19 22 33 11 50 8c-4 13 1 23 11 29-17-4-37-2-54 5z'/%3E%3Cpath fill='%23fff' d='M7 38c16-8 39-12 54-2l1 8c-16-8-37-4-53 3z'/%3E%3Ccircle cx='51' cy='8' r='7' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(-35deg) scaleX(-1);transform-origin:center;pointer-events:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
 .brand-mark{border:1px solid var(--color-primary);border-radius:var(--radius-md);padding:var(--space-3);font-size:var(--text-xl);font-weight:800;line-height:1.1;text-decoration:none;letter-spacing:-.05em}
 .brand-mark span{display:block;font-size:var(--text-xs);letter-spacing:.22em;margin-top:var(--space-2)}
 .site-title{display:block;font-family:var(--font-display);font-weight:700;font-size:clamp(1.25rem,2.2vw,1.875rem);line-height:1.2;text-decoration:none}
@@ -155,7 +164,11 @@ p{margin:0 0 var(--space-4);text-align:start}
 @media(max-width:999px){.footer-main{grid-template-columns:minmax(0,1fr) 240px;gap:var(--space-8)}.footer-group ul{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3) var(--space-6)}}
 @media(max-width:700px){.footer-main{grid-template-columns:1fr;padding-block:var(--space-10) var(--space-8);gap:var(--space-10)}.footer-navigation{gap:var(--space-8)}.footer-group a{font-size:var(--text-base)}.footer-feature{aspect-ratio:16/9;max-width:480px}.footer-identity{flex-direction:column;gap:var(--space-5)}.footer-bottom{align-items:start;flex-direction:column}.footer-signature{width:100%;justify-content:space-between;gap:var(--space-4)}}
 .services-area{margin-bottom:var(--space-8)}
+.holiday-season .site-footer{position:relative;overflow:hidden}
+.holiday-season .site-footer::before{content:'✦  ❄  ✦  ❄  ✦  ❄  ✦';position:absolute;inset:0 0 auto;padding:9px 1rem 7px;border-bottom:1px solid rgba(255,255,255,.12);color:#e8c765;font-size:.65rem;letter-spacing:.8em;text-align:center;pointer-events:none}
+.holiday-season .site-footer .footer-main{padding-top:calc(var(--space-16) + 22px)}
 .highlight-grid{display:flex;gap:var(--space-4);flex-wrap:wrap}.highlight-card{width:160px;border:1px solid var(--border-color);border-radius:var(--radius-md);overflow:hidden;background:var(--color-white)}.highlight-card img{width:100%;height:90px;object-fit:contain}
+@media(max-width:700px){.holiday-season .holiday-banner{min-height:40px;font-size:.68rem;letter-spacing:0}.holiday-season .holiday-banner p{gap:.5rem}.holiday-season .site-footer::before{letter-spacing:.45em}.holiday-season .site-footer .footer-main{padding-top:calc(var(--space-10) + 22px)}}
 @media(min-width:1000px){.primary-menu>li:last-child .sub-menu{left:auto;right:0}}
 @media(max-width:999px){.masthead{gap:var(--space-6)}.content-layout{grid-template-columns:220px minmax(0,1fr);gap:var(--space-6)}.main-navigation.is-enhanced .nav-toggle{display:inline-flex}.main-navigation.is-enhanced .primary-menu:not(.is-open){display:none}.primary-menu{flex-direction:column;padding-bottom:var(--space-3)}.primary-menu>li>a,.primary-menu>li>.submenu-toggle{flex:1;width:100%}.primary-menu .sub-menu{position:static;width:100%;max-width:none;box-shadow:none}.primary-menu>li{display:flex;flex-wrap:wrap}.page-banner{min-height:240px}}
 @media(max-width:700px){.site-container{width:calc(100% - 2rem)}.institution-inner>span{display:none}.masthead{align-items:stretch;flex-direction:column;padding-block:var(--space-5);gap:var(--space-5)}.header-tools{width:100%}.site-search{max-width:none}.site-branding{gap:var(--space-4)}.custom-logo{max-width:96px;max-height:64px}.site-description{font-size:var(--text-xs)}.content-layout{grid-template-columns:minmax(0,1fr);gap:var(--space-8);margin-bottom:var(--space-10)}.page-banner{min-height:210px;margin-block:var(--space-5)}.banner-content{padding:var(--space-6)}.section-navigation summary{min-height:48px}.news-card .ffds-card-body{padding:var(--space-5)}.empty-state{padding:var(--space-5)}}
