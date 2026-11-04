@@ -8,17 +8,17 @@ if ( is_singular() ) {
 	}
 } else {
 	?>
-	<?php if ( ! is_category() ) : ?>
 	<header class="listing-header">
 		<p class="eyebrow"><?php echo is_search() ? 'Busca no site' : 'Acontece na FAFAR'; ?></p>
+		<?php if ( ! is_category() ) : ?>
 		<h1><?php
 		if ( is_search() ) { echo esc_html( 'Resultados para “' . get_search_query() . '”' ); }
 		elseif ( is_archive() ) { the_archive_title(); }
 		else { echo 'Notícias e comunicados'; }
 		?></h1>
 		<?php if ( is_archive() ) { the_archive_description( '<div class="archive-description">', '</div>' ); } ?>
+		<?php endif; ?>
 	</header>
-	<?php endif; ?>
 	<?php if ( have_posts() ) : ?>
 		<div class="post-list"><?php while ( have_posts() ) { the_post(); get_template_part( 'template-parts/content', 'card' ); } ?></div>
 		<?php the_posts_pagination( array( 'mid_size' => 1, 'prev_text' => '← Anterior', 'next_text' => 'Próxima →' ) ); ?>
