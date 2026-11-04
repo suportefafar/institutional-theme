@@ -72,3 +72,9 @@ A interface foi conferida por HTTP em 320, 390, 768, 1024 e 1440 px. Os testes d
 Código do tema: GPL-3.0-or-later, conforme [LICENSE](LICENSE). Os materiais do commit inicial do repositório mantêm o aviso MIT em `LICENSES/initial-repository-MIT.txt`. Componentes do Farmácia UFMG Design System: MIT, com aviso em `assets/css/design-system/LICENSE`. Fontes: SIL OFL, com os textos em `assets/fonts/`. As imagens institucionais são recursos de identidade da FAFAR/UFMG; sua presença neste projeto não concede direitos sobre as marcas.
 
 Consulte [SECURITY.md](SECURITY.md) e [docs/publication-review.md](docs/publication-review.md) para os cuidados de publicação.
+
+## SEO e publicação
+
+`inc/seo.php` adiciona descrições, contextualiza títulos de páginas selecionadas, exclui páginas operacionais e de teste do sitemap e solicita `noindex` para elas. A proteção de acesso continua a cargo das regras próprias de cada página. O módulo também converte URLs internas legadas em HTTP para HTTPS na saída e atualiza o link antigo da Farmácia Jr.
+
+Na instalação de produção auditada, a mesma versão do arquivo foi instalada como `wp-content/mu-plugins/fafar-seo.php`, pois o tema ativo é publicado por uma versão fixada. O MU plugin é carregado primeiro e tem precedência sobre o módulo do tema; ao publicar mudanças futuras de SEO, atualize esse MU plugin pelo processo de implantação ou remova-o depois de publicar o tema atualizado. Manter as duas cópias evita conflito de execução, mas uma cópia antiga do MU plugin prevalecerá.
