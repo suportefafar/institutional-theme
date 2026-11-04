@@ -29,8 +29,8 @@ function get_menu_by_current_content() {
 }
 
 function site_fafar_highlight_area() {
-	if ( ! is_user_logged_in() || ! is_home() || ! function_exists( 'get_field' ) ) { return ''; }
-	$services = new WP_Query( array( 'post_type' => 'servicos', 'posts_per_page' => 40, 'orderby' => 'date', 'order' => 'ASC', 'no_found_rows' => true ) );
+	if ( ( ! is_front_page() && ! is_home() ) || ! function_exists( 'get_field' ) ) { return ''; }
+	$services = new WP_Query( array( 'post_type' => 'servicos', 'post_status' => 'publish', 'posts_per_page' => 40, 'orderby' => 'date', 'order' => 'ASC', 'no_found_rows' => true ) );
 	$items = '';
 	foreach ( $services->posts as $service ) {
 		$url = get_field( 'link_serviço', $service->ID );
