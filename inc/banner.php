@@ -6,6 +6,13 @@ function get_custom_banner() {
 	$image = get_stylesheet_directory_uri() . '/assets/img/fafar-vista-aerea.jpeg';
 	$title = get_bloginfo( 'name' );
 	$label = 'Ensino, pesquisa e extensão';
+	$banner_images = array(
+		'ppgact' => 'ppgact.jpg',
+		'alm'    => 'alm.jpg',
+		'act'    => 'act.jpg',
+		'fas'    => 'fas.jpg',
+		'pfa'    => 'pfa2.jpg',
+	);
 	$category = institutional_fafar_get_category();
 	$alias = $category ? $category->slug : '';
 	if ( $category && $category->description ) { $title = wp_strip_all_tags( $category->description ); }
@@ -17,7 +24,7 @@ function get_custom_banner() {
 	}
 	// Lê banners legados somente se a tabela existir; funciona sem o plugin.
 	$table = $wpdb->prefix . 'revslider_sliders';
-	if ( $alias && ! is_home() && $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ) === $table ) {
+	if ( $alias && ! isset( $banner_images[ $alias ] ) && ! is_home() && $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table ) ) ) === $table ) {
 		$slider_id = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM `{$table}` WHERE alias = %s LIMIT 1", $alias ) );
 		if ( $slider_id ) {
 			$slides_table = $wpdb->prefix . 'revslider_slides';
@@ -25,6 +32,9 @@ function get_custom_banner() {
 			$slide = json_decode( (string) $params, true );
 			if ( ! empty( $slide['image'] ) && is_string( $slide['image'] ) ) { $image = $slide['image']; }
 		}
+	}
+	if ( isset( $banner_images[ $alias ] ) ) {
+		$image = get_stylesheet_directory_uri() . '/assets/img/banners/' . $banner_images[ $alias ];
 	}
 	?>
 	<div class="site-container"><div class="page-banner">

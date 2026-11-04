@@ -15,9 +15,8 @@ function fafar_icon( $name ) {
 	return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . ( $paths[ $name ] ?? '' ) . '</svg>';
 }
 
-/** Avoid broken local preview images when the development database references absent uploads. */
+/** Avoid broken images when the database references uploads that are absent from this installation. */
 function fafar_image_url( $url, $fallback ) {
-	if ( 'development' !== wp_get_environment_type() ) { return $url; }
 	$uploads = wp_get_upload_dir();
 	$path = wp_parse_url( $url, PHP_URL_PATH );
 	$base = wp_parse_url( $uploads['baseurl'], PHP_URL_PATH );
