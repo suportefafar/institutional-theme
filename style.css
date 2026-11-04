@@ -72,7 +72,7 @@ p{margin:0 0 var(--space-4);text-align:start}
 .page-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(249,248,246,.85),rgba(249,248,246,.75),rgba(249,248,246,.85));z-index:-1}
 .banner-content{padding:var(--space-8);max-width:850px}
 .page-banner .banner-label{color:var(--color-gray-700);font-size:var(--text-xs);font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:var(--space-3);text-align:center}
-.banner-title{font-family:var(--font-display);font-size:clamp(1.75rem,4vw,3rem);line-height:1.2;color:var(--color-secondary-dark);margin:0;text-align:center;text-wrap:balance}
+.banner-title{font-family:var(--font-display);font-weight:400;font-size:clamp(1.75rem,4vw,3rem);line-height:1.2;color:var(--color-secondary-dark);margin:0;text-align:center;text-wrap:balance}
 .content-layout{display:grid;grid-template-columns:260px minmax(0,1fr);align-items:start;gap:var(--space-10);margin-block:var(--space-8) var(--space-16)}
 .main-content,.content-area{min-width:0}
 .site-sidebar{font-size:var(--text-sm)}

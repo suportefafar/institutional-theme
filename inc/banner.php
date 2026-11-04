@@ -9,6 +9,7 @@ function get_custom_banner() {
 	$category = institutional_fafar_get_category();
 	$alias = $category ? $category->slug : '';
 	if ( $category && $category->description ) { $title = wp_strip_all_tags( $category->description ); }
+	elseif ( is_category() && $category ) { $title = $category->name; }
 	if ( ! $alias && is_singular() ) {
 		$alias = get_the_author_meta( 'user_nicename', get_queried_object()->post_author );
 		$author_category = get_category_by_slug( $alias );
@@ -28,7 +29,14 @@ function get_custom_banner() {
 	?>
 	<div class="site-container"><div class="page-banner">
 		<img src="<?php echo esc_url( fafar_image_url( $image, get_stylesheet_directory_uri() . '/assets/img/fafar-vista-aerea.jpeg' ) ); ?>" alt="" width="1200" height="360" fetchpriority="high">
-		<div class="banner-content"><p class="banner-label"><?php echo esc_html( $label ); ?></p><p class="banner-title"><?php echo esc_html( $title ); ?></p></div>
+		<div class="banner-content">
+            <p class="banner-label"><?php echo esc_html( $label ); ?></p>
+            <?php if ( is_category() ) : ?>
+                <h1 class="banner-title"><?php echo esc_html( $title ); ?></h1>
+            <?php else : ?>
+                <p class="banner-title"><?php echo esc_html( $title ); ?></p>
+            <?php endif; ?>
+        </div>
 	</div></div>
 	<?php
 }
