@@ -125,7 +125,8 @@ p{margin:0 0 var(--space-4);text-align:start}
 .entry-content a{text-decoration:underline}
 .entry-content blockquote{border-left:3px solid var(--color-primary);padding-left:var(--space-6);margin:var(--space-6) 0;color:var(--color-gray-600)}
 .entry-content pre{overflow:auto;padding:var(--space-4);background:var(--color-gray-100)}
-.entry-content table{border-collapse:collapse;display:block;max-width:100%;overflow:auto;font-size:var(--text-sm)}
+.entry-content table{border-collapse:collapse;display:block;max-width:100%;height:auto!important;overflow-x:auto;overflow-y:hidden;font-size:var(--text-sm)}
+.entry-content table:not(.dynamic-table)>thead,.entry-content table:not(.dynamic-table)>tbody,.entry-content table:not(.dynamic-table)>tfoot{display:table;width:100%;min-width:640px}
 .entry-content th,.entry-content td{padding:var(--space-3);border-bottom:1px solid var(--border-color);text-align:start}
 .entry-content input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button]),.entry-content select,.entry-content textarea,.comment-form input:not([type=checkbox]):not([type=submit]),.comment-form textarea{max-width:100%;padding:var(--space-3);border:1px solid var(--color-gray-300);border-radius:var(--radius-md);background:var(--color-white);color:var(--color-gray-800)}
 .entry-content button,.entry-content input[type=submit],.comment-form input[type=submit]{min-height:44px}
