@@ -1,0 +1,171 @@
+<?php
+/** Delegação administrativa: configuração privada, desabilitada por padrão. */
+$config = get_option( 'institutional_theme_cenex_delegation', array() );
+$GLOBALS['cenex_delegated_user_id'] = (int) ( getenv( 'CENEX_DELEGATED_USER_ID' ) ?: ( $config['delegated_user_id'] ?? 0 ) );
+$GLOBALS['cenex_target_user_id'] = (int) ( getenv( 'CENEX_TARGET_USER_ID' ) ?: ( $config['target_user_id'] ?? 0 ) );
+$GLOBALS['cenex_delegation_expires_at'] = strtotime( getenv( 'CENEX_DELEGATION_EXPIRES_AT' ) ?: ( $config['expires_at'] ?? '' ) );
+
+function fafar_cenex_delegation_enabled() {
+    return $GLOBALS['cenex_delegated_user_id'] > 0 && $GLOBALS['cenex_target_user_id'] > 0 && $GLOBALS['cenex_delegation_expires_at'] > time();
+}
+
+// Dynamically grant capabilities for the target user's posts/pages
+add_filter( 'user_has_cap', 'custom_cenex_user_permissions', 10, 4 );
+function custom_cenex_user_permissions( $allcaps, $caps, $args, $user ) {
+    if ( ! fafar_cenex_delegation_enabled() || $user->ID != $GLOBALS['cenex_delegated_user_id'] ) {
+        return $allcaps;
+    }
+
+    $expiration_date = $GLOBALS['cenex_delegation_expires_at'];
+    if ( time() > $expiration_date ) {
+        return $allcaps;
+    }
+
+    // Base capabilities so the user can access wp-admin, media, and post/page menus
+    $base_caps = array(
+        'read'                   => true,
+        'edit_posts'             => true,
+        'edit_pages'             => true,
+        'publish_posts'          => true,
+        'publish_pages'          => true,
+        'edit_published_posts'   => true,
+        'edit_published_pages'   => true,
+        'delete_posts'           => true,
+        'delete_pages'           => true,
+        'delete_published_posts' => true,
+        'delete_published_pages' => true,
+        'upload_files'           => true,
+    );
+
+    foreach ( $base_caps as $cap => $value ) {
+        $allcaps[ $cap ] = true;
+    }
+
+    // Dynamically grant capabilities for a specific post/page if it belongs to the configured owner
+    if ( ! empty( $args ) && isset( $args[0] ) ) {
+        $cap_requested = $args[0];
+        $target_caps = array( 'edit_post', 'delete_post', 'read_post', 'edit_page', 'delete_page', 'read_page' );
+
+        if ( in_array( $cap_requested, $target_caps ) && isset( $args[2] ) ) {
+            $post = get_post( $args[2] );
+            if ( $post && $post->post_author == $GLOBALS['cenex_target_user_id'] ) {
+                foreach ( $caps as $cap ) {
+                    $allcaps[ $cap ] = true;
+                }
+            }
+        }
+
+        // Handle REST API (Gutenberg) checking edit_others_posts without passing the post ID
+        if ( in_array( $cap_requested, array( 'edit_others_posts', 'edit_others_pages' ) ) && ! isset( $args[2] ) ) {
+            $post_id = 0;
+            if ( isset( $_REQUEST['post'] ) ) {
+                $post_id = intval( $_REQUEST['post'] );
+            } elseif ( isset( $_REQUEST['post_ID'] ) ) {
+                $post_id = intval( $_REQUEST['post_ID'] );
+            } else {
+                $uri = $_SERVER['REQUEST_URI'] ?? '';
+                if ( preg_match( '#/wp/v2/(?:posts|pages|[\w-]+)/(\d+)#', $uri, $matches ) ) {
+                    $post_id = intval( $matches[1] );
+                }
+            }
+
+            if ( $post_id ) {
+                $post = get_post( $post_id );
+                if ( $post && $post->post_author == $GLOBALS['cenex_target_user_id'] ) {
+                    $allcaps[ $cap_requested ] = true;
+                }
+            }
+        }
+    }
+
+    return $allcaps;
+}
+
+// Modify the query in WP Admin to allow the configured delegated user to see owner posts/pages
+add_action( 'pre_get_posts', 'custom_cenex_admin_posts_query' );
+function custom_cenex_admin_posts_query( $query ) {
+    if ( ! is_admin() || ! $query->is_main_query() ) {
+        return;
+    }
+
+    global $pagenow;
+    if ( 'edit.php' !== $pagenow ) {
+        return;
+    }
+
+    $user_id = get_current_user_id();
+    if ( ! fafar_cenex_delegation_enabled() || $user_id != $GLOBALS['cenex_delegated_user_id'] ) {
+        return;
+    }
+
+    $expiration_date = $GLOBALS['cenex_delegation_expires_at'];
+    if ( time() > $expiration_date ) {
+        return;
+    }
+
+    // Because the user lacks 'edit_others_posts' globally, WordPress forces 'author' to their ID.
+    // We change it to allow seeing their own posts AND the configured owner's posts.
+    $current_author = $query->get( 'author' );
+    if ( (string) $current_author === (string) $user_id ) {
+        $query->set( 'author', $user_id . ',' . $GLOBALS['cenex_target_user_id'] );
+    }
+}
+
+// Força que os novos posts ou páginas criados pelo usuário delegado sejam do usuário alvo
+add_filter( 'wp_insert_post_data', 'custom_cenex_force_post_author', 10, 2 );
+function custom_cenex_force_post_author( $data, $postarr ) {
+    $current_user_id = get_current_user_id();
+
+    if ( ! fafar_cenex_delegation_enabled() || $current_user_id != $GLOBALS['cenex_delegated_user_id'] ) {
+        return $data;
+    }
+
+    $expiration_date = $GLOBALS['cenex_delegation_expires_at'];
+    if ( time() > $expiration_date ) {
+        return $data;
+    }
+
+    if ( isset( $data['post_type'] ) && in_array( $data['post_type'], array( 'post', 'page' ) ) ) {
+        $data['post_author'] = $GLOBALS['cenex_target_user_id'];
+    }
+
+    return $data;
+}
+
+// Força que os posts criados/editados pelo usuário delegado tenham a categoria "CENEX"
+add_action( 'save_post', 'custom_cenex_force_post_category', 10, 3 );
+function custom_cenex_force_post_category( $post_id, $post, $update ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) return;
+    if ( wp_is_post_revision( $post_id ) ) return;
+
+    $current_user_id = get_current_user_id();
+    if ( ! fafar_cenex_delegation_enabled() || $current_user_id != $GLOBALS['cenex_delegated_user_id'] ) {
+        return;
+    }
+
+    $expiration_date = $GLOBALS['cenex_delegation_expires_at'];
+    if ( time() > $expiration_date ) {
+        return;
+    }
+
+    // Aplica a categoria se o tipo de post suportar categorias (geralmente "post")
+    if ( is_object_in_taxonomy( $post->post_type, 'category' ) ) {
+        $category = get_term_by( 'slug', 'cenex', 'category' );
+        if ( ! $category ) {
+            $category = get_term_by( 'name', 'CENEX', 'category' );
+        }
+
+        if ( ! $category ) {
+            $cat_info = wp_insert_term( 'CENEX', 'category', array( 'slug' => 'cenex' ) );
+            if ( ! is_wp_error( $cat_info ) ) {
+                $cat_id = $cat_info['term_id'];
+            }
+        } else {
+            $cat_id = $category->term_id;
+        }
+
+        if ( isset( $cat_id ) ) {
+            wp_set_post_categories( $post_id, array( $cat_id ), true ); // true para adicionar (append)
+        }
+    }
+}

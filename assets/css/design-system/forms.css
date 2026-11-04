@@ -1,0 +1,101 @@
+/* ══════════════════════════════════════════
+   FORMS (Minimalist)
+   ══════════════════════════════════════════ */
+
+.ffds-form-group {
+  margin-bottom: var(--space-4);
+}
+
+.ffds-form-label {
+  display: inline-block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-gray-700);
+}
+
+.ffds-form-control {
+  display: block;
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-gray-800);
+  background-color: var(--color-white);
+  background-clip: padding-box;
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.ffds-form-control:focus {
+  color: var(--color-gray-800);
+  background-color: var(--color-white);
+  border-color: var(--color-primary);
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem var(--color-primary-20);
+}
+
+.ffds-form-control::placeholder {
+  color: var(--color-gray-400);
+  opacity: 1;
+}
+
+.ffds-form-control:disabled,
+.ffds-form-control[readonly] {
+  background-color: var(--color-gray-100);
+  opacity: 1;
+}
+
+/* Sizes */
+.ffds-form-control-sm {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--text-sm);
+  border-radius: var(--radius-sm);
+}
+
+.ffds-form-control-lg {
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-lg);
+  border-radius: var(--radius-lg);
+}
+
+/* Checkboxes & Radios */
+.ffds-form-check {
+  display: block;
+  min-height: 1.5rem;
+  padding-left: 1.5em;
+  margin-bottom: 0.125rem;
+}
+
+.ffds-form-check-input {
+  float: left;
+  margin-left: -1.5em;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.25em;
+  vertical-align: top;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: 1px solid var(--color-gray-300);
+  appearance: none;
+  print-color-adjust: exact;
+  accent-color: var(--color-primary);
+}
+
+.ffds-form-check-input[type="checkbox"] {
+  border-radius: 0.25em;
+}
+
+.ffds-form-check-input[type="radio"] {
+  border-radius: 50%;
+}
+
+.ffds-form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}

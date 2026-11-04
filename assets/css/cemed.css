@@ -1,0 +1,66 @@
+.fafar-cemed-page {
+  --cemed-accent: var(--color-primary);
+  --cemed-ink: var(--color-secondary);
+  color: var(--cemed-ink);
+}
+
+.fafar-cemed-page p { text-align: left !important; }
+.fafar-cemed-page h2 { margin-bottom: 1rem; }
+.fafar-cemed-alert { border-left: 4px solid var(--cemed-accent); padding: .8rem 1rem; background: var(--color-warning-bg); }
+.fafar-cemed-message { padding: .8rem 1rem; margin: 1rem 0; border-left: 4px solid var(--color-success); background: var(--color-success-bg); }
+.fafar-cemed-message.is-error { border-color: var(--color-error); background: var(--color-error-bg); }
+.fafar-cemed-form { margin-top: 2rem; }
+.fafar-cemed-form * { box-sizing: border-box; }
+.fafar-cemed-form fieldset { border: 0; border-top: 2px solid var(--cemed-accent); margin: 2rem 0 0; padding: 1rem 0 0; min-width: 0; }
+.fafar-cemed-form legend { font-size: 1.2rem; font-weight: 700; padding: 0 .4rem 0 0; }
+.fafar-cemed-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.fafar-cemed-field { margin: 0 0 1.3rem; min-width: 0; }
+.fafar-cemed-field > label, .fafar-cemed-label { display: block; font-weight: 600; margin-bottom: .4rem; }
+.fafar-cemed-field > label span[aria-hidden], .fafar-cemed-label span[aria-hidden] { color: var(--color-error); }
+.fafar-cemed-field input:not([type="radio"]), .fafar-cemed-field select, .fafar-cemed-field textarea { display: block; width: 100%; background: var(--color-gray-50); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); color: var(--cemed-ink); padding: .65rem .75rem; font: inherit; }
+.fafar-cemed-field textarea { min-height: 8rem; resize: vertical; }
+.fafar-cemed-field input:focus-visible, .fafar-cemed-field select:focus-visible, .fafar-cemed-field textarea:focus-visible { outline: 2px solid #8a6600; outline-offset: 2px; }
+.fafar-cemed-help { color: var(--color-gray-600); font-size: .94rem; line-height: 1.5; margin: .2rem 0 .6rem; }
+.fafar-cemed-choices { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+.fafar-cemed-choices label { display: inline-flex; align-items: center; gap: .4rem; font-weight: 400; cursor: pointer; }
+.fafar-cemed-choices input { margin: 0; }
+.fafar-cemed-term { border: 1px solid var(--border-color); background: var(--color-gray-50); max-height: 25rem; overflow: auto; padding: 1.2rem; margin: .4rem 0 1.4rem; line-height: 1.55; }
+.fafar-cemed-term ol { margin-left: 1.4rem; }
+.fafar-cemed-term li { margin-bottom: .8rem; }
+.fafar-cemed-term li p { margin: .3rem 0; }
+.fafar-cemed-form button { background: var(--cemed-accent); border: 0; color: var(--color-secondary-dark); cursor: pointer; font: inherit; font-weight: 700; padding: .8rem 1.5rem; }
+.fafar-cemed-form button:hover, .fafar-cemed-form button:focus-visible { background: var(--color-primary-dark); }
+.fafar-cemed-honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.fafar-cemed-item { border: 1px solid var(--border-color); margin: 1rem 0; }
+.fafar-cemed-item summary { cursor: pointer; display: flex; gap: .5rem 1.5rem; flex-wrap: wrap; align-items: center; padding: .9rem 1rem; background: var(--color-gray-50); }
+.fafar-cemed-item summary::marker { color: var(--color-gray-700); }
+.fafar-cemed-item summary span { color: var(--color-gray-600); font-size: .92rem; }
+.fafar-cemed-item summary .fafar-cemed-status { border-radius: 1rem; background: var(--color-gray-100); color: var(--color-secondary); font-weight: 700; padding: .2rem .7rem; }
+.fafar-cemed-item summary .fafar-cemed-status.is-em_analise { background: var(--color-warning-bg); color: var(--color-warning); }
+.fafar-cemed-item summary .fafar-cemed-status.is-respondida { background: var(--color-success-bg); color: var(--color-success); }
+.fafar-cemed-item-body { padding: 1rem; }
+.fafar-cemed-published { border-left: 4px solid var(--color-success); background: var(--color-success-bg); padding: .8rem 1rem; margin: 0 0 1rem; }
+.fafar-cemed-published a { font-weight: 700; text-decoration: underline; }
+.fafar-cemed-pending { border-left: 4px solid var(--cemed-accent); background: var(--color-warning-bg); padding: .8rem 1rem; margin: 0 0 1rem; }
+.fafar-cemed-pending a { font-weight: 700; text-decoration: underline; }
+.fafar-cemed-item-body dl { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr); margin: 0 0 1.5rem; }
+.fafar-cemed-item-body dt, .fafar-cemed-item-body dd { border-bottom: 1px solid var(--border-color); padding: .4rem 0; margin: 0; overflow-wrap: anywhere; }
+.fafar-cemed-item-body dt { font-weight: 700; }
+.fafar-cemed-item-body h3 { font-size: 1.1rem; margin: 1rem 0 .4rem; }
+.fafar-cemed-answer { white-space: normal; overflow-wrap: anywhere; }
+.fafar-cemed-manage { border-top: 2px solid var(--cemed-accent); margin-top: 1.5rem; padding-top: 1rem; }
+.fafar-cemed-manage label { display: block; font-weight: 700; margin: 1rem 0 .4rem; }
+.fafar-cemed-manage select, .fafar-cemed-manage textarea { display: block; width: 100%; max-width: 100%; border: 1px solid var(--color-gray-300); background: var(--color-gray-50); color: var(--cemed-ink); padding: .6rem; font: inherit; }
+.fafar-cemed-manage textarea { min-height: 8rem; resize: vertical; }
+.fafar-cemed-manage button { background: var(--cemed-accent); border: 0; color: var(--color-secondary-dark); cursor: pointer; font: inherit; font-weight: 700; padding: .7rem 1.2rem; }
+.fafar-cemed-manage button:hover, .fafar-cemed-manage button:focus-visible { background: var(--color-primary-dark); }
+.fafar-cemed-manage-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
+.fafar-cemed-manage-actions button:first-child:not(:last-child) { background: var(--color-gray-100); border: 1px solid var(--color-gray-300); }
+.fafar-cemed-pagination { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1.5rem 0; }
+.fafar-cemed-pagination a, .fafar-cemed-pagination span { border: 1px solid var(--color-gray-300); padding: .3rem .6rem; }
+.fafar-cemed-pagination .current { background: var(--cemed-accent); border-color: var(--cemed-accent); }
+@media (max-width: 650px) {
+  .fafar-cemed-grid, .fafar-cemed-item-body dl { grid-template-columns: 1fr; }
+  .fafar-cemed-item-body dt { border: 0; padding-bottom: 0; }
+  .fafar-cemed-item-body dd { padding-top: 0; }
+}

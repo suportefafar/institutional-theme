@@ -1,0 +1,37 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
+
+# Development and generated files
+/node_modules/
+/vendor/
+/coverage/
+/.cache/
+/tmp/
+/build/
+/dist/
+*.zip
+*.tar.gz
+
+# Private operational files
+/.aws/
+/.ssh/
+/.agents/
+/.codex/
+/uploads/
+wp-config.php
+.htpasswd
+error_log
+*.pem
+*.key
+*.p12
+*.pfx
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.bak
