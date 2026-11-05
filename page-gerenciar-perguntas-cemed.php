@@ -20,6 +20,19 @@ $confirmation = isset( $_GET['confirmacao'] ) && is_scalar( $_GET['confirmacao']
 $show_update = $updated_id && $confirmation && wp_verify_nonce( $confirmation, 'fafar_cemed_updated_' . $updated_id );
 $show_delete = $deleted_id && $confirmation && wp_verify_nonce( $confirmation, 'fafar_cemed_deleted_' . $deleted_id );
 $questions   = new WP_Query( array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => 20, 'paged' => $page_number, 'orderby' => 'date', 'order' => 'DESC' ) );
+$question_ids = get_posts( array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true, 'orderby' => 'none' ) );
+$cemed_stats = array( 'total' => count( $question_ids ), 'answered' => 0, 'evaluated' => 0, 'ratings' => array_fill_keys( array( '1', '2', '3', '4', '5' ), 0 ) );
+foreach ( $question_ids as $cemed_question_id ) {
+	if ( 'respondida' === get_post_meta( $cemed_question_id, '_cemed_status', true ) ) {
+		++$cemed_stats['answered'];
+	}
+	$stored_feedback = get_post_meta( $cemed_question_id, '_cemed_feedback', true );
+	$rating = is_array( $stored_feedback ) && isset( $stored_feedback['nota'] ) ? (string) $stored_feedback['nota'] : '';
+	if ( isset( $cemed_stats['ratings'][ $rating ] ) ) {
+		++$cemed_stats['ratings'][ $rating ];
+		++$cemed_stats['evaluated'];
+	}
+}
 $status_labels = array( 'nova' => 'Nova', 'em_analise' => 'Em análise', 'respondida' => 'Respondida' );
 $email_labels = array( 'sent' => 'Enviado', 'failed' => 'Falha no envio', 'suppressed_non_production' => 'Não enviado no dev' );
 $style       = get_stylesheet_directory() . '/assets/css/cemed.css';
@@ -37,6 +50,20 @@ get_header();
 			<div class="entry-content clear fafar-cemed-page fafar-cemed-list">
 				<?php do_action( 'fafar_entry_content_before' ); ?>
 				<p>Área restrita a usuários autenticados. Revise o texto da pergunta antes de publicar a resposta para retirar dados pessoais ou informações clínicas identificáveis.</p>
+				<section class="fafar-cemed-stats" aria-labelledby="fafar-cemed-stats-title">
+					<h2 id="fafar-cemed-stats-title">Estatísticas</h2>
+					<div class="fafar-cemed-stat-grid">
+						<div class="fafar-cemed-stat"><span>Perguntas recebidas</span><strong><?php echo esc_html( number_format_i18n( $cemed_stats['total'] ) ); ?></strong></div>
+						<div class="fafar-cemed-stat"><span>Perguntas respondidas</span><strong><?php echo esc_html( number_format_i18n( $cemed_stats['answered'] ) ); ?></strong></div>
+						<div class="fafar-cemed-stat"><span>Perguntas avaliadas</span><strong><?php echo esc_html( number_format_i18n( $cemed_stats['evaluated'] ) ); ?></strong></div>
+					</div>
+					<h3>Avaliações por nota</h3>
+					<dl class="fafar-cemed-rating-list">
+						<?php foreach ( $cemed_stats['ratings'] as $rating_value => $rating_count ) : ?>
+							<dt><?php echo esc_html( $rating_value ); ?> / 5</dt><dd><?php echo esc_html( number_format_i18n( $rating_count ) ); ?> pergunta(s)</dd>
+						<?php endforeach; ?>
+					</dl>
+				</section>
 				<?php if ( $show_update ) : ?>
 					<p class="fafar-cemed-message is-success" role="status">Pergunta <?php echo esc_html( fafar_cemed_question_code( $updated_id ) ); ?> atualizada.</p>
 				<?php endif; ?>
