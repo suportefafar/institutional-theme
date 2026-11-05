@@ -9,16 +9,23 @@ if ( ! is_user_logged_in() ) {
 }
 
 nocache_headers();
-$manage_result = fafar_cemed_manage_question();
+$manage_result = fafar_cemed_delete_public_post();
+if ( null === $manage_result ) {
+	$manage_result = fafar_cemed_manage_question();
+}
 $page_number = max( 1, get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : ( isset( $_GET['pagina'] ) ? absint( $_GET['pagina'] ) : 1 ) );
 $updated_id  = isset( $_GET['atualizada'] ) && is_scalar( $_GET['atualizada'] ) ? absint( $_GET['atualizada'] ) : 0;
+$deleted_id  = isset( $_GET['excluida'] ) && is_scalar( $_GET['excluida'] ) ? absint( $_GET['excluida'] ) : 0;
 $confirmation = isset( $_GET['confirmacao'] ) && is_scalar( $_GET['confirmacao'] ) ? sanitize_text_field( wp_unslash( $_GET['confirmacao'] ) ) : '';
 $show_update = $updated_id && $confirmation && wp_verify_nonce( $confirmation, 'fafar_cemed_updated_' . $updated_id );
+$show_delete = $deleted_id && $confirmation && wp_verify_nonce( $confirmation, 'fafar_cemed_deleted_' . $deleted_id );
 $questions   = new WP_Query( array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => 20, 'paged' => $page_number, 'orderby' => 'date', 'order' => 'DESC' ) );
 $status_labels = array( 'nova' => 'Nova', 'em_analise' => 'Em análise', 'respondida' => 'Respondida' );
 $email_labels = array( 'sent' => 'Enviado', 'failed' => 'Falha no envio', 'suppressed_non_production' => 'Não enviado no dev' );
 $style       = get_stylesheet_directory() . '/assets/css/cemed.css';
+$script      = get_stylesheet_directory() . '/assets/js/cemed-management.js';
 wp_enqueue_style( 'fafar-cemed', get_stylesheet_directory_uri() . '/assets/css/cemed.css', array( 'fafar-theme' ), file_exists( $style ) ? filemtime( $style ) : '1.0.0' );
+wp_enqueue_script( 'fafar-cemed-management', get_stylesheet_directory_uri() . '/assets/js/cemed-management.js', array(), file_exists( $script ) ? filemtime( $script ) : '1.0.0', true );
 get_header();
 ?>
 
@@ -31,6 +38,9 @@ get_header();
 				<p>Área restrita a usuários autenticados. Revise o texto da pergunta antes de publicar a resposta para retirar dados pessoais ou informações clínicas identificáveis.</p>
 				<?php if ( $show_update ) : ?>
 					<p class="fafar-cemed-message is-success" role="status">Pergunta <?php echo esc_html( fafar_cemed_question_code( $updated_id ) ); ?> atualizada.</p>
+				<?php endif; ?>
+				<?php if ( $show_delete ) : ?>
+					<p class="fafar-cemed-message is-success" role="status">Post da pergunta <?php echo esc_html( fafar_cemed_question_code( $deleted_id ) ); ?> excluído e enviado para a lixeira.</p>
 				<?php endif; ?>
 				<?php if ( is_wp_error( $manage_result ) ) : ?>
 					<p class="fafar-cemed-message is-error" role="alert"><?php echo esc_html( $manage_result->get_error_message() ); ?></p>
@@ -58,11 +68,25 @@ get_header();
 						$team_email = is_array( $team_email ) ? $team_email : array();
 						$response_email = is_array( $response_email ) ? $response_email : array();
 					?>
-						<details class="fafar-cemed-item" id="cemed-pergunta-<?php echo esc_attr( $question_id ); ?>" <?php echo $show_update && $updated_id === $question_id ? 'open' : ''; ?>>
+						<details class="fafar-cemed-item" id="cemed-pergunta-<?php echo esc_attr( $question_id ); ?>" <?php echo ( $show_update && $updated_id === $question_id ) || ( $show_delete && $deleted_id === $question_id ) ? 'open' : ''; ?>>
 							<summary><strong><?php echo esc_html( $question_code ); ?> — <?php echo esc_html( $data['nome'] ?? 'Sem nome' ); ?></strong><span class="fafar-cemed-status is-<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $status_labels[ $status ] ); ?></span><span><?php echo esc_html( get_the_date( 'd/m/Y H:i' ) ); ?></span><span><?php echo esc_html( $data['municipio'] ?? '' ); ?><?php echo ! empty( $data['uf'] ) ? esc_html( ' / ' . $data['uf'] ) : ''; ?></span></summary>
 							<div class="fafar-cemed-item-body">
 								<?php if ( $public_post_id ) : ?>
 									<p class="fafar-cemed-published"><strong>Resposta publicada:</strong> <a href="<?php echo esc_url( get_permalink( $public_post_id ) ); ?>" target="_blank" rel="noopener noreferrer">Abrir o post com a pergunta e a resposta ↗</a></p>
+									<div class="fafar-cemed-post-actions" aria-label="Ações do post publicado">
+										<?php $edit_post_url = get_edit_post_link( $public_post_id, '' ); ?>
+										<?php if ( $edit_post_url ) : ?><a class="ffds-btn ffds-btn-secondary" href="<?php echo esc_url( $edit_post_url ); ?>">Editar post</a><?php endif; ?>
+										<?php if ( current_user_can( 'delete_post', $public_post_id ) ) : ?>
+											<form method="post" action="<?php echo esc_url( get_permalink( get_queried_object_id() ) ); ?>" data-cemed-delete-post data-confirm="Excluir este post? Ele será enviado para a lixeira e poderá ser recuperado pelo painel administrativo.">
+												<?php wp_nonce_field( 'fafar_cemed_delete_public_post_' . $question_id . '_' . $public_post_id, 'fafar_cemed_delete_nonce' ); ?>
+												<input type="hidden" name="fafar_cemed_manage_action" value="delete_public_post">
+												<input type="hidden" name="cemed_question_id" value="<?php echo esc_attr( $question_id ); ?>">
+												<input type="hidden" name="cemed_public_post_id" value="<?php echo esc_attr( $public_post_id ); ?>">
+												<input type="hidden" name="cemed_page_number" value="<?php echo esc_attr( $page_number ); ?>">
+												<button class="ffds-btn ffds-btn-danger" type="submit">Excluir post</button>
+											</form>
+										<?php endif; ?>
+									</div>
 								<?php else : ?>
 									<p class="fafar-cemed-pending"><strong>Post ainda não criado.</strong> Esta pergunta está aguardando resposta. <a href="#cemed-responder-<?php echo esc_attr( $question_id ); ?>">Ir para a resposta e publicação ↓</a></p>
 								<?php endif; ?>

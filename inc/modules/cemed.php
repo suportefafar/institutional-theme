@@ -402,6 +402,50 @@ function fafar_cemed_publish_answer( $question_id, $public_question, $answer ) {
 	return array( 'post_id' => $public_post_id, 'created' => ! $existing_id );
 }
 
+/** Remove apenas o post público, preservando a pergunta para revisão ou republicação. */
+function fafar_cemed_delete_public_post() {
+	if ( 'POST' !== $_SERVER['REQUEST_METHOD'] || 'delete_public_post' !== fafar_cemed_post_value( 'fafar_cemed_manage_action' ) ) {
+		return null;
+	}
+	if ( ! is_user_logged_in() ) {
+		return new WP_Error( 'forbidden', 'Sua conta não pode excluir posts.' );
+	}
+
+	$question_id    = absint( fafar_cemed_post_value( 'cemed_question_id' ) );
+	$public_post_id = absint( fafar_cemed_post_value( 'cemed_public_post_id' ) );
+	$question       = $question_id ? get_post( $question_id ) : null;
+	$public_post    = $public_post_id ? get_post( $public_post_id ) : null;
+	$associated_id  = $question_id ? absint( get_post_meta( $question_id, '_cemed_public_post_id', true ) ) : 0;
+
+	if ( ! $question || 'cemed_pergunta' !== $question->post_type || 'publish' !== $question->post_status || ! $public_post || 'post' !== $public_post->post_type || $associated_id !== $public_post_id ) {
+		return new WP_Error( 'invalid_post', 'O post selecionado não está associado a esta pergunta.' );
+	}
+	if ( ! current_user_can( 'delete_post', $public_post_id ) ) {
+		return new WP_Error( 'forbidden', 'Sua conta não tem permissão para excluir este post.' );
+	}
+	$nonce = fafar_cemed_post_value( 'fafar_cemed_delete_nonce' );
+	if ( ! $nonce || ! wp_verify_nonce( $nonce, 'fafar_cemed_delete_public_post_' . $question_id . '_' . $public_post_id ) ) {
+		return new WP_Error( 'nonce', 'A sessão expirou. Atualize a página e tente novamente.' );
+	}
+	if ( ! wp_trash_post( $public_post_id ) ) {
+		return new WP_Error( 'delete', 'Não foi possível excluir o post. Tente novamente.' );
+	}
+	if ( ! delete_post_meta( $question_id, '_cemed_public_post_id' ) ) {
+		wp_untrash_post( $public_post_id );
+		return new WP_Error( 'delete', 'Não foi possível remover a associação. O post foi restaurado.' );
+	}
+
+	delete_post_meta( $question_id, '_cemed_feedback_token' );
+	delete_post_meta( $public_post_id, '_cemed_question_id' );
+	update_post_meta( $question_id, '_cemed_status', 'em_analise' );
+	update_post_meta( $question_id, '_cemed_atualizada_em', current_time( 'mysql' ) );
+	update_post_meta( $question_id, '_cemed_atualizada_por', get_current_user_id() );
+
+	$page_number = max( 1, absint( fafar_cemed_post_value( 'cemed_page_number' ) ) );
+	wp_safe_redirect( add_query_arg( array( 'excluida' => $question_id, 'confirmacao' => wp_create_nonce( 'fafar_cemed_deleted_' . $question_id ), 'pagina' => $page_number ), get_permalink() ) . '#cemed-pergunta-' . $question_id, 303 );
+	exit;
+}
+
 /** Salva o acompanhamento; responder publica o post e notifica o solicitante. */
 function fafar_cemed_manage_question() {
 	if ( 'POST' !== $_SERVER['REQUEST_METHOD'] || 'save' !== fafar_cemed_post_value( 'fafar_cemed_manage_action' ) ) {

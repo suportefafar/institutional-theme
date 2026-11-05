@@ -41,6 +41,9 @@
 .fafar-cemed-item-body { padding: 1rem; }
 .fafar-cemed-published { border-left: 4px solid var(--color-success); background: var(--color-success-bg); padding: .8rem 1rem; margin: 0 0 1rem; }
 .fafar-cemed-published a { font-weight: 700; text-decoration: underline; }
+.fafar-cemed-post-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin: 0 0 1.5rem; }
+.fafar-cemed-post-actions form { margin: 0; }
+.fafar-cemed-post-actions .ffds-btn { min-height: 44px; text-decoration: none; }
 .fafar-cemed-pending { border-left: 4px solid var(--cemed-accent); background: var(--color-warning-bg); padding: .8rem 1rem; margin: 0 0 1rem; }
 .fafar-cemed-pending a { font-weight: 700; text-decoration: underline; }
 .fafar-cemed-item-body dl { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr); margin: 0 0 1.5rem; }
