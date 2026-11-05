@@ -172,7 +172,7 @@ get_header();
 							</div>
 
 							<div class="fafar-file-grid">
-								<div class="fafar-file-field"><label for="ArquivoFoto">Foto atual 3x4 <span aria-hidden="true">*</span> <small>(.jpg, .jpeg ou .png)</small></label><input id="ArquivoFoto" name="ArquivoFoto" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" data-max-size="8388608" required></div>
+								<div class="fafar-file-field"><label for="ArquivoFoto">Foto atual 3x4 <span aria-hidden="true">*</span> <small>(.jpg, .jpeg, .png ou .pdf)</small></label><input id="ArquivoFoto" name="ArquivoFoto" type="file" accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoCertidaoNascimentoCasadoSeparacao">Cópia da certidão de nascimento, casamento ou separação <span aria-hidden="true">*</span></label><input id="ArquivoCertidaoNascimentoCasadoSeparacao" name="ArquivoCertidaoNascimentoCasadoSeparacao" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoLattes">Curriculum vitae ou Curriculum Lattes (modelo da <a href="http://lattes.cnpq.br/" target="_blank" rel="noopener noreferrer">Plataforma Lattes/CNPq</a>) <span aria-hidden="true">*</span></label><input id="ArquivoLattes" name="ArquivoLattes" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoHistoricoGraduacao">Histórico escolar do curso de graduação <span aria-hidden="true">*</span></label><input id="ArquivoHistoricoGraduacao" name="ArquivoHistoricoGraduacao" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>

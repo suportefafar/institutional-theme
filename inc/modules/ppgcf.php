@@ -296,7 +296,7 @@ function fafar_ppgcf_download_document() {
 /** Campos de arquivo permitidos e seus formatos. */
 function fafar_ppgcf_file_rules() {
 	$rules = array(
-		'ArquivoFoto' => array( 'jpg', 'jpeg', 'png' ),
+		'ArquivoFoto' => array( 'jpg', 'jpeg', 'png', 'pdf' ),
 	);
 
 	$pdf_fields = array(
@@ -773,7 +773,7 @@ function fafar_ppgcf_upload_file() {
 		finfo_close( $finfo );
 	}
 
-	$allowed_mimes = 'ArquivoFoto' === $field ? array( 'image/jpeg', 'image/png' ) : array( 'application/pdf' );
+	$allowed_mimes = 'ArquivoFoto' === $field ? array( 'image/jpeg', 'image/png', 'application/pdf' ) : array( 'application/pdf' );
 	if ( ! in_array( $mime, $allowed_mimes, true ) ) {
 		fafar_ppgcf_send_json_error( 'O conteúdo do arquivo não corresponde ao formato informado.', 400, $field, 'invalid_upload_mime' );
 	}

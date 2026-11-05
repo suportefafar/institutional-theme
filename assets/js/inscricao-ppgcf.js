@@ -455,7 +455,7 @@
       var isImage = ['jpg', 'jpeg', 'png'].indexOf(extension) !== -1;
       var isPdf = extension === 'pdf';
       var accept = input.getAttribute('accept') || '';
-      var accepted = accept.indexOf('image/') !== -1 ? isImage : (accept.indexOf('application/pdf') !== -1 ? isPdf : true);
+      var accepted = (accept.indexOf('image/') !== -1 && isImage) || (accept.indexOf('application/pdf') !== -1 && isPdf);
       var error = '';
       var wrapper;
 
