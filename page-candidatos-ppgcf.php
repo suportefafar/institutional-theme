@@ -82,10 +82,12 @@ $candidate_labels = array(
 );
 
 $document_labels = array(
+	'ArquivoFormularioInscricao'             => 'Formulário de inscrição preenchido e assinado',
 	'ArquivoFoto'                            => 'Foto atual 3x4',
 	'ArquivoCertidaoNascimentoCasadoSeparacao' => 'Certidão de nascimento, casamento ou separação',
 	'ArquivoLattes'                          => 'Curriculum vitae ou Curriculum Lattes',
 	'ArquivoPublicacoesAtividades'           => 'Comprovantes das publicações/atividades do currículo',
+	'ArquivoHistoricoGraduacao'              => 'Histórico escolar da graduação',
 	'ArquivoCertidaoQuitacaoEleitoral'       => 'Certidão de quitação eleitoral',
 	'ArquivoComprovanteResidencia'           => 'Comprovante de residência',
 	'ArquivoTabelaPontuacaoCurriculo'        => 'Tabela de pontuação do currículo',
@@ -100,9 +102,15 @@ $document_labels = array(
 	'ArquivoAutodeclaracaoEtnicoRacial'      => 'Autodeclaração étnico-racial',
 	'ArquivoAutorreconhecimentoIndigena'     => 'Declaração de autorreconhecimento indígena',
 	'ArquivoDeclaracaoLiderancaIndigena'     => 'Declaração de lideranças indígenas',
-	'ArquivoDeclaracaoFunai'                 => 'Declaração da Funai',
+	'ArquivoDeclaracaoFunai'                 => 'Declaração da Funai ou do Ministério dos Povos Indígenas',
+	'ArquivoComprovantePertencimentoIndigena' => 'Comprovante de pertencimento étnico indígena',
+	'ArquivoAutorreconhecimentoQuilombola'   => 'Declaração de autorreconhecimento quilombola',
+	'ArquivoComprovantePertencimentoQuilombola' => 'Comprovante de pertencimento quilombola',
+	'ArquivoAutodeclaracaoTransTravesti'     => 'Autodeclaração como pessoa trans ou travesti',
+	'ArquivoDocumentoNomeSocial'             => 'Documento com nome social ou certidão retificada',
+	'ArquivoCertidaoInteiroTeor'             => 'Certidão de inteiro teor',
 	'ArquivoAutodeclaracaoDeficiente'        => 'Autodeclaração de pessoa com deficiência',
-	'ArquivoRelatorioMedico'                 => 'Relatório do médico assistente',
+	'ArquivoRelatorioMedico'                 => 'Relatório do profissional de saúde',
 	'ArquivoCondicoesEspeciaisProva'         => 'Formulário de condições especiais para a prova',
 	'ArquivoExameLinguaInglesa'              => 'Comprovação de proficiência em língua inglesa',
 );

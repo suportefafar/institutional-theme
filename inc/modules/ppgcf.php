@@ -300,9 +300,11 @@ function fafar_ppgcf_file_rules() {
 	);
 
 	$pdf_fields = array(
+		'ArquivoFormularioInscricao',
 		'ArquivoCertidaoNascimentoCasadoSeparacao',
 		'ArquivoLattes',
 		'ArquivoPublicacoesAtividades',
+		'ArquivoHistoricoGraduacao',
 		'ArquivoCertidaoQuitacaoEleitoral',
 		'ArquivoComprovanteResidencia',
 		'ArquivoTabelaPontuacaoCurriculo',
@@ -318,6 +320,12 @@ function fafar_ppgcf_file_rules() {
 		'ArquivoAutorreconhecimentoIndigena',
 		'ArquivoDeclaracaoLiderancaIndigena',
 		'ArquivoDeclaracaoFunai',
+		'ArquivoComprovantePertencimentoIndigena',
+		'ArquivoAutorreconhecimentoQuilombola',
+		'ArquivoComprovantePertencimentoQuilombola',
+		'ArquivoAutodeclaracaoTransTravesti',
+		'ArquivoDocumentoNomeSocial',
+		'ArquivoCertidaoInteiroTeor',
 		'ArquivoAutodeclaracaoDeficiente',
 		'ArquivoRelatorioMedico',
 		'ArquivoCondicoesEspeciaisProva',
@@ -881,7 +889,7 @@ function fafar_ppgcf_required_files( $data ) {
 		'ArquivoFoto',
 		'ArquivoCertidaoNascimentoCasadoSeparacao',
 		'ArquivoLattes',
-		'ArquivoPublicacoesAtividades',
+		'ArquivoHistoricoGraduacao',
 		'ArquivoCertidaoQuitacaoEleitoral',
 		'ArquivoComprovanteResidencia',
 		'ArquivoTabelaPontuacaoCurriculo',
@@ -901,14 +909,20 @@ function fafar_ppgcf_required_files( $data ) {
 		}
 	}
 
+	if ( 'Mestrado' === $level ) {
+		$files[] = 'ArquivoFormularioInscricao';
+	}
+
 	if ( 'Doutorado' === $level ) {
 		$files[] = 'ArquivoProjetoTese';
 	}
 
 	$vacancy_files = array(
-		'Reserva de vagas para negros'     => array( 'ArquivoAutodeclaracaoEtnicoRacial' ),
-		'Reserva de vagas para indígenas'  => array( 'ArquivoAutorreconhecimentoIndigena', 'ArquivoDeclaracaoLiderancaIndigena', 'ArquivoDeclaracaoFunai' ),
-		'Reserva de vagas para pessoas com deficiência' => array( 'ArquivoAutodeclaracaoDeficiente', 'ArquivoRelatorioMedico', 'ArquivoCondicoesEspeciaisProva' ),
+		'Reserva para autodeclarados negros' => array( 'ArquivoAutodeclaracaoEtnicoRacial' ),
+		'Pessoas indígenas' => array( 'ArquivoAutorreconhecimentoIndigena', 'ArquivoDeclaracaoLiderancaIndigena', 'ArquivoDeclaracaoFunai', 'ArquivoComprovantePertencimentoIndigena' ),
+		'Pessoas quilombolas' => array( 'ArquivoAutorreconhecimentoQuilombola', 'ArquivoComprovantePertencimentoQuilombola' ),
+		'Pessoas trans e travestis' => array( 'ArquivoAutodeclaracaoTransTravesti', 'ArquivoDocumentoNomeSocial', 'ArquivoCertidaoInteiroTeor' ),
+		'Pessoas com deficiência' => array( 'ArquivoAutodeclaracaoDeficiente', 'ArquivoRelatorioMedico', 'ArquivoCondicoesEspeciaisProva' ),
 	);
 
 	if ( isset( $vacancy_files[ $type ] ) ) {
@@ -933,7 +947,7 @@ function fafar_ppgcf_submit_form() {
 	}
 
 	$valid_levels = fafar_ppgcf_candidate_levels();
-	$valid_types  = array( 'Ampla concorrência', 'Estrangeiro', 'Reserva de vagas para negros', 'Reserva de vagas para indígenas', 'Reserva de vagas para pessoas com deficiência' );
+	$valid_types  = array( 'Ampla concorrência', 'Estrangeiro', 'Reserva para autodeclarados negros', 'Pessoas indígenas', 'Pessoas quilombolas', 'Pessoas trans e travestis', 'Pessoas com deficiência' );
 	$valid_sexes  = array( 'Feminino', 'Masculino' );
 	if ( ! in_array( $data['NivelDaVaga'], $valid_levels, true ) ) {
 		fafar_ppgcf_send_json_error( 'O nível de vaga selecionado não está disponível para inscrição. Atualize a página e selecione um nível habilitado.', 400, 'NivelDaVaga', 'invalid_option' );

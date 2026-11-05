@@ -18,7 +18,8 @@ $fafar_ppgcf_form_is_open     = 'open' === $fafar_ppgcf_schedule_state['status']
 $form_style_path              = get_stylesheet_directory() . '/assets/css/inscricao.css';
 $form_script_path             = get_stylesheet_directory() . '/assets/js/inscricao-ppgcf.js';
 
-$ppgcf_documents_url = trailingslashit( wp_get_upload_dir()['baseurl'] ) . 'inscricao-ppgcf/';
+$ppgcf_documents_url = trailingslashit( get_stylesheet_directory_uri() ) . 'assets/docs/ppgcf/';
+$ppgcf_uploads_url   = trailingslashit( wp_get_upload_dir()['baseurl'] ) . 'inscricao-ppgcf/';
 
 nocache_headers();
 
@@ -86,9 +87,11 @@ get_header();
 								<div class="fafar-choice-list">
 									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Ampla concorrência" checked required> <span>Ampla concorrência</span></label>
 									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Estrangeiro" required> <span>Estrangeiro</span></label>
-									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Reserva de vagas para negros" required> <span>Reserva de vagas para negros</span></label>
-									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Reserva de vagas para indígenas" required> <span>Reserva de vagas para indígenas</span></label>
-									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Reserva de vagas para pessoas com deficiência" required> <span>Reserva de vagas para pessoas com deficiência</span></label>
+									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Reserva para autodeclarados negros" required> <span>Reserva para autodeclarados negros</span></label>
+									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Pessoas indígenas" required> <span>Pessoas indígenas</span></label>
+									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Pessoas quilombolas" required> <span>Pessoas quilombolas</span></label>
+									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Pessoas trans e travestis" required> <span>Pessoas trans e travestis</span></label>
+									<label class="fafar-choice"><input type="radio" name="TipoDaVaga" value="Pessoas com deficiência" required> <span>Pessoas com deficiência</span></label>
 								</div>
 							</div>
 						</fieldset>
@@ -162,20 +165,24 @@ get_header();
 
 						<fieldset class="fafar-form-section fafar-documentation">
 							<legend>Documentação</legend>
-							<p class="fafar-help">Tamanho máximo: 8 MB por arquivo. Formatos aceitos conforme indicado em cada campo.</p>
+							<p class="fafar-help">Tamanho máximo: 8 MB por arquivo. Baixe os modelos pelos links, preencha e assine os documentos e envie-os em PDF, salvo a foto 3x4.</p>
+
+							<div class="fafar-conditional" data-condition="mestrado" hidden>
+								<div class="fafar-file-field"><label for="ArquivoFormularioInscricao">Formulário de inscrição para o processo seletivo do Mestrado 2027, preenchido e assinado <span aria-hidden="true">*</span></label><p class="fafar-help" id="ArquivoFormularioInscricao-ajuda"><a href="<?php echo esc_url( $ppgcf_documents_url . 'formulario-inscricao-mestrado-2027.docx' ); ?>" target="_blank" rel="noopener noreferrer">Baixe o formulário de inscrição</a>, preencha, assine e envie em PDF.</p><input id="ArquivoFormularioInscricao" name="ArquivoFormularioInscricao" type="file" accept=".pdf,application/pdf" data-max-size="8388608" aria-describedby="ArquivoFormularioInscricao-ajuda" required></div>
+							</div>
 
 							<div class="fafar-file-grid">
 								<div class="fafar-file-field"><label for="ArquivoFoto">Foto atual 3x4 <span aria-hidden="true">*</span> <small>(.jpg, .jpeg ou .png)</small></label><input id="ArquivoFoto" name="ArquivoFoto" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoCertidaoNascimentoCasadoSeparacao">Cópia da certidão de nascimento, casamento ou separação <span aria-hidden="true">*</span></label><input id="ArquivoCertidaoNascimentoCasadoSeparacao" name="ArquivoCertidaoNascimentoCasadoSeparacao" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoLattes">Curriculum vitae ou Curriculum Lattes (modelo da <a href="http://lattes.cnpq.br/" target="_blank" rel="noopener noreferrer">Plataforma Lattes/CNPq</a>) <span aria-hidden="true">*</span></label><input id="ArquivoLattes" name="ArquivoLattes" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
-								<div class="fafar-file-field"><label for="ArquivoPublicacoesAtividades">Comprovantes das publicações/atividades, organizados na ordem numérica do currículo e reunidos em arquivo único <span aria-hidden="true">*</span></label><input id="ArquivoPublicacoesAtividades" name="ArquivoPublicacoesAtividades" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
+								<div class="fafar-file-field"><label for="ArquivoHistoricoGraduacao">Histórico escolar do curso de graduação <span aria-hidden="true">*</span></label><input id="ArquivoHistoricoGraduacao" name="ArquivoHistoricoGraduacao" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoCertidaoQuitacaoEleitoral">Cópia da certidão de quitação eleitoral a ser <a href="https://www.tse.jus.br/eleitor/certidoes/certidao-de-quitacao-eleitoral" target="_blank" rel="noopener noreferrer">obtida aqui</a> <span aria-hidden="true">*</span></label><input id="ArquivoCertidaoQuitacaoEleitoral" name="ArquivoCertidaoQuitacaoEleitoral" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoComprovanteResidencia">Cópia do comprovante de residência <span aria-hidden="true">*</span></label><input id="ArquivoComprovanteResidencia" name="ArquivoComprovanteResidencia" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 								<div class="fafar-file-field"><label for="ArquivoTabelaPontuacaoCurriculo">Tabela de pontuação do currículo devidamente preenchida e assinada, disponível no site do programa <span aria-hidden="true">*</span></label><input id="ArquivoTabelaPontuacaoCurriculo" name="ArquivoTabelaPontuacaoCurriculo" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 							</div>
 
 							<div class="fafar-conditional fafar-file-grid" data-condition="militar" hidden>
-								<div class="fafar-file-field"><label for="ArquivoComprovanteMilitar">Comprovante de estar em dia com as obrigações militares, no caso de brasileiro e do sexo masculino. Carimbo no documento militar e/ou no verso do diploma, como no <a href="<?php echo esc_url( $ppgcf_documents_url . 'modelo-carimbo.gif' ); ?>" target="_blank" rel="noopener noreferrer">exemplo</a> <span aria-hidden="true">*</span></label><input id="ArquivoComprovanteMilitar" name="ArquivoComprovanteMilitar" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoComprovanteMilitar">Comprovante de estar em dia com as obrigações militares, no caso de brasileiro e do sexo masculino. Carimbo no documento militar e/ou no verso do diploma, como no <a href="<?php echo esc_url( $ppgcf_uploads_url . 'modelo-carimbo.gif' ); ?>" target="_blank" rel="noopener noreferrer">exemplo</a> <span aria-hidden="true">*</span></label><input id="ArquivoComprovanteMilitar" name="ArquivoComprovanteMilitar" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
 							</div>
 
 							<div class="fafar-conditional fafar-file-grid" data-condition="arquivos-brasileiro" hidden>
@@ -198,18 +205,30 @@ get_header();
 							</div>
 
 							<div class="fafar-conditional fafar-file-grid" data-condition="edital-regular" hidden>
-								<div class="fafar-file-field"><label for="ArquivoAutodeclaracaoEtnicoRacial"><a href="<?php echo esc_url( $ppgcf_documents_url . 'autodeclaracao-etnico-racial.pdf' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de autodeclaração étnico-racial preenchido <span aria-hidden="true">*</span></label><input id="ArquivoAutodeclaracaoEtnicoRacial" name="ArquivoAutodeclaracaoEtnicoRacial" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoAutodeclaracaoEtnicoRacial"><a href="<?php echo esc_url( $ppgcf_uploads_url . 'autodeclaracao-etnico-racial.pdf' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de autodeclaração étnico-racial preenchido <span aria-hidden="true">*</span></label><input id="ArquivoAutodeclaracaoEtnicoRacial" name="ArquivoAutodeclaracaoEtnicoRacial" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
 							</div>
 
 							<div class="fafar-conditional fafar-file-grid" data-condition="indigenas" hidden>
-								<div class="fafar-file-field"><label for="ArquivoAutorreconhecimentoIndigena"><a href="<?php echo esc_url( $ppgcf_documents_url . 'autorreconhecimento-indigena.pdf' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de autorreconhecimento indígena <span aria-hidden="true">*</span></label><input id="ArquivoAutorreconhecimentoIndigena" name="ArquivoAutorreconhecimentoIndigena" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
-								<div class="fafar-file-field"><label for="ArquivoDeclaracaoLiderancaIndigena"><a href="<?php echo esc_url( $ppgcf_documents_url . 'liderancas-indigenas.pdf' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de declaração assinada por pelo menos três lideranças indígenas <span aria-hidden="true">*</span></label><input id="ArquivoDeclaracaoLiderancaIndigena" name="ArquivoDeclaracaoLiderancaIndigena" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
-								<div class="fafar-file-field"><label for="ArquivoDeclaracaoFunai"><a href="<?php echo esc_url( $ppgcf_documents_url . 'declaracao-residencia-indigena.pdf' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de declaração da Fundação Nacional dos Povos Indígenas (Funai), atestando que o candidato reside em comunidade indígena <span aria-hidden="true">*</span></label><input id="ArquivoDeclaracaoFunai" name="ArquivoDeclaracaoFunai" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoAutorreconhecimentoIndigena"><a href="<?php echo esc_url( $ppgcf_documents_url . 'autorreconhecimento-indigena.docx' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de autorreconhecimento indígena <span aria-hidden="true">*</span></label><input id="ArquivoAutorreconhecimentoIndigena" name="ArquivoAutorreconhecimentoIndigena" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoDeclaracaoLiderancaIndigena"><a href="<?php echo esc_url( $ppgcf_documents_url . 'liderancas-indigenas.docx' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de declaração assinada por pelo menos três lideranças indígenas <span aria-hidden="true">*</span></label><input id="ArquivoDeclaracaoLiderancaIndigena" name="ArquivoDeclaracaoLiderancaIndigena" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoDeclaracaoFunai">Declaração expedida pela Funai ou pelo Ministério dos Povos Indígenas <span aria-hidden="true">*</span></label><input id="ArquivoDeclaracaoFunai" name="ArquivoDeclaracaoFunai" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoComprovantePertencimentoIndigena">Outros documentos que comprovem o pertencimento étnico <span aria-hidden="true">*</span></label><input id="ArquivoComprovantePertencimentoIndigena" name="ArquivoComprovantePertencimentoIndigena" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+							</div>
+
+							<div class="fafar-conditional fafar-file-grid" data-condition="quilombolas" hidden>
+								<div class="fafar-file-field"><label for="ArquivoAutorreconhecimentoQuilombola"><a href="<?php echo esc_url( $ppgcf_documents_url . 'autorreconhecimento-quilombola.docx' ); ?>" target="_blank" rel="noopener noreferrer">Modelo</a> de declaração de autorreconhecimento quilombola <span aria-hidden="true">*</span></label><input id="ArquivoAutorreconhecimentoQuilombola" name="ArquivoAutorreconhecimentoQuilombola" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoComprovantePertencimentoQuilombola"><a href="<?php echo esc_url( $ppgcf_documents_url . 'liderancas-quilombolas.docx' ); ?>" target="_blank" rel="noopener noreferrer">Modelo de declaração de lideranças</a> (ou certificação da Fundação Cultural Palmares) para comprovar o pertencimento quilombola <span aria-hidden="true">*</span></label><input id="ArquivoComprovantePertencimentoQuilombola" name="ArquivoComprovantePertencimentoQuilombola" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+							</div>
+
+							<div class="fafar-conditional fafar-file-grid" data-condition="trans-travestis" hidden>
+								<div class="fafar-file-field"><label for="ArquivoAutodeclaracaoTransTravesti"><a href="<?php echo esc_url( $ppgcf_documents_url . 'autodeclaracao-trans-travesti.docx' ); ?>" target="_blank" rel="noopener noreferrer">Modelo</a> de autodeclaração como pessoa trans ou travesti <span aria-hidden="true">*</span></label><input id="ArquivoAutodeclaracaoTransTravesti" name="ArquivoAutodeclaracaoTransTravesti" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoDocumentoNomeSocial">RG com nome social ou certidão de nascimento retificada <span aria-hidden="true">*</span></label><input id="ArquivoDocumentoNomeSocial" name="ArquivoDocumentoNomeSocial" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoCertidaoInteiroTeor">Certidão de inteiro teor <span aria-hidden="true">*</span></label><input id="ArquivoCertidaoInteiroTeor" name="ArquivoCertidaoInteiroTeor" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
 							</div>
 
 							<div class="fafar-conditional fafar-file-grid" data-condition="pcds" hidden>
-								<div class="fafar-file-field"><label for="ArquivoAutodeclaracaoDeficiente"><a href="<?php echo esc_url( $ppgcf_documents_url . 'autodeclaracao-pessoa-com-deficiencia.pdf' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de autodeclaração de pessoa com deficiência <span aria-hidden="true">*</span></label><input id="ArquivoAutodeclaracaoDeficiente" name="ArquivoAutodeclaracaoDeficiente" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
-								<div class="fafar-file-field"><label for="ArquivoRelatorioMedico"><a href="<?php echo esc_url( $ppgcf_documents_url . 'relatorio-medico-assistente.docx' ); ?>" target="_blank" rel="noopener noreferrer">Relatório</a> do médico assistente (enviar em PDF) <span aria-hidden="true">*</span></label><input id="ArquivoRelatorioMedico" name="ArquivoRelatorioMedico" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoAutodeclaracaoDeficiente"><a href="<?php echo esc_url( $ppgcf_documents_url . 'autodeclaracao-pessoa-com-deficiencia.docx' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de autodeclaração de pessoa com deficiência <span aria-hidden="true">*</span></label><input id="ArquivoAutodeclaracaoDeficiente" name="ArquivoAutodeclaracaoDeficiente" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
+								<div class="fafar-file-field"><label for="ArquivoRelatorioMedico"><a href="<?php echo esc_url( $ppgcf_documents_url . 'relatorio-profissional-saude.docx' ); ?>" target="_blank" rel="noopener noreferrer">Relatório</a> do profissional de saúde (enviar em PDF) <span aria-hidden="true">*</span></label><input id="ArquivoRelatorioMedico" name="ArquivoRelatorioMedico" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
 								<div class="fafar-file-field"><label for="ArquivoCondicoesEspeciaisProva"><a href="<?php echo esc_url( $ppgcf_documents_url . 'solicitacao-condicoes-especiais.docx' ); ?>" target="_blank" rel="noopener noreferrer">Formulário</a> de solicitação de condições especiais para realizar a prova <span aria-hidden="true">*</span></label><input id="ArquivoCondicoesEspeciaisProva" name="ArquivoCondicoesEspeciaisProva" type="file" accept=".pdf,application/pdf" data-max-size="8388608" data-required="true"></div>
 							</div>
 

@@ -165,12 +165,18 @@
           return type !== 'Estrangeiro' && sex === 'Masculino';
         case 'doutorado':
           return level === 'Doutorado';
+        case 'mestrado':
+          return level === 'Mestrado';
         case 'edital-regular':
-          return type === 'Reserva de vagas para negros';
+          return type === 'Reserva para autodeclarados negros';
         case 'indigenas':
-          return type === 'Reserva de vagas para indígenas';
+          return type === 'Pessoas indígenas';
+        case 'quilombolas':
+          return type === 'Pessoas quilombolas';
+        case 'trans-travestis':
+          return type === 'Pessoas trans e travestis';
         case 'pcds':
-          return type === 'Reserva de vagas para pessoas com deficiência';
+          return type === 'Pessoas com deficiência';
         default:
           return false;
       }
