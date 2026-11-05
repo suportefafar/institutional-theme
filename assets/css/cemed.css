@@ -17,13 +17,18 @@
 .fafar-cemed-field { margin: 0 0 1.3rem; min-width: 0; }
 .fafar-cemed-field > label, .fafar-cemed-label { display: block; font-weight: 600; margin-bottom: .4rem; }
 .fafar-cemed-field > label span[aria-hidden], .fafar-cemed-label span[aria-hidden] { color: var(--color-error); }
-.fafar-cemed-field input:not([type="radio"]), .fafar-cemed-field select, .fafar-cemed-field textarea { display: block; width: 100%; background: var(--color-gray-50); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); color: var(--cemed-ink); padding: .65rem .75rem; font: inherit; }
+.fafar-cemed-field input:not([type="radio"]):not([type="checkbox"]), .fafar-cemed-field select, .fafar-cemed-field textarea { display: block; width: 100%; background: var(--color-gray-50); border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); color: var(--cemed-ink); padding: .65rem .75rem; font: inherit; }
 .fafar-cemed-field textarea { min-height: 8rem; resize: vertical; }
 .fafar-cemed-field input:focus-visible, .fafar-cemed-field select:focus-visible, .fafar-cemed-field textarea:focus-visible { outline: 2px solid #8a6600; outline-offset: 2px; }
 .fafar-cemed-help { color: var(--color-gray-600); font-size: .94rem; line-height: 1.5; margin: .2rem 0 .6rem; }
 .fafar-cemed-choices { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; }
+.fafar-cemed-choices.is-stacked { align-items: stretch; flex-direction: column; gap: .65rem; }
+.fafar-cemed-choices.is-stacked label { align-items: flex-start; width: 100%; min-width: 0; }
 .fafar-cemed-choices label { display: inline-flex; align-items: center; gap: .4rem; font-weight: 400; cursor: pointer; }
-.fafar-cemed-choices input { margin: 0; }
+.fafar-cemed-choices input { flex: 0 0 auto; width: auto; margin: .2rem 0 0; padding: 0; }
+.fafar-cemed-patient { border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); margin: 1rem 0 1.5rem; padding: 1rem; }
+.fafar-cemed-patient h3 { background: var(--cemed-accent); border-radius: var(--radius-sm); color: var(--color-secondary-dark); font-size: 1.1rem; margin: 0 0 1rem; padding: .8rem 1rem; }
+.fafar-cemed-patient h4 { font-size: 1rem; margin: 1.25rem 0 .8rem; }
 .fafar-cemed-term { border: 1px solid var(--border-color); background: var(--color-gray-50); max-height: 25rem; overflow: auto; padding: 1.2rem; margin: .4rem 0 1.4rem; line-height: 1.55; }
 .fafar-cemed-term ol { margin-left: 1.4rem; }
 .fafar-cemed-term li { margin-bottom: .8rem; }
@@ -53,8 +58,13 @@
 .fafar-cemed-answer { white-space: normal; overflow-wrap: anywhere; }
 .fafar-cemed-manage { border-top: 2px solid var(--cemed-accent); margin-top: 1.5rem; padding-top: 1rem; }
 .fafar-cemed-manage label { display: block; font-weight: 700; margin: 1rem 0 .4rem; }
-.fafar-cemed-manage select, .fafar-cemed-manage textarea { display: block; width: 100%; max-width: 100%; border: 1px solid var(--color-gray-300); background: var(--color-gray-50); color: var(--cemed-ink); padding: .6rem; font: inherit; }
+.fafar-cemed-manage select, .fafar-cemed-manage textarea, .fafar-cemed-manage input:not([type="checkbox"]):not([type="radio"]) { display: block; width: 100%; max-width: 100%; border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); background: var(--color-gray-50); color: var(--cemed-ink); padding: .6rem; font: inherit; }
 .fafar-cemed-manage textarea { min-height: 8rem; resize: vertical; }
+.fafar-cemed-manage-field { margin: 1.2rem 0; }
+.fafar-cemed-manage-field > .fafar-cemed-label { display: block; font-weight: 700; margin: 0 0 .5rem; }
+.fafar-cemed-manage .fafar-cemed-choices.is-stacked { align-items: stretch; flex-direction: column; gap: .5rem; }
+.fafar-cemed-manage .fafar-cemed-choices label { display: inline-flex; align-items: flex-start; gap: .5rem; margin: 0; font-weight: 400; }
+.fafar-cemed-manage .fafar-cemed-choices input { flex: 0 0 auto; width: auto; margin: .25rem 0 0; padding: 0; }
 .fafar-cemed-manage button { background: var(--cemed-accent); border: 0; color: var(--color-secondary-dark); cursor: pointer; font: inherit; font-weight: 700; padding: .7rem 1.2rem; }
 .fafar-cemed-manage button:hover, .fafar-cemed-manage button:focus-visible { background: var(--color-primary-dark); }
 .fafar-cemed-manage-actions { display: flex; flex-wrap: wrap; gap: .6rem; }

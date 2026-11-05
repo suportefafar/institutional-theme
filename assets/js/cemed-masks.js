@@ -4,6 +4,89 @@
 
   const digitsOnly = (value, limit) => value.replace(/\D/g, '').slice(0, limit);
 
+  const professionWrap = form.querySelector('[data-cemed-profissao-wrap]');
+  const otherProfessionWrap = form.querySelector('[data-cemed-profissao-outro-wrap]');
+  const otherProfessionInput = form.querySelector('[name="profissao_saude_outro"]');
+  const patientSection = form.querySelector('[data-cemed-patient-section]');
+  const patientAge = form.querySelector('[name="idade_paciente"]');
+  const patientSex = form.querySelector('[name="sexo_paciente"]');
+  const patientGender = form.querySelector('[name="genero_paciente"]');
+  const diseaseOther = form.querySelector('[name="doencas_preexistentes_outro"]');
+  const specialOther = form.querySelector('[name="condicoes_especiais_outro"]');
+  const toggleOtherField = (name, wrapperSelector, input) => {
+    const selected = [...form.querySelectorAll(`[name="${name}"]:checked`)].some((choice) => choice.value === 'Outro');
+    const visible = patientSection && !patientSection.hidden && selected;
+    const wrapper = form.querySelector(wrapperSelector);
+    if (wrapper) wrapper.hidden = !visible;
+    if (input) {
+      input.required = Boolean(visible);
+      if (!visible) input.value = '';
+    }
+  };
+  const updatePatientFields = () => {
+    const isSpecificPatient = form.querySelector('[name="paciente_especifico"]:checked')?.value === 'Sim';
+    if (patientSection) patientSection.hidden = !isSpecificPatient;
+    for (const field of [patientAge, patientSex, patientGender]) {
+      if (field) field.required = isSpecificPatient;
+    }
+    for (const name of ['doencas_preexistentes[]', 'condicoes_especiais[]']) {
+      const checkboxes = [...form.querySelectorAll(`[name="${name}"]`)];
+      for (const checkbox of checkboxes) checkbox.required = false;
+      if (checkboxes[0]) {
+        const hasSelection = checkboxes.some((checkbox) => checkbox.checked);
+        checkboxes[0].setCustomValidity(isSpecificPatient && !hasSelection ? 'Selecione pelo menos uma opção.' : '');
+      }
+    }
+    if (!isSpecificPatient) {
+      for (const checkbox of form.querySelectorAll('[name="doencas_preexistentes[]"], [name="condicoes_especiais[]"]')) checkbox.checked = false;
+      if (patientAge) patientAge.value = '';
+      if (patientSex) patientSex.value = '';
+      if (patientGender) patientGender.value = '';
+    }
+    toggleOtherField('doencas_preexistentes[]', '[data-cemed-diseases-other-wrap]', diseaseOther);
+    toggleOtherField('condicoes_especiais[]', '[data-cemed-special-other-wrap]', specialOther);
+  };
+  form.addEventListener('change', (event) => {
+    if (event.target.matches('[name="paciente_especifico"]')) {
+      updatePatientFields();
+      return;
+    }
+    if (event.target.matches('[name="doencas_preexistentes[]"], [name="condicoes_especiais[]"]')) {
+      const checkbox = event.target;
+      const group = checkbox.name;
+      const choices = [...form.querySelectorAll(`[name="${group}"]`)];
+      const none = choices.find((choice) => choice.value === 'Nenhuma');
+      if (checkbox.value === 'Nenhuma' && checkbox.checked) {
+        for (const choice of choices) if (choice !== checkbox) choice.checked = false;
+      } else if (checkbox.checked && none) {
+        none.checked = false;
+      }
+      updatePatientFields();
+    }
+  });
+  updatePatientFields();
+  const updateProfessionFields = () => {
+    const isHealthProfessional = form.querySelector('[name="profissional_saude"]:checked')?.value === 'Sim';
+    if (!isHealthProfessional) {
+      for (const input of form.querySelectorAll('[name="profissao_saude"]')) input.checked = false;
+    }
+    const profession = form.querySelector('[name="profissao_saude"]:checked')?.value || '';
+    if (professionWrap) professionWrap.hidden = !isHealthProfessional;
+    if (otherProfessionWrap) otherProfessionWrap.hidden = !isHealthProfessional || profession !== 'Outro';
+    for (const input of form.querySelectorAll('[name="profissao_saude"]')) {
+      input.required = isHealthProfessional;
+    }
+    if (otherProfessionInput) {
+      const isOther = isHealthProfessional && profession === 'Outro';
+      otherProfessionInput.required = isOther;
+      if (!isOther) otherProfessionInput.value = '';
+    }
+  };
+  form.addEventListener('change', (event) => {
+    if (event.target.matches('[name="profissional_saude"], [name="profissao_saude"]')) updateProfessionFields();
+  });
+  updateProfessionFields();
+
   const formatCpf = (value) => {
     const digits = digitsOnly(value, 11);
     let result = digits.slice(0, 3);

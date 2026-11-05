@@ -166,11 +166,43 @@ function fafar_cemed_post_value( $key ) {
 	return trim( (string) wp_unslash( $_POST[ $key ] ) );
 }
 
+function fafar_cemed_post_values( $key ) {
+	if ( ! isset( $_POST[ $key ] ) || ! is_array( $_POST[ $key ] ) ) {
+		return array();
+	}
+	$values = array();
+	foreach ( wp_unslash( $_POST[ $key ] ) as $value ) {
+		if ( is_scalar( $value ) ) {
+			$values[] = sanitize_text_field( trim( (string) $value ) );
+		}
+	}
+	return array_values( array_unique( $values ) );
+}
+
+function fafar_cemed_patient_disease_options() {
+	return array( 'Câncer', 'Colesterol elevado', 'Depressão', 'Diabetes (tipo I, tipo II e gestacional)', 'Insuficiência hepática', 'Insuficiência renal', 'Hipertensão arterial sistêmica', 'Osteoporose', 'Problema cardíaco (ex.: insuficiência cardíaca congestiva, arritmias, angina, histórico de infarto agudo do miocárdio, entre outras)', 'Problema respiratório (ex.: asma, doença pulmonar obstrutiva crônica, entre outras)', 'Nenhuma', 'Outro' );
+}
+
+function fafar_cemed_patient_special_condition_options() {
+	return array( 'Gravidez', 'Lactação', 'Menopausa', 'Nenhuma', 'Outro' );
+}
+
+function fafar_cemed_answer_classification_options() {
+	return array( 'Armazenamento / estabilidade', 'Registro / Equivalência e bioequivalência - Genérico, similar e referência', 'Farmacocinética / Farmacodinâmica', 'Farmacotécnica / Tecnologia farmacêutica / Incompatibilidades', 'Indicações', 'Interações medicamentosas: medicamento-medicamento, medicamento-alimento ou medicamento-álcool', 'Legislação / políticas de saúde / Acesso aos medicamentos', 'Posologia / vias de administração', 'Precauções / contraindicações / alergias', 'Reações adversas', 'Toxicidade', 'Eficácia / Efetividade', 'Outro' );
+}
+
+function fafar_cemed_additional_info_options() {
+	return array( 'Nenhuma', 'Medicamentos', 'Posologia (dose/frequência)', 'Doenças', 'Resultados de exames laboratoriais', 'Outro' );
+}
+
 function fafar_cemed_form_values() {
-	$fields = array( 'email', 'nome', 'cpf', 'telefone', 'uf', 'municipio', 'profissional_saude', 'pergunta', 'paciente_especifico', 'informacoes_adicionais', 'consentimento' );
+	$fields = array( 'email', 'nome', 'cpf', 'telefone', 'uf', 'municipio', 'profissional_saude', 'profissao_saude', 'profissao_saude_outro', 'idade_paciente', 'sexo_paciente', 'genero_paciente', 'doencas_preexistentes_outro', 'condicoes_especiais_outro', 'pergunta', 'paciente_especifico', 'informacoes_adicionais', 'consentimento' );
 	$values = array();
 	foreach ( $fields as $field ) {
 		$values[ $field ] = fafar_cemed_post_value( $field );
+	}
+	foreach ( array( 'doencas_preexistentes', 'condicoes_especiais' ) as $field ) {
+		$values[ $field ] = fafar_cemed_post_values( $field );
 	}
 	return $values;
 }
@@ -201,6 +233,37 @@ function fafar_cemed_handle_submission( $values ) {
 			return new WP_Error( 'choice', 'Selecione uma opção para todos os campos de Sim ou Não.' );
 		}
 	}
+	$professions = array( 'Dentista', 'Enfermeiro', 'Farmacêutico', 'Médico', 'Outro' );
+	if ( 'Sim' === $values['profissional_saude'] && ! in_array( $values['profissao_saude'], $professions, true ) ) {
+		return new WP_Error( 'profession', 'Selecione sua profissão.' );
+	}
+	if ( 'Sim' === $values['profissional_saude'] && 'Outro' === $values['profissao_saude'] && '' === $values['profissao_saude_outro'] ) {
+		return new WP_Error( 'profession_other', 'Informe sua profissão.' );
+	}
+	if ( 'Sim' === $values['paciente_especifico'] ) {
+		if ( ! preg_match( '/^(?:0|[1-9]\d{0,2})$/', $values['idade_paciente'] ) || absint( $values['idade_paciente'] ) > 130 ) {
+			return new WP_Error( 'patient_age', 'Informe uma idade válida para o paciente (de 0 a 130 anos).' );
+		}
+		if ( ! in_array( $values['sexo_paciente'], array( 'Feminino', 'Masculino' ), true ) ) {
+			return new WP_Error( 'patient_sex', 'Selecione o sexo do paciente.' );
+		}
+		if ( ! in_array( $values['genero_paciente'], array( 'Cisgênero', 'Transgênero', 'Não Binário', 'Prefiro Não Responder' ), true ) ) {
+			return new WP_Error( 'patient_gender', 'Selecione o gênero do paciente.' );
+		}
+		foreach ( array( 'doencas_preexistentes' => fafar_cemed_patient_disease_options(), 'condicoes_especiais' => fafar_cemed_patient_special_condition_options() ) as $field => $allowed ) {
+			$choices = array_values( array_intersect( $values[ $field ], $allowed ) );
+			if ( ! $choices || count( $choices ) !== count( $values[ $field ] ) ) {
+				return new WP_Error( 'patient_conditions', 'Selecione opções válidas para as condições do paciente.' );
+			}
+			if ( in_array( 'Nenhuma', $choices, true ) && 1 !== count( $choices ) ) {
+				return new WP_Error( 'patient_none', '“Nenhuma” não pode ser marcada junto com outras condições.' );
+			}
+			$other_field = 'doencas_preexistentes' === $field ? 'doencas_preexistentes_outro' : 'condicoes_especiais_outro';
+			if ( in_array( 'Outro', $choices, true ) && '' === $values[ $other_field ] ) {
+				return new WP_Error( 'patient_other', 'Descreva a outra condição do paciente.' );
+			}
+		}
+	}
 	if ( $values['uf'] && ! array_key_exists( $values['uf'], fafar_ppgcf_brazilian_states() ) ) {
 		return new WP_Error( 'uf', 'Selecione uma UF válida.' );
 	}
@@ -212,7 +275,7 @@ function fafar_cemed_handle_submission( $values ) {
 	if ( $values['telefone'] && ! in_array( strlen( $phone_digits ), array( 10, 11 ), true ) ) {
 		return new WP_Error( 'telefone', 'Informe um telefone com DDD e 10 ou 11 dígitos, ou deixe o campo vazio.' );
 	}
-	$limits = array( 'email' => 254, 'nome' => 200, 'cpf' => 20, 'telefone' => 30, 'uf' => 2, 'municipio' => 120, 'pergunta' => 10000, 'informacoes_adicionais' => 10000 );
+	$limits = array( 'email' => 254, 'nome' => 200, 'cpf' => 20, 'telefone' => 30, 'uf' => 2, 'municipio' => 120, 'profissao_saude_outro' => 120, 'doencas_preexistentes_outro' => 300, 'condicoes_especiais_outro' => 300, 'pergunta' => 10000, 'informacoes_adicionais' => 10000 );
 	foreach ( $limits as $field => $limit ) {
 		if ( strlen( $values[ $field ] ) > $limit * 4 ) {
 			return new WP_Error( 'length', 'Um dos campos excede o tamanho permitido.' );
@@ -227,7 +290,16 @@ function fafar_cemed_handle_submission( $values ) {
 		'uf'                     => sanitize_text_field( $values['uf'] ),
 		'municipio'              => sanitize_text_field( $values['municipio'] ),
 		'profissional_saude'     => $values['profissional_saude'],
+		'profissao_saude'        => 'Sim' === $values['profissional_saude'] ? $values['profissao_saude'] : '',
+		'profissao_saude_outro'  => 'Sim' === $values['profissional_saude'] && 'Outro' === $values['profissao_saude'] ? sanitize_text_field( $values['profissao_saude_outro'] ) : '',
 		'paciente_especifico'    => $values['paciente_especifico'],
+		'idade_paciente'         => 'Sim' === $values['paciente_especifico'] ? absint( $values['idade_paciente'] ) : '',
+		'sexo_paciente'          => 'Sim' === $values['paciente_especifico'] ? $values['sexo_paciente'] : '',
+		'genero_paciente'        => 'Sim' === $values['paciente_especifico'] ? $values['genero_paciente'] : '',
+		'doencas_preexistentes'  => 'Sim' === $values['paciente_especifico'] ? array_values( array_intersect( $values['doencas_preexistentes'], fafar_cemed_patient_disease_options() ) ) : array(),
+		'doencas_preexistentes_outro' => 'Sim' === $values['paciente_especifico'] && in_array( 'Outro', $values['doencas_preexistentes'], true ) ? sanitize_text_field( $values['doencas_preexistentes_outro'] ) : '',
+		'condicoes_especiais'    => 'Sim' === $values['paciente_especifico'] ? array_values( array_intersect( $values['condicoes_especiais'], fafar_cemed_patient_special_condition_options() ) ) : array(),
+		'condicoes_especiais_outro' => 'Sim' === $values['paciente_especifico'] && in_array( 'Outro', $values['condicoes_especiais'], true ) ? sanitize_text_field( $values['condicoes_especiais_outro'] ) : '',
 		'informacoes_adicionais' => sanitize_textarea_field( $values['informacoes_adicionais'] ),
 		'consentimento'          => $values['consentimento'],
 		'consentimento_em'       => current_time( 'mysql' ),
@@ -388,7 +460,7 @@ function fafar_cemed_public_answer_content( $question, $answer ) {
 }
 
 /** Publica uma vez; alterações posteriores atualizam o mesmo post. */
-function fafar_cemed_publish_answer( $question_id, $public_question, $answer ) {
+function fafar_cemed_publish_answer( $question_id, $public_title, $public_question, $answer ) {
 	$category = term_exists( 'cemed', 'category' );
 	if ( ! $category ) {
 		$category = wp_insert_term( 'cemed', 'category', array( 'slug' => 'cemed' ) );
@@ -411,7 +483,7 @@ function fafar_cemed_publish_answer( $question_id, $public_question, $answer ) {
 	$payload = array(
 		'post_type'      => 'post',
 		'post_status'    => 'publish',
-		'post_title'     => 'Pergunta ao Cemed — ' . fafar_cemed_question_code( $question_id ),
+		'post_title'     => $public_title,
 		'post_content'   => fafar_cemed_public_answer_content( $public_question, $answer ),
 		'post_category'  => array( $category_id ),
 		'comment_status' => 'open',
@@ -505,17 +577,71 @@ function fafar_cemed_manage_question() {
 	if ( ! $nonce || ! wp_verify_nonce( $nonce, 'fafar_cemed_manage_' . $post_id ) ) {
 		return new WP_Error( 'nonce', 'A sessão expirou. Atualize a página e tente novamente.' );
 	}
-	$status = '1' === fafar_cemed_post_value( 'cemed_publish' ) ? 'respondida' : fafar_cemed_post_value( 'cemed_status' );
+	$status = '1' === fafar_cemed_post_value( 'cemed_publish' ) ? 'respondida' : 'em_analise';
 	if ( ! in_array( $status, array( 'nova', 'em_analise', 'respondida' ), true ) ) {
 		return new WP_Error( 'status', 'Selecione uma situação válida.' );
 	}
 	$answer = fafar_cemed_post_value( 'cemed_resposta' );
+	$public_title = fafar_cemed_post_value( 'cemed_public_title' );
 	$public_question = fafar_cemed_post_value( 'cemed_public_question' );
-	if ( strlen( $answer ) > 40000 || strlen( $public_question ) > 40000 ) {
+	$classifications = fafar_cemed_post_values( 'cemed_classificacao' );
+	$classifications_other = fafar_cemed_post_value( 'cemed_classificacao_outro' );
+	$additional_needed = fafar_cemed_post_value( 'cemed_informacao_adicional' );
+	$additional_types = fafar_cemed_post_values( 'cemed_informacao_adicional_tipo' );
+	$additional_types_other = fafar_cemed_post_value( 'cemed_informacao_adicional_outro' );
+	$additional_details = fafar_cemed_post_value( 'cemed_informacoes_adicionais_detalhes' );
+	if ( strlen( $public_title ) > 800 || strlen( $answer ) > 40000 || strlen( $public_question ) > 40000 ) {
 		return new WP_Error( 'length', 'A pergunta ou a resposta excede o tamanho permitido.' );
 	}
+	$classifications_allowed = fafar_cemed_answer_classification_options();
+	if ( count( array_intersect( $classifications, $classifications_allowed ) ) !== count( $classifications ) ) {
+		return new WP_Error( 'classification', 'Selecione classificações válidas.' );
+	}
+	if ( 'respondida' === $status && ! $classifications ) {
+		return new WP_Error( 'classification', 'Classifique a solicitação antes de publicar a resposta.' );
+	}
+	if ( 'respondida' === $status && in_array( 'Outro', $classifications, true ) && '' === $classifications_other ) {
+		return new WP_Error( 'classification_other', 'Descreva a outra classificação.' );
+	}
+	if ( '' !== $additional_needed && ! in_array( $additional_needed, array( 'Sim', 'Não' ), true ) ) {
+		return new WP_Error( 'additional_info', 'Informe se foram necessárias informações adicionais.' );
+	}
+	$additional_allowed = fafar_cemed_additional_info_options();
+	if ( count( array_intersect( $additional_types, $additional_allowed ) ) !== count( $additional_types ) ) {
+		return new WP_Error( 'additional_info_types', 'Selecione opções válidas para as informações adicionais.' );
+	}
+	if ( 'Sim' === $additional_needed ) {
+		if ( 'respondida' === $status && ( ! $additional_types || in_array( 'Nenhuma', $additional_types, true ) ) ) {
+			return new WP_Error( 'additional_info_types', 'Selecione os tipos de informações adicionais solicitadas.' );
+		}
+		if ( 'respondida' === $status && in_array( 'Outro', $additional_types, true ) && '' === $additional_types_other ) {
+			return new WP_Error( 'additional_info_other', 'Descreva o outro tipo de informação solicitada.' );
+		}
+		if ( 'respondida' === $status && '' === $additional_details ) {
+			return new WP_Error( 'additional_info_details', 'Descreva as informações adicionais solicitadas e as respostas obtidas.' );
+		}
+	} elseif ( 'Não' === $additional_needed ) {
+		$additional_types = array( 'Nenhuma' );
+		$additional_types_other = '';
+		$additional_details = 'Nenhuma';
+	} elseif ( 'respondida' === $status ) {
+		return new WP_Error( 'additional_info', 'Informe se foram necessárias informações adicionais.' );
+	}
+	if ( 'respondida' === $status && 'Sim' === $additional_needed && in_array( 'Nenhuma', $additional_types, true ) ) {
+		return new WP_Error( 'additional_info_types', '“Nenhuma” não pode ser selecionada quando foram necessárias informações adicionais.' );
+	}
+	if ( strlen( $classifications_other ) > 1200 || strlen( $additional_types_other ) > 1200 || strlen( $additional_details ) > 10000 ) {
+		return new WP_Error( 'length', 'Um dos campos de classificação ou informações adicionais excede o tamanho permitido.' );
+	}
 	$answer = sanitize_textarea_field( $answer );
+	$public_title = sanitize_text_field( $public_title );
 	$public_question = sanitize_textarea_field( $public_question );
+	$classifications_other = sanitize_text_field( $classifications_other );
+	$additional_types_other = sanitize_text_field( $additional_types_other );
+	$additional_details = sanitize_textarea_field( $additional_details );
+	if ( '' === $public_title ) {
+		return new WP_Error( 'public_title', 'Informe um título próprio para a publicação.' );
+	}
 	$public_post_id = absint( get_post_meta( $post_id, '_cemed_public_post_id', true ) );
 	if ( $public_post_id && 'respondida' !== $status ) {
 		return new WP_Error( 'already_published', 'A resposta já foi publicada. Mantenha a situação como respondida.' );
@@ -524,12 +650,29 @@ function fafar_cemed_manage_question() {
 		return new WP_Error( 'required', 'Para publicar, preencha a pergunta revisada e a resposta.' );
 	}
 	update_post_meta( $post_id, '_cemed_resposta', $answer );
+	update_post_meta( $post_id, '_cemed_public_title', $public_title );
 	update_post_meta( $post_id, '_cemed_public_question', $public_question );
-	if ( get_post_meta( $post_id, '_cemed_resposta', true ) !== $answer || get_post_meta( $post_id, '_cemed_public_question', true ) !== $public_question ) {
+	update_post_meta( $post_id, '_cemed_classificacao', $classifications );
+	update_post_meta( $post_id, '_cemed_classificacao_outro', in_array( 'Outro', $classifications, true ) ? $classifications_other : '' );
+	update_post_meta( $post_id, '_cemed_informacao_adicional', $additional_needed );
+	update_post_meta( $post_id, '_cemed_informacao_adicional_tipo', $additional_types );
+	update_post_meta( $post_id, '_cemed_informacao_adicional_outro', in_array( 'Outro', $additional_types, true ) ? $additional_types_other : '' );
+	update_post_meta( $post_id, '_cemed_informacoes_adicionais_detalhes', $additional_details );
+	if (
+		get_post_meta( $post_id, '_cemed_resposta', true ) !== $answer ||
+		get_post_meta( $post_id, '_cemed_public_title', true ) !== $public_title ||
+		get_post_meta( $post_id, '_cemed_public_question', true ) !== $public_question ||
+		get_post_meta( $post_id, '_cemed_classificacao', true ) !== $classifications ||
+		get_post_meta( $post_id, '_cemed_classificacao_outro', true ) !== ( in_array( 'Outro', $classifications, true ) ? $classifications_other : '' ) ||
+		get_post_meta( $post_id, '_cemed_informacao_adicional', true ) !== $additional_needed ||
+		get_post_meta( $post_id, '_cemed_informacao_adicional_tipo', true ) !== $additional_types ||
+		get_post_meta( $post_id, '_cemed_informacao_adicional_outro', true ) !== ( in_array( 'Outro', $additional_types, true ) ? $additional_types_other : '' ) ||
+		get_post_meta( $post_id, '_cemed_informacoes_adicionais_detalhes', true ) !== $additional_details
+	) {
 		return new WP_Error( 'save', 'Não foi possível salvar o acompanhamento. Tente novamente.' );
 	}
 	if ( 'respondida' === $status ) {
-		$publication = fafar_cemed_publish_answer( $post_id, $public_question, $answer );
+		$publication = fafar_cemed_publish_answer( $post_id, $public_title, $public_question, $answer );
 		if ( is_wp_error( $publication ) ) {
 			return $publication;
 		}
