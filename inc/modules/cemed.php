@@ -15,6 +15,10 @@ add_action( 'wp_ajax_nopriv_fafar_cemed_form_nonce', 'fafar_cemed_refresh_form_n
 add_filter( 'comments_open', 'fafar_cemed_keep_answer_comments_open', PHP_INT_MAX, 2 );
 add_filter( 'pings_open', '__return_false', PHP_INT_MAX );
 add_filter( 'pre_option_comment_registration', 'fafar_cemed_allow_guest_answer_comments' );
+add_filter( 'notify_post_author', 'fafar_cemed_enable_comment_notification', 10, 2 );
+add_filter( 'notify_moderator', 'fafar_cemed_enable_moderation_notification', 10, 2 );
+add_filter( 'comment_notification_recipients', 'fafar_cemed_comment_notification_recipients', 10, 2 );
+add_filter( 'comment_moderation_recipients', 'fafar_cemed_comment_notification_recipients', 10, 2 );
 
 /** Reconhece apenas os posts públicos gerados por uma resposta do Cemed. */
 function fafar_cemed_is_answer_post( $post_id ) {
@@ -49,6 +53,44 @@ function fafar_cemed_allow_guest_answer_comments( $pre_option ) {
 		$post_id = absint( wp_unslash( $_POST['comment_post_ID'] ) );
 	}
 	return fafar_cemed_comments_allowed( $post_id ) ? '0' : $pre_option;
+}
+
+/** Reconhece comentários de visitantes nos posts públicos de respostas do Cemed. */
+function fafar_cemed_comment_targets_notification( $comment_id ) {
+	$comment = get_comment( absint( $comment_id ) );
+	if ( ! $comment || ! in_array( $comment->comment_type, array( '', 'comment' ), true ) ) {
+		return false;
+	}
+	return fafar_cemed_email_delivery_enabled() && fafar_cemed_is_answer_post( $comment->comment_post_ID );
+}
+
+/** Garante o aviso de comentários publicados, mesmo se a opção global estiver desligada. */
+function fafar_cemed_enable_comment_notification( $notify, $comment_id ) {
+	return fafar_cemed_comment_targets_notification( $comment_id ) ? true : $notify;
+}
+
+/** Garante o aviso de moderação somente para comentários que realmente estão pendentes. */
+function fafar_cemed_enable_moderation_notification( $notify, $comment_id ) {
+	$comment = get_comment( absint( $comment_id ) );
+	if ( $comment && '0' === (string) $comment->comment_approved && fafar_cemed_comment_targets_notification( $comment_id ) ) {
+		return true;
+	}
+	return $notify;
+}
+
+/** Inclui o Cemed sem substituir nem duplicar os destinatários padrão do WordPress. */
+function fafar_cemed_comment_notification_recipients( $emails, $comment_id ) {
+	if ( ! is_array( $emails ) || ! fafar_cemed_comment_targets_notification( $comment_id ) ) {
+		return $emails;
+	}
+	$recipient = 'sim.cemedufmg@gmail.com';
+	foreach ( $emails as $email ) {
+		if ( 0 === strcasecmp( trim( (string) $email ), $recipient ) ) {
+			return $emails;
+		}
+	}
+	$emails[] = $recipient;
+	return $emails;
 }
 
 /** Fornece um nonce atual para páginas públicas que ficaram abertas. */
