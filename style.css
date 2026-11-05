@@ -208,7 +208,45 @@ p{margin:0 0 var(--space-4);text-align:start}
 .dynamic-notice-error{border-color:var(--color-error-border);border-inline-start-color:var(--color-error);background:var(--color-error-bg)}.dynamic-notice-success{border-color:var(--color-success-border);border-inline-start-color:var(--color-success);background:var(--color-success-bg)}
 .dynamic-details{margin:var(--space-6) 0;border:1px solid var(--border-color);border-radius:var(--radius-lg);background:var(--color-white)}.dynamic-details>div{display:grid;grid-template-columns:160px minmax(0,1fr);gap:var(--space-4);padding:var(--space-4);border-bottom:1px solid var(--border-color)}.dynamic-details>div:last-child{border:0}.dynamic-details dt{font-size:var(--text-sm);color:var(--color-gray-600)}.dynamic-details dd{margin:0;overflow-wrap:anywhere}
 .dynamic-tool{display:grid;gap:0}
+.ppgmaf-faculty-group{margin-block:var(--space-8)}
+.ppgmaf-faculty-group>h2{margin:0 0 var(--space-4);font-family:var(--font-display);font-size:var(--text-2xl);color:var(--color-gray-900)}
+.ppgmaf-faculty-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+.ppgmaf-faculty-card{min-width:0;overflow:hidden;border:1px solid var(--border-color);border-radius:var(--radius-lg);background:var(--color-white);box-shadow:var(--shadow-sm)}
+.ppgmaf-faculty-header{position:relative;display:grid;grid-template-columns:128px minmax(0,1fr)}
+.ppgmaf-faculty-photo{position:absolute;inset:0 auto 0 0;display:block;width:128px;height:100%;object-fit:cover;object-position:50% 25%;background:var(--color-gray-100)}
+.ppgmaf-photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--space-2);padding:var(--space-3);color:var(--color-gray-500);text-align:center}
+.ppgmaf-photo-placeholder>span{display:grid;width:56px;aspect-ratio:1;place-items:center;border-radius:50%;background:var(--color-primary-10);color:var(--color-gray-700);font-family:var(--font-display);font-size:var(--text-xl);font-weight:700}
+.ppgmaf-photo-placeholder small{font-size:var(--text-xs)}
+.ppgmaf-faculty-content{grid-column:2;min-width:0;padding:var(--space-4)}
+.ppgmaf-faculty-content h3{margin:0 0 var(--space-2);font-family:var(--font-display);font-size:var(--text-lg);line-height:1.3;color:var(--color-gray-900)}
+.ppgmaf-faculty-unit,.ppgmaf-faculty-email{margin:0 0 var(--space-2);font-size:var(--text-sm);overflow-wrap:anywhere}
+.ppgmaf-faculty-email a,.ppgmaf-lattes-link{color:var(--color-info);text-decoration:underline;text-underline-offset:2px}
+.ppgmaf-faculty-content>p{margin-block:var(--space-2)}
+.ppgmaf-lattes-link{font-size:var(--text-sm);font-weight:600}
+.ppgmaf-faculty-bio{margin:0;border-top:1px solid var(--border-color);padding:var(--space-3) var(--space-4) var(--space-4)}
+.ppgmaf-faculty-bio h4{margin:0;color:var(--color-gray-700);font-size:var(--text-sm);font-weight:600}
+.ppgmaf-faculty-bio p{margin:var(--space-3) 0 0;color:var(--color-gray-600);font-size:var(--text-sm);line-height:1.55}
+.ppgmaf-placeholder{color:var(--color-gray-500);font-size:var(--text-sm);font-style:italic}
+.ppgmaf-placeholder-label{display:inline-block;margin-bottom:var(--space-2);padding:2px var(--space-2);border-radius:var(--radius-sm);background:var(--color-warning-bg);color:var(--color-warning);font-size:var(--text-xs);font-weight:700}
+.fafar-custom-faculty{max-width:1100px;margin-inline:auto}
+.fafar-custom-faculty-group{margin-block:var(--space-8)}
+.fafar-custom-faculty-group>h2{margin:0 0 var(--space-4);padding-bottom:var(--space-2);border-bottom:2px solid var(--color-primary);font-family:var(--font-display);font-size:var(--text-2xl);color:var(--color-gray-900)}
+.fafar-custom-faculty-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+.fafar-custom-faculty-card{min-width:0;overflow:hidden;border:1px solid var(--border-color);border-radius:var(--radius-lg);background:var(--color-white);box-shadow:var(--shadow-sm)}
+.fafar-custom-faculty-header{position:relative;display:grid;grid-template-columns:128px minmax(0,1fr)}
+.fafar-custom-faculty-photo{position:absolute;inset:0 auto 0 0;display:block;width:128px;height:100%;object-fit:cover;object-position:center 25%;background:var(--color-gray-100)}
+.fafar-custom-faculty-placeholder{display:grid;place-items:center;color:var(--color-gray-700);font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700}
+.fafar-custom-faculty-info{grid-column:2;min-width:0;padding:var(--space-4);overflow-wrap:anywhere}
+.fafar-custom-faculty-info h3{margin:0 0 var(--space-2);font-family:var(--font-display);font-size:var(--text-lg);line-height:1.3;color:var(--color-gray-900)}
+.fafar-custom-faculty-info p{margin:var(--space-2) 0;font-size:var(--text-sm)}
+.fafar-custom-faculty-info a{color:var(--color-info);text-decoration:underline;text-underline-offset:2px}
+.fafar-custom-faculty-unit{color:var(--color-gray-600)}
+.fafar-custom-faculty-profiles{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-3);margin:var(--space-2) 0;padding:0;list-style:none;font-size:var(--text-sm)}
+.fafar-custom-faculty-bio{border-top:1px solid var(--border-color);padding:var(--space-3) var(--space-4) var(--space-4)}
+.fafar-custom-faculty-bio h4{margin:0;color:var(--color-gray-700);font-size:var(--text-sm);font-weight:600}
+.fafar-custom-faculty-bio p{margin:var(--space-3) 0 0;color:var(--color-gray-600);font-size:var(--text-sm);line-height:1.6}
 .room-map-room{width:8rem}.room-map-days{width:8.5rem}.room-map-time{width:5.5rem}
 .entry-content .dynamic-table.room-map-table{table-layout:fixed;min-width:720px}
 .room-map-table tbody th{overflow-wrap:anywhere}.room-map-table td:nth-child(2),.room-map-table td:nth-child(4),.room-map-table td:nth-child(5){white-space:nowrap}
-@media(max-width:700px){.dynamic-filters{flex-wrap:wrap;padding:var(--space-4)}.dynamic-field{flex-basis:100%}.dynamic-filters button{min-width:110px}.dynamic-details>div{grid-template-columns:1fr;gap:var(--space-1)}}
+@media(max-width:980px){.ppgmaf-faculty-grid,.fafar-custom-faculty-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.dynamic-filters{flex-wrap:wrap;padding:var(--space-4)}.dynamic-field{flex-basis:100%}.dynamic-filters button{min-width:110px}.dynamic-details>div{grid-template-columns:1fr;gap:var(--space-1)}.ppgmaf-faculty-header{grid-template-columns:96px minmax(0,1fr)}.ppgmaf-faculty-photo{width:96px}.ppgmaf-faculty-content{padding:var(--space-3)}.ppgmaf-faculty-content h3{font-size:var(--text-base)}.ppgmaf-faculty-bio{padding:var(--space-3)}.fafar-custom-faculty-header{grid-template-columns:96px minmax(0,1fr)}.fafar-custom-faculty-photo{width:96px}.fafar-custom-faculty-info{padding:var(--space-3)}.fafar-custom-faculty-info h3{font-size:var(--text-base)}.fafar-custom-faculty-bio{padding:var(--space-3)}}

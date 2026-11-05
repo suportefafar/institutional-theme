@@ -564,6 +564,281 @@ function corpo_docente_pfa_content_handler()
     ]);
 }
 
+/** Protótipo dos perfis do PPGMAF com dados disponíveis na página e nos Lattes fornecidos. */
+function corpo_docente_ppgmaf_content_handler()
+{
+    $faculty = array(
+        'permanentes' => array(
+            array( 'name' => 'Adriano Max Moreira Reis', 'unit' => 'PFA/FAFAR/UFMG', 'email' => 'amreis@farmacia.ufmg.br', 'lattes' => '4412547750108123', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4704960A4', 'bio' => 'Professor Titular da Faculdade de Farmácia da UFMG, doutor em Ciências pela USP e mestre em Ciências Farmacêuticas pela UFMG. Atua em farmacoterapia do idoso, farmacovigilância, utilização de medicamentos, segurança do paciente e assistência farmacêutica hospitalar e em serviços de saúde.' ),
+            array( 'name' => 'Augusto Afonso Guerra Júnior', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'augustoguerramg@gmail.com', 'lattes' => '4998210231373901', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4791796Y6', 'bio' => 'Professor Associado da UFMG, doutor em Saúde Pública e mestre em Ciências Farmacêuticas. Pesquisa farmacoepidemiologia, farmacogenômica, farmacoeconomia, políticas de saúde e avaliação de tecnologias em saúde. Coordena o FarGenix e o CCATES/UFMG.' ),
+            array( 'name' => 'Clarice Chemello', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'clachemello@gmail.com', 'lattes' => '4528500699816146', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4734396J3', 'bio' => 'Professora do Departamento de Farmácia Social da UFMG, doutora em Farmácia Assistencial pela Universidad de Granada e coordenadora do PPGMAF. Atua em Farmácia Clínica, Atenção Farmacêutica e Farmacogenética.' ),
+            array( 'name' => 'Cristiane A. M. de Pádua', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'menezescristiane@hotmail.com', 'lattes' => '0999148325656924', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4777370J9', 'bio' => 'Professora Titular da Faculdade de Farmácia da UFMG, docente permanente e subcoordenadora do PPGMAF. Atua em Epidemiologia e Farmacoepidemiologia e coordena o Centro de Estudo do Medicamento (Cemed/UFMG).' ),
+            array( 'name' => 'Cristina Mariano Ruas', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'crisruasufmg@gmail.com', 'lattes' => '3535918051912413', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4504288H7', 'bio' => 'Farmacêutica, mestre e doutora em Saúde Pública, é professora da Faculdade de Farmácia da UFMG e integra o PPGMAF. Atua em Saúde Coletiva, farmacoepidemiologia, farmacoeconomia e políticas de medicamentos, com pesquisas sobre uso, segurança, acesso e custos.' ),
+            array( 'name' => 'Djenane Ramalho de Oliveira', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'djenane.oliveira@gmail.com', 'lattes' => '1148969228307246', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4703095E2', 'bio' => 'Professora Titular da UFMG, farmacêutica, PhD em Social and Administrative Pharmacy pela University of Minnesota e pós-doutora pela University of Edinburgh. Desenvolve atividades de ensino, pesquisa e extensão em cuidado farmacêutico e prática clínica.' ),
+            array( 'name' => 'Edna Afonso Reis', 'unit' => 'EST/ICEX/UFMG', 'email' => 'edna@est.ufmg.br', 'lattes' => '3773191587995244', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4767418J6', 'bio' => 'Professora Associada do Departamento de Estatística do ICEx/UFMG. É graduada, mestre e doutora em Estatística e integra o PPGMAF desde 2012.' ),
+            array( 'name' => 'Helian Nunes de Oliveira', 'unit' => 'MPS/MEDICINA/UFMG', 'email' => 'heliannunes@gmail.com', 'lattes' => '2872805590419095', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4127635J3', 'bio' => 'Médico psiquiatra, pesquisador e professor do Departamento de Medicina Preventiva e Social da UFMG. Atua em saúde mental, saúde pública e saúde coletiva e participa do PPGMAF.' ),
+            array( 'name' => 'Juliana Alvares Teodoro', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'jualvares@gmail.com', 'lattes' => '8338204270737352', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4774457D1', 'bio' => 'Professora Associada do Departamento de Farmácia Social da UFMG. Doutora em Saúde Pública e mestre em Ciências Farmacêuticas pela UFMG. Atua em farmacoepidemiologia, avaliação de tecnologias em saúde e economia da saúde.' ),
+            array( 'name' => 'Maria Auxiliadora P. Martins', 'unit' => 'PFA/FAFAR/UFMG', 'email' => 'auxiliadorapmartins@hotmail.com', 'lattes' => '4405925489665474', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4763246D0', 'bio' => 'Professora Associada do Departamento de Produtos Farmacêuticos da UFMG. Atua em Farmácia Hospitalar e coordena programas de residência em saúde no Hospital Risoleta Tolentino Neves.' ),
+            array( 'name' => 'Mariana M. G. do Nascimento', 'unit' => 'PFA/FAFAR/UFMG', 'email' => 'marianamgn@yahoo.com.br', 'lattes' => '4157162836464120', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4736451D5', 'bio' => 'Professora Adjunta do Departamento de Produtos Farmacêuticos da UFMG. Farmacêutica, doutora em Ciências da Saúde e pós-doutora pelo PPGMAF. Atua em Farmácia Hospitalar, cuidado farmacêutico e assistência farmacêutica.' ),
+            array( 'name' => 'Maria das Graças Braga', 'unit' => 'PFA/FAFAR/UFMG', 'email' => 'mgbceccato@gmail.com', 'lattes' => '1976803349720094', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4770029Y3', 'bio' => 'Professora Associada do Departamento de Farmácia Social da UFMG, doutora em Saúde Pública e mestre em Ciências Farmacêuticas. Atua em farmacoepidemiologia, saúde coletiva e assistência farmacêutica.' ),
+            array( 'name' => 'Marina Guimarães Lima', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'marina.glima@gmail.com', 'lattes' => '8321059230428548', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4710528J7', 'bio' => 'Professora Associada do Departamento de Farmácia Social da UFMG. Atua em assistência farmacêutica, avaliação de serviços de saúde, educação em saúde e ensino farmacêutico.' ),
+            array( 'name' => 'Micheline Rosa Silveira', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'michelinerosa@gmail.com', 'lattes' => '0144496689713578', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4799555A0', 'bio' => 'Professora Titular do Departamento de Farmácia Social da UFMG, farmacêutica, mestre e doutora em Ciências Biológicas. Atua em Ética e Legislação Farmacêutica e integra o PPGMAF.' ),
+            array( 'name' => 'Simone de A. Medina Mendonça', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'simoneamm@gmail.com', 'lattes' => '3448232730811718', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4779201H8', 'bio' => 'Professora Adjunta do Departamento de Farmácia Social da UFMG, educadora, pesquisadora e extensionista. Dedica-se à clínica farmacêutica na atenção primária à saúde, à educação de profissionais de saúde e às humanidades em saúde.' ),
+        ),
+        'colaboradores' => array(
+            array( 'name' => 'Yone de Almeida Nascimento', 'unit' => 'FAS/FAFAR/UFMG', 'email' => 'yone.almeida1@gmail.com', 'lattes' => '7553187616002928', 'photo' => 'https://servicosweb.cnpq.br/wspessoa/servletrecuperafoto?tipo=1&id=K4751442A8', 'bio' => 'Farmacêutica, mestre em Ciências Farmacêuticas e doutora em Medicamentos e Assistência Farmacêutica pela UFMG. Professora Adjunta da Faculdade de Farmácia, atua em disciplinas e serviços de prática clínica farmacêutica.' ),
+            array( 'name' => 'Ricardo Mesquita Camelo', 'unit' => 'MPS/MEDICINA/UFMG', 'email' => 'rmcamelo@hotmail.com', 'lattes' => '8637068903068965', 'photo' => '', 'bio' => 'Médico formado pela UFMG, com mestrado e doutorado em Ciências Biológicas e doutorado em Ciências Aplicadas à Saúde do Adulto. Atua em ensino médico, emergência e atenção primária. Pesquisa hemofilias e outras doenças hemorrágicas.' ),
+        ),
+    );
+
+    echo '<p class="dynamic-intro">Conheça os docentes vinculados ao Programa de Pós-Graduação em Medicamentos e Assistência Farmacêutica da UFMG.</p>';
+    foreach ( $faculty as $group => $members ) {
+        $heading = 'permanentes' === $group ? 'Docentes permanentes' : 'Docentes colaboradores';
+        echo '<section class="ppgmaf-faculty-group" aria-labelledby="ppgmaf-' . esc_attr( $group ) . '"><h2 id="ppgmaf-' . esc_attr( $group ) . '">' . esc_html( $heading ) . '</h2><div class="ppgmaf-faculty-grid">';
+        foreach ( $members as $person ) {
+            $has_bio = ! empty( $person['bio'] );
+            $name = $person['name'];
+            $name_parts = preg_split( '/\s+/', trim( $name ) );
+            $initials = strtoupper( substr( $name_parts[0], 0, 1 ) . substr( end( $name_parts ), 0, 1 ) );
+            echo '<article class="ppgmaf-faculty-card' . ( $has_bio ? '' : ' is-incomplete' ) . '">';
+            echo '<div class="ppgmaf-faculty-header">';
+            if ( ! empty( $person['photo'] ) ) {
+                echo '<img class="ppgmaf-faculty-photo" src="' . esc_url( $person['photo'] ) . '" alt="Fotografia de ' . esc_attr( $name ) . '" loading="lazy" decoding="async">';
+            } else {
+                echo '<div class="ppgmaf-faculty-photo ppgmaf-photo-placeholder" role="img" aria-label="Foto não informada para ' . esc_attr( $name ) . '"><span>' . esc_html( $initials ) . '</span><small>Foto não informada</small></div>';
+            }
+            echo '<div class="ppgmaf-faculty-content">';
+            if ( ! $has_bio ) { echo '<span class="ppgmaf-placeholder-label">Dados em atualização</span>'; }
+            echo '<h3>' . esc_html( $name ) . '</h3><p class="ppgmaf-faculty-unit">' . esc_html( $person['unit'] ) . '</p>';
+            if ( ! empty( $person['email'] ) ) {
+                echo '<p class="ppgmaf-faculty-email"><a href="mailto:' . esc_attr( sanitize_email( $person['email'] ) ) . '">' . esc_html( $person['email'] ) . '</a></p>';
+            } else {
+                echo '<p class="ppgmaf-faculty-email"><span class="ppgmaf-placeholder">E-mail não informado</span></p>';
+            }
+            if ( ! empty( $person['lattes'] ) ) {
+                echo '<p><a class="ppgmaf-lattes-link" href="' . esc_url( 'https://lattes.cnpq.br/' . $person['lattes'] ) . '" target="_blank" rel="noopener noreferrer">Currículo Lattes <span aria-hidden="true">↗</span><span class="screen-reader-text"> (abre em nova aba)</span></a></p>';
+            } else {
+                echo '<p><span class="ppgmaf-placeholder">Link do Lattes não informado</span></p>';
+            }
+            echo '</div></div><div class="ppgmaf-faculty-bio"><h4>Biografia</h4><p>' . ( $has_bio ? esc_html( $person['bio'] ) : '<span class="ppgmaf-placeholder">Biografia não informada.</span>' ) . '</p></div></article>';
+        }
+        echo '</div></section>';
+    }
+}
+
+/** Recupera o HTML legado da própria página para reutilizar os dados já mantidos no WordPress. */
+function fafar_custom_faculty_source( $slug )
+{
+    $page = get_page_by_path( $slug, OBJECT, 'page' );
+    if ( ! $page || ! class_exists( 'DOMDocument' ) ) { return null; }
+    $previous_errors = libxml_use_internal_errors( true );
+    $document = new DOMDocument( '1.0', 'UTF-8' );
+    $loaded = $document->loadHTML( '<?xml encoding="UTF-8">' . get_post_field( 'post_content', $page ), LIBXML_NONET );
+    libxml_clear_errors();
+    libxml_use_internal_errors( $previous_errors );
+    return $loaded ? array( $document, new DOMXPath( $document ) ) : null;
+}
+
+function fafar_custom_faculty_text( $node )
+{
+    return $node ? trim( preg_replace( '/\s+/u', ' ', $node->textContent ) ) : '';
+}
+
+function fafar_custom_faculty_element( $xpath, $context, $query )
+{
+    $nodes = $xpath->query( $query, $context );
+    return $nodes && $nodes->length ? $nodes->item( 0 ) : null;
+}
+
+function fafar_custom_faculty_image( $xpath, $context )
+{
+    $image = fafar_custom_faculty_element( $xpath, $context, '(.//img)[1]' );
+    return $image ? fafar_custom_faculty_image_url( $image->getAttribute( 'src' ) ) : '';
+}
+
+/** O banco local reescreve as URLs antigas para farmacia.local, onde esses arquivos não existem. */
+function fafar_custom_faculty_image_url( $url )
+{
+    $parts = wp_parse_url( $url );
+    if ( ! is_array( $parts ) || empty( $parts['host'] ) || empty( $parts['path'] ) ) { return $url; }
+    $host = strtolower( $parts['host'] );
+    $local_hosts = array( 'farmacia.local', 'www.farmacia.local' );
+    if ( in_array( $host, $local_hosts, true ) && 0 === strpos( $parts['path'], '/wp-content/uploads/' ) ) {
+        return 'https://www.farmacia.ufmg.br' . $parts['path'] . ( empty( $parts['query'] ) ? '' : '?' . $parts['query'] );
+    }
+    return $url;
+}
+
+function fafar_custom_faculty_link( $xpath, $context )
+{
+    $link = fafar_custom_faculty_element( $xpath, $context, '(.//a[@href])[1]' );
+    return $link ? $link->getAttribute( 'href' ) : '';
+}
+
+function fafar_custom_faculty_directory_groups()
+{
+    $source = fafar_custom_faculty_source( 'corpo-docente-4' );
+    if ( ! $source ) { return array(); }
+    list( $document, $xpath ) = $source;
+    $groups = array();
+    foreach ( $xpath->query( '//h4' ) as $heading ) {
+        $wrapper = fafar_custom_faculty_element( $xpath, $heading, 'following::div[contains(concat(" ", normalize-space(@class), " "), " table-responsive ")][1]' );
+        if ( ! $wrapper ) { continue; }
+        $table = fafar_custom_faculty_element( $xpath, $wrapper, './/table[1]' );
+        if ( ! $table ) { continue; }
+        $group = array( 'title' => fafar_custom_faculty_text( $heading ), 'people' => array() );
+        foreach ( $xpath->query( './/tr', $table ) as $row ) {
+            $cells = $xpath->query( './td', $row );
+            if ( ! $cells || $cells->length < 5 ) { continue; }
+            $person = array(
+                'name' => fafar_custom_faculty_text( $cells->item( 1 ) ),
+                'unit' => fafar_custom_faculty_text( $cells->item( 2 ) ),
+                'email' => fafar_custom_faculty_text( $cells->item( 3 ) ),
+                'photo' => fafar_custom_faculty_image( $xpath, $cells->item( 0 ) ),
+                'lattes' => fafar_custom_faculty_link( $xpath, $cells->item( 4 ) ),
+                'bio' => '',
+                'profiles' => array(),
+            );
+            if ( $person['name'] ) { $group['people'][] = $person; }
+        }
+        if ( $group['people'] ) { $groups[] = $group; }
+    }
+    return $groups;
+}
+
+function fafar_custom_faculty_ppgact_groups()
+{
+    $source = fafar_custom_faculty_source( 'corpo-docente-3' );
+    if ( ! $source ) { return array(); }
+    list( $document, $xpath ) = $source;
+    $root = fafar_custom_faculty_element( $xpath, $document, '//*[contains(concat(" ", normalize-space(@class), " "), " ppgact-docentes ")]' );
+    if ( ! $root ) { return array(); }
+    $groups = array();
+    $current = null;
+    foreach ( $root->childNodes as $child ) {
+        if ( ! ( $child instanceof DOMElement ) ) { continue; }
+        if ( 'h3' === strtolower( $child->tagName ) ) {
+            if ( $current && $current['people'] ) { $groups[] = $current; }
+            $current = array( 'title' => fafar_custom_faculty_text( $child ), 'people' => array() );
+            continue;
+        }
+        if ( ! $current || 'div' !== strtolower( $child->tagName ) || false === strpos( ' ' . $child->getAttribute( 'class' ) . ' ', ' grade ' ) ) { continue; }
+        foreach ( $xpath->query( './/article[contains(concat(" ", normalize-space(@class), " "), " docente ")]', $child ) as $article ) {
+            $name_node = fafar_custom_faculty_element( $xpath, $article, './/*[contains(concat(" ", normalize-space(@class), " "), " nome ")]' );
+            $unit_node = fafar_custom_faculty_element( $xpath, $article, './/*[contains(concat(" ", normalize-space(@class), " "), " unidade ")]' );
+            $email_node = fafar_custom_faculty_element( $xpath, $article, './/*[contains(concat(" ", normalize-space(@class), " "), " contato ")][1]' );
+            $photo_node = fafar_custom_faculty_element( $xpath, $article, './/*[contains(concat(" ", normalize-space(@class), " "), " foto ")]' );
+            $bio_node = fafar_custom_faculty_element( $xpath, $article, './/*[contains(concat(" ", normalize-space(@class), " "), " biografia ")]' );
+            $lattes = '';
+            foreach ( $xpath->query( './/*[contains(concat(" ", normalize-space(@class), " "), " contato ")]//a[@href]', $article ) as $link ) {
+                if ( false !== stripos( $link->getAttribute( 'href' ), 'lattes' ) || false !== stripos( $link->textContent, 'lattes' ) ) { $lattes = $link->getAttribute( 'href' ); }
+            }
+            $photo = '';
+            if ( $photo_node ) {
+                $photo = 'img' === strtolower( $photo_node->tagName ) ? fafar_custom_faculty_image_url( $photo_node->getAttribute( 'src' ) ) : fafar_custom_faculty_image( $xpath, $photo_node );
+            }
+            $current['people'][] = array(
+                'name' => fafar_custom_faculty_text( $name_node ),
+                'unit' => fafar_custom_faculty_text( $unit_node ),
+                'email' => fafar_custom_faculty_text( $email_node ),
+                'photo' => $photo,
+                'lattes' => $lattes,
+                'bio' => fafar_custom_faculty_text( $bio_node ),
+                'profiles' => array(),
+            );
+        }
+    }
+    if ( $current && $current['people'] ) { $groups[] = $current; }
+    return $groups;
+}
+
+function fafar_custom_faculty_ppgca_groups()
+{
+    $source = fafar_custom_faculty_source( 'corpo-docente-ppgca' );
+    if ( ! $source ) { return array(); }
+    list( $document, $xpath ) = $source;
+    $groups = array();
+    foreach ( $xpath->query( '//table[1]//tr' ) as $row ) {
+        $cells = $xpath->query( './td', $row );
+        $headers = $xpath->query( './th', $row );
+        if ( $headers && $headers->length ) {
+            if ( $groups && empty( $groups[ count( $groups ) - 1 ]['people'] ) ) { array_pop( $groups ); }
+            $groups[] = array( 'title' => fafar_custom_faculty_text( $headers->item( 0 ) ), 'people' => array() );
+            continue;
+        }
+        if ( ! $cells || $cells->length < 8 ) { continue; }
+        if ( ! $groups ) { $groups[] = array( 'title' => 'Docentes', 'people' => array() ); }
+        $profiles = array();
+        foreach ( array( 3 => 'Lattes', 4 => 'ORCID', 5 => 'ResearchID', 6 => 'Google Acadêmico' ) as $index => $label ) {
+            $href = fafar_custom_faculty_link( $xpath, $cells->item( $index ) );
+            if ( $href ) { $profiles[] = array( 'label' => $label, 'url' => $href ); }
+        }
+        $groups[ count( $groups ) - 1 ]['people'][] = array(
+            'name' => fafar_custom_faculty_text( $cells->item( 0 ) ),
+            'unit' => fafar_custom_faculty_text( $cells->item( 1 ) ),
+            'email' => fafar_custom_faculty_text( $cells->item( 2 ) ),
+            'photo' => '',
+            'lattes' => '',
+            'bio' => '',
+            'profiles' => $profiles,
+            'ramal' => fafar_custom_faculty_text( $cells->item( 7 ) ),
+        );
+    }
+    return array_values( array_filter( $groups, function ( $group ) { return ! empty( $group['people'] ); } ) );
+}
+
+function fafar_custom_faculty_render( $groups, $intro, $show_bio = false )
+{
+    if ( ! $groups ) { echo fafar_dynamic_notice( 'Os dados do corpo docente estão temporariamente indisponíveis.' ); return; }
+    echo '<div class="fafar-custom-faculty"><p class="dynamic-intro">' . esc_html( $intro ) . '</p>';
+    foreach ( $groups as $index => $group ) {
+        echo '<section class="fafar-custom-faculty-group"><h2>' . esc_html( $group['title'] ) . '</h2><div class="fafar-custom-faculty-grid">';
+        foreach ( $group['people'] as $person ) {
+            $name = $person['name'];
+            $parts = preg_split( '/\s+/u', trim( $name ) );
+            $first = $parts[0] ?? '';
+            $last = end( $parts ) ?: '';
+            $initials = strtoupper( function_exists( 'mb_substr' ) ? mb_substr( $first, 0, 1 ) . mb_substr( $last, 0, 1 ) : substr( $first, 0, 1 ) . substr( $last, 0, 1 ) );
+            echo '<article class="fafar-custom-faculty-card"><div class="fafar-custom-faculty-header">';
+            if ( $person['photo'] ) {
+                echo '<img class="fafar-custom-faculty-photo" src="' . esc_url( $person['photo'] ) . '" alt="Fotografia de ' . esc_attr( $name ) . '" loading="lazy" decoding="async">';
+            } else {
+                echo '<div class="fafar-custom-faculty-photo fafar-custom-faculty-placeholder" role="img" aria-label="Fotografia não informada para ' . esc_attr( $name ) . '"><span>' . esc_html( $initials ) . '</span></div>';
+            }
+            echo '<div class="fafar-custom-faculty-info"><h3>' . esc_html( $name ) . '</h3><p class="fafar-custom-faculty-unit">' . esc_html( $person['unit'] ) . '</p>';
+            $email = sanitize_email( $person['email'] );
+            if ( $email ) { echo '<p><a href="mailto:' . esc_attr( $email ) . '">' . esc_html( $email ) . '</a></p>'; }
+            if ( $person['lattes'] ) { echo '<p><a href="' . esc_url( $person['lattes'] ) . '" target="_blank" rel="noopener noreferrer">Currículo Lattes ↗</a></p>'; }
+            if ( ! empty( $person['profiles'] ) ) {
+                echo '<ul class="fafar-custom-faculty-profiles">';
+                foreach ( $person['profiles'] as $profile ) { echo '<li><a href="' . esc_url( $profile['url'] ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $profile['label'] ) . '</a></li>'; }
+                echo '</ul>';
+            }
+            if ( ! empty( $person['ramal'] ) && '---' !== $person['ramal'] ) { echo '<p>Ramal: ' . esc_html( $person['ramal'] ) . '</p>'; }
+            echo '</div></div>';
+            if ( $show_bio && $person['bio'] ) { echo '<div class="fafar-custom-faculty-bio"><h4>Biografia</h4><p>' . esc_html( $person['bio'] ) . '</p></div>'; }
+            echo '</article>';
+        }
+        echo '</div></section>';
+    }
+    echo '</div>';
+}
+
+function corpo_docente_ppgact_content_handler()
+{
+    fafar_custom_faculty_render( fafar_custom_faculty_ppgact_groups(), 'Conheça os docentes vinculados ao Programa de Pós-Graduação em Análises Clínicas e Toxicológicas da UFMG.', true );
+}
+
+function corpo_docente_fafar_directory_content_handler()
+{
+    fafar_custom_faculty_render( fafar_custom_faculty_directory_groups(), 'Conheça os docentes da Faculdade de Farmácia da UFMG.' );
+}
+
+function corpo_docente_ppgca_content_handler()
+{
+    fafar_custom_faculty_render( fafar_custom_faculty_ppgca_groups(), 'Conheça os docentes do Programa de Pós-Graduação em Ciência de Alimentos da UFMG.' );
+}
+
 function corpo_docente_all_content_handler()
 {
     get_people_from_intranet([

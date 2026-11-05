@@ -39,7 +39,11 @@ function fafar_dynamic_routes() {
         'corpo-docente-act' => 'corpo_docente_act_content_handler',
         'corpo-docente-alm' => 'corpo_docente_alm_content_handler',
         'corpo-docente-2' => 'corpo_docente_fas_content_handler',
+        'corpo-docente-3' => 'corpo_docente_ppgact_content_handler',
+        'corpo-docente-4' => 'corpo_docente_fafar_directory_content_handler',
+        'corpo-docente-ppgca' => 'corpo_docente_ppgca_content_handler',
         'corpo-docente-pfa' => 'corpo_docente_pfa_content_handler',
+        'corpo-docente-ppgmaf' => 'corpo_docente_ppgmaf_content_handler',
         'corpo-docente' => 'corpo_docente_all_content_handler',
     );
 }
@@ -51,7 +55,7 @@ function fafar_dynamic_certificates_maintenance() {
 
 // Os formulários passam a ser renderizados pelo tema; o conteúdo legado fica preservado no banco.
 add_filter( 'the_content', function ( $content ) {
-    return in_the_loop() && is_main_query() && is_page( array( 'ementas', 'validarementa' ) ) ? '' : $content;
+    return in_the_loop() && is_main_query() && is_page( array( 'ementas', 'validarementa', 'corpo-docente-ppgmaf', 'corpo-docente-3', 'corpo-docente-4', 'corpo-docente-ppgca' ) ) ? '' : $content;
 }, 8 );
 
 add_action( 'wp_enqueue_scripts', function () {
