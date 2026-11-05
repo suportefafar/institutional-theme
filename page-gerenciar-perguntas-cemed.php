@@ -120,11 +120,11 @@ get_header();
 									<?php if ( 'Sim' === ( $data['profissional_saude'] ?? '' ) ) : ?><dt>Profissão</dt><dd><?php echo esc_html( 'Outro' === ( $data['profissao_saude'] ?? '' ) ? ( $data['profissao_saude_outro'] ?? 'Outro' ) : ( $data['profissao_saude'] ?? '—' ) ); ?></dd><?php endif; ?>
 									<dt>Envolve paciente específico?</dt><dd><?php echo esc_html( $data['paciente_especifico'] ?? '—' ); ?></dd>
 									<?php if ( 'Sim' === ( $data['paciente_especifico'] ?? '' ) ) : ?>
-										<dt>Idade do paciente</dt><dd><?php echo esc_html( (string) ( $data['idade_paciente'] ?? '—' ) ); ?></dd>
-										<dt>Sexo</dt><dd><?php echo esc_html( $data['sexo_paciente'] ?? '—' ); ?></dd>
-										<dt>Gênero</dt><dd><?php echo esc_html( $data['genero_paciente'] ?? '—' ); ?></dd>
-										<dt>Doenças pré-existentes</dt><dd><?php $diseases = is_array( $data['doencas_preexistentes'] ?? null ) ? $data['doencas_preexistentes'] : array(); if ( in_array( 'Outro', $diseases, true ) && ! empty( $data['doencas_preexistentes_outro'] ) ) { $diseases[] = $data['doencas_preexistentes_outro']; } echo esc_html( $diseases ? implode( ', ', $diseases ) : '—' ); ?></dd>
-										<dt>Condições especiais</dt><dd><?php $special_conditions = is_array( $data['condicoes_especiais'] ?? null ) ? $data['condicoes_especiais'] : array(); if ( in_array( 'Outro', $special_conditions, true ) && ! empty( $data['condicoes_especiais_outro'] ) ) { $special_conditions[] = $data['condicoes_especiais_outro']; } echo esc_html( $special_conditions ? implode( ', ', $special_conditions ) : '—' ); ?></dd>
+										<dt class="is-patient-detail">Idade do paciente</dt><dd class="is-patient-detail"><?php echo esc_html( (string) ( $data['idade_paciente'] ?? '—' ) ); ?></dd>
+										<dt class="is-patient-detail">Sexo do paciente</dt><dd class="is-patient-detail"><?php echo esc_html( $data['sexo_paciente'] ?? '—' ); ?></dd>
+										<dt class="is-patient-detail">Gênero do paciente</dt><dd class="is-patient-detail"><?php echo esc_html( $data['genero_paciente'] ?? '—' ); ?></dd>
+										<dt class="is-patient-detail">Doenças pré-existentes do paciente</dt><dd class="is-patient-detail"><?php $diseases = is_array( $data['doencas_preexistentes'] ?? null ) ? $data['doencas_preexistentes'] : array(); if ( in_array( 'Outro', $diseases, true ) && ! empty( $data['doencas_preexistentes_outro'] ) ) { $diseases[] = $data['doencas_preexistentes_outro']; } echo esc_html( $diseases ? implode( ', ', $diseases ) : '—' ); ?></dd>
+										<dt class="is-patient-detail">Condições especiais do paciente</dt><dd class="is-patient-detail"><?php $special_conditions = is_array( $data['condicoes_especiais'] ?? null ) ? $data['condicoes_especiais'] : array(); if ( in_array( 'Outro', $special_conditions, true ) && ! empty( $data['condicoes_especiais_outro'] ) ) { $special_conditions[] = $data['condicoes_especiais_outro']; } echo esc_html( $special_conditions ? implode( ', ', $special_conditions ) : '—' ); ?></dd>
 									<?php endif; ?>
 									<dt>Consentiu em participar da pesquisa?</dt><dd><?php echo esc_html( $data['consentimento'] ?? '—' ); ?></dd>
 									<dt>Escolha registrada em</dt><dd><?php echo esc_html( $data['consentimento_em'] ?? '—' ); ?></dd>

@@ -54,6 +54,7 @@
 .fafar-cemed-item-body dl { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr); margin: 0 0 1.5rem; }
 .fafar-cemed-item-body dt, .fafar-cemed-item-body dd { border-bottom: 1px solid var(--border-color); padding: .4rem 0; margin: 0; overflow-wrap: anywhere; }
 .fafar-cemed-item-body dt { font-weight: 700; }
+.fafar-cemed-item-body dt.is-patient-detail, .fafar-cemed-item-body dd.is-patient-detail { padding-inline-start: 2em; }
 .fafar-cemed-item-body h3 { font-size: 1.1rem; margin: 1rem 0 .4rem; }
 .fafar-cemed-answer { white-space: normal; overflow-wrap: anywhere; }
 .fafar-cemed-manage { border-top: 2px solid var(--cemed-accent); margin-top: 1.5rem; padding-top: 1rem; }
