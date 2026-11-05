@@ -801,9 +801,9 @@ function fafar_custom_faculty_render( $groups, $intro, $show_bio = false )
             $initials = strtoupper( function_exists( 'mb_substr' ) ? mb_substr( $first, 0, 1 ) . mb_substr( $last, 0, 1 ) : substr( $first, 0, 1 ) . substr( $last, 0, 1 ) );
             echo '<article class="fafar-custom-faculty-card"><div class="fafar-custom-faculty-header">';
             if ( $person['photo'] ) {
-                echo '<img class="fafar-custom-faculty-photo" src="' . esc_url( $person['photo'] ) . '" alt="Fotografia de ' . esc_attr( $name ) . '" loading="lazy" decoding="async">';
+                echo '<div class="fafar-custom-faculty-photo-wrap"><img class="fafar-custom-faculty-photo" src="' . esc_url( $person['photo'] ) . '" alt="Fotografia de ' . esc_attr( $name ) . '" loading="lazy" decoding="async"></div>';
             } else {
-                echo '<div class="fafar-custom-faculty-photo fafar-custom-faculty-placeholder" role="img" aria-label="Fotografia não informada para ' . esc_attr( $name ) . '"><span>' . esc_html( $initials ) . '</span></div>';
+                echo '<div class="fafar-custom-faculty-photo-wrap fafar-custom-faculty-placeholder" role="img" aria-label="Fotografia não informada para ' . esc_attr( $name ) . '"><span>' . esc_html( $initials ) . '</span></div>';
             }
             echo '<div class="fafar-custom-faculty-info"><h3>' . esc_html( $name ) . '</h3><p class="fafar-custom-faculty-unit">' . esc_html( $person['unit'] ) . '</p>';
             $email = sanitize_email( $person['email'] );

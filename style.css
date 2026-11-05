@@ -232,9 +232,10 @@ p{margin:0 0 var(--space-4);text-align:start}
 .fafar-custom-faculty-group{margin-block:var(--space-8)}
 .fafar-custom-faculty-group>h2{margin:0 0 var(--space-4);padding-bottom:var(--space-2);border-bottom:2px solid var(--color-primary);font-family:var(--font-display);font-size:var(--text-2xl);color:var(--color-gray-900)}
 .fafar-custom-faculty-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
-.fafar-custom-faculty-card{min-width:0;overflow:hidden;border:1px solid var(--border-color);border-radius:var(--radius-lg);background:var(--color-white);box-shadow:var(--shadow-sm)}
-.fafar-custom-faculty-header{position:relative;display:grid;grid-template-columns:128px minmax(0,1fr)}
-.fafar-custom-faculty-photo{position:relative;grid-column:1;grid-row:1;display:block;align-self:stretch;width:128px;height:auto;min-height:0;object-fit:cover;object-position:center 25%;background:var(--color-gray-100)}
+.fafar-custom-faculty-card{display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid var(--border-color);border-radius:var(--radius-lg);background:var(--color-white);box-shadow:var(--shadow-sm)}
+.fafar-custom-faculty-header{position:relative;display:grid;flex:1;grid-template-columns:128px minmax(0,1fr)}
+.fafar-custom-faculty-photo-wrap{position:relative;grid-column:1;grid-row:1;min-width:0;min-height:0;overflow:hidden;background:var(--color-gray-100)}
+.fafar-custom-faculty-photo{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center 25%}
 .fafar-custom-faculty-placeholder{display:grid;place-items:center;color:var(--color-gray-700);font-family:var(--font-display);font-size:var(--text-2xl);font-weight:700}
 .fafar-custom-faculty-info{grid-column:2;min-width:0;padding:var(--space-4);overflow-wrap:anywhere}
 .fafar-custom-faculty-info h3{margin:0 0 var(--space-2);font-family:var(--font-display);font-size:var(--text-lg);line-height:1.3;color:var(--color-gray-900)}
@@ -249,4 +250,4 @@ p{margin:0 0 var(--space-4);text-align:start}
 .entry-content .dynamic-table.room-map-table{table-layout:fixed;min-width:720px}
 .room-map-table tbody th{overflow-wrap:anywhere}.room-map-table td:nth-child(2),.room-map-table td:nth-child(4),.room-map-table td:nth-child(5){white-space:nowrap}
 @media(max-width:980px){.ppgmaf-faculty-grid,.fafar-custom-faculty-grid{grid-template-columns:1fr}}
-@media(max-width:700px){.dynamic-filters{flex-wrap:wrap;padding:var(--space-4)}.dynamic-field{flex-basis:100%}.dynamic-filters button{min-width:110px}.dynamic-details>div{grid-template-columns:1fr;gap:var(--space-1)}.ppgmaf-faculty-header{grid-template-columns:96px minmax(0,1fr)}.ppgmaf-faculty-photo{width:96px}.ppgmaf-faculty-content{padding:var(--space-3)}.ppgmaf-faculty-content h3{font-size:var(--text-base)}.ppgmaf-faculty-bio{padding:var(--space-3)}.fafar-custom-faculty-header{grid-template-columns:96px minmax(0,1fr)}.fafar-custom-faculty-photo{width:96px}.fafar-custom-faculty-info{padding:var(--space-3)}.fafar-custom-faculty-info h3{font-size:var(--text-base)}.fafar-custom-faculty-bio{padding:var(--space-3)}}
+@media(max-width:700px){.dynamic-filters{flex-wrap:wrap;padding:var(--space-4)}.dynamic-field{flex-basis:100%}.dynamic-filters button{min-width:110px}.dynamic-details>div{grid-template-columns:1fr;gap:var(--space-1)}.ppgmaf-faculty-header{grid-template-columns:96px minmax(0,1fr)}.ppgmaf-faculty-photo{width:96px}.ppgmaf-faculty-content{padding:var(--space-3)}.ppgmaf-faculty-content h3{font-size:var(--text-base)}.ppgmaf-faculty-bio{padding:var(--space-3)}.fafar-custom-faculty-header{grid-template-columns:96px minmax(0,1fr)}.fafar-custom-faculty-info{padding:var(--space-3)}.fafar-custom-faculty-info h3{font-size:var(--text-base)}.fafar-custom-faculty-bio{padding:var(--space-3)}}
