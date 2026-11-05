@@ -66,10 +66,16 @@
 .fafar-cemed-manage .fafar-cemed-choices.is-stacked { align-items: stretch; flex-direction: column; gap: .5rem; }
 .fafar-cemed-manage .fafar-cemed-choices label { display: inline-flex; align-items: flex-start; gap: .5rem; margin: 0; font-weight: 400; }
 .fafar-cemed-manage .fafar-cemed-choices input { flex: 0 0 auto; width: auto; margin: .25rem 0 0; padding: 0; }
-.fafar-cemed-manage button { background: var(--cemed-accent); border: 0; color: var(--color-secondary-dark); cursor: pointer; font: inherit; font-weight: 700; padding: .7rem 1.2rem; }
-.fafar-cemed-manage button:hover, .fafar-cemed-manage button:focus-visible { background: var(--color-primary-dark); }
+.fafar-cemed-manage-actions button { background: var(--cemed-accent); border: 0; color: var(--color-secondary-dark); cursor: pointer; font: inherit; font-weight: 700; padding: .7rem 1.2rem; }
+.fafar-cemed-manage-actions button:hover, .fafar-cemed-manage-actions button:focus-visible { background: var(--color-primary-dark); }
 .fafar-cemed-manage-actions { display: flex; flex-wrap: wrap; gap: .6rem; }
 .fafar-cemed-manage-actions button:first-child:not(:last-child) { background: var(--color-gray-100); border: 1px solid var(--color-gray-300); }
+.fafar-cemed-manage .wp-editor-wrap { width: 100%; border: 1px solid var(--color-gray-300); border-radius: var(--radius-md); overflow: hidden; }
+.fafar-cemed-manage .mce-toolbar-grp { background: var(--color-gray-50); border-bottom: 1px solid var(--color-gray-300); }
+.fafar-cemed-manage .mce-toolbar .mce-btn button { min-height: 28px; padding: 0 3px; border: 0; border-radius: 3px; background: transparent; box-shadow: none; color: var(--color-gray-700); }
+.fafar-cemed-manage .mce-toolbar .mce-btn:hover button, .fafar-cemed-manage .mce-toolbar .mce-btn.mce-active button { background: var(--color-gray-100); color: var(--cemed-ink); }
+.fafar-cemed-manage .mce-toolbar .mce-btn:focus-within button { outline: 2px solid var(--cemed-accent); outline-offset: -2px; }
+.fafar-cemed-manage .wp-editor-container textarea { min-height: 8rem; border: 0; border-radius: 0; }
 .fafar-cemed-pagination { display: flex; gap: .5rem; flex-wrap: wrap; margin: 1.5rem 0; }
 .fafar-cemed-pagination a, .fafar-cemed-pagination span { border: 1px solid var(--color-gray-300); padding: .3rem .6rem; }
 .fafar-cemed-pagination .current { background: var(--cemed-accent); border-color: var(--cemed-accent); }

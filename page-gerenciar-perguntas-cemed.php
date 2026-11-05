@@ -26,6 +26,7 @@ $style       = get_stylesheet_directory() . '/assets/css/cemed.css';
 $script      = get_stylesheet_directory() . '/assets/js/cemed-management.js';
 wp_enqueue_style( 'fafar-cemed', get_stylesheet_directory_uri() . '/assets/css/cemed.css', array( 'fafar-theme' ), file_exists( $style ) ? filemtime( $style ) : '1.0.0' );
 wp_enqueue_script( 'fafar-cemed-management', get_stylesheet_directory_uri() . '/assets/js/cemed-management.js', array(), file_exists( $script ) ? filemtime( $script ) : '1.0.0', true );
+wp_enqueue_editor();
 get_header();
 ?>
 
@@ -83,9 +84,11 @@ get_header();
 						$requester_email = get_post_meta( $question_id, '_cemed_email_requester', true );
 						$team_email = get_post_meta( $question_id, '_cemed_email_team', true );
 						$response_email = get_post_meta( $question_id, '_cemed_email_response', true );
+						$direct_response_email = get_post_meta( $question_id, '_cemed_email_direct_response', true );
 						$requester_email = is_array( $requester_email ) ? $requester_email : array();
 						$team_email = is_array( $team_email ) ? $team_email : array();
 						$response_email = is_array( $response_email ) ? $response_email : array();
+						$direct_response_email = is_array( $direct_response_email ) ? $direct_response_email : array();
 					?>
 						<details class="fafar-cemed-item" id="cemed-pergunta-<?php echo esc_attr( $question_id ); ?>" <?php echo ( $show_update && $updated_id === $question_id ) || ( $show_delete && $deleted_id === $question_id ) ? 'open' : ''; ?>>
 							<summary><strong><?php echo esc_html( $question_code ); ?> — <?php echo esc_html( $data['nome'] ?? 'Sem nome' ); ?></strong><span class="fafar-cemed-status is-<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $status_labels[ $status ] ); ?></span><span><?php echo esc_html( get_the_date( 'd/m/Y H:i' ) ); ?></span><span><?php echo esc_html( $data['municipio'] ?? '' ); ?><?php echo ! empty( $data['uf'] ) ? esc_html( ' / ' . $data['uf'] ) : ''; ?></span></summary>
@@ -131,6 +134,7 @@ get_header();
 									<dt>Confirmação ao solicitante</dt><dd><?php echo esc_html( $email_labels[ $requester_email['status'] ?? '' ] ?? 'Pendente' ); ?></dd>
 									<dt>Notificação à equipe</dt><dd><?php echo esc_html( $email_labels[ $team_email['status'] ?? '' ] ?? 'Pendente' ); ?></dd>
 									<?php if ( $public_post_id ) : ?><dt>E-mail da resposta</dt><dd><?php echo esc_html( $email_labels[ $response_email['status'] ?? '' ] ?? 'Pendente' ); ?></dd><?php endif; ?>
+											<?php if ( $direct_response_email ) : ?><dt>E-mail direto da resposta</dt><dd><?php echo esc_html( $email_labels[ $direct_response_email['status'] ?? '' ] ?? 'Pendente' ); ?></dd><?php endif; ?>
 								</dl>
 								<h3>Pergunta</h3><div class="fafar-cemed-answer"><?php echo wpautop( esc_html( get_the_content( null, false ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped before wpautop. ?></div>
 								<h3>Outras informações</h3><div class="fafar-cemed-answer"><?php echo wpautop( esc_html( $data['informacoes_adicionais'] ?? '—' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped before wpautop. ?></div>
@@ -154,15 +158,15 @@ get_header();
 										<input type="hidden" name="fafar_cemed_manage_action" value="save">
 										<input type="hidden" name="cemed_question_id" value="<?php echo esc_attr( $question_id ); ?>">
 										<input type="hidden" name="cemed_page_number" value="<?php echo esc_attr( $page_number ); ?>">
-						<label for="cemed-public-title-<?php echo esc_attr( $question_id ); ?>">Título da publicação <span aria-hidden="true">*</span></label>
-						<input id="cemed-public-title-<?php echo esc_attr( $question_id ); ?>" name="cemed_public_title" type="text" maxlength="200" value="<?php echo esc_attr( $public_title ); ?>" required>
+						<label for="cemed-public-title-<?php echo esc_attr( $question_id ); ?>">Título da publicação</label>
+						<input id="cemed-public-title-<?php echo esc_attr( $question_id ); ?>" name="cemed_public_title" type="text" maxlength="200" value="<?php echo esc_attr( $public_title ); ?>">
 										<label for="cemed-public-question-<?php echo esc_attr( $question_id ); ?>">Pergunta para publicação</label>
-										<textarea id="cemed-public-question-<?php echo esc_attr( $question_id ); ?>" name="cemed_public_question" rows="5" maxlength="40000"><?php echo esc_textarea( $public_question ); ?></textarea>
+										<?php wp_editor( $public_question, 'cemed-public-question-' . $question_id, array( 'textarea_name' => 'cemed_public_question', 'textarea_rows' => 5, 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold,italic,bullist,numlist,link', 'toolbar2' => '', 'menubar' => false ) ) ); ?>
 										<p class="fafar-cemed-help">Revise este texto antes de publicar. O nome, o CPF, o e-mail e os demais campos pessoais não entram no post.</p>
 										<label for="cemed-resposta-<?php echo esc_attr( $question_id ); ?>">Resposta</label>
-										<textarea id="cemed-resposta-<?php echo esc_attr( $question_id ); ?>" name="cemed_resposta" rows="6" maxlength="40000"><?php echo esc_textarea( $answer ); ?></textarea>
+										<?php wp_editor( $answer, 'cemed-resposta-' . $question_id, array( 'textarea_name' => 'cemed_resposta', 'textarea_rows' => 6, 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold,italic,bullist,numlist,link', 'toolbar2' => '', 'menubar' => false ) ) ); ?>
 						<div class="fafar-cemed-manage-field">
-							<span class="fafar-cemed-label" id="cemed-classificacao-label-<?php echo esc_attr( $question_id ); ?>">Classifique a solicitação (se necessário, mais de uma opção pode ser selecionada): <span aria-hidden="true">*</span></span>
+							<span class="fafar-cemed-label" id="cemed-classificacao-label-<?php echo esc_attr( $question_id ); ?>">Classifique a solicitação (se necessário, mais de uma opção pode ser selecionada):</span>
 							<div class="fafar-cemed-choices is-stacked" role="group" aria-labelledby="cemed-classificacao-label-<?php echo esc_attr( $question_id ); ?>">
 								<?php foreach ( fafar_cemed_answer_classification_options() as $classification ) : ?><label><input type="checkbox" name="cemed_classificacao[]" value="<?php echo esc_attr( $classification ); ?>" <?php checked( in_array( $classification, $classifications, true ) ); ?>> <?php echo esc_html( $classification ); ?></label><?php endforeach; ?>
 							</div>
@@ -170,21 +174,22 @@ get_header();
 						</div>
 						<div class="fafar-cemed-manage-field"><span class="fafar-cemed-label" id="cemed-informacao-adicional-label-<?php echo esc_attr( $question_id ); ?>">Foram necessárias informações adicionais?</span><div class="fafar-cemed-choices" role="group" aria-labelledby="cemed-informacao-adicional-label-<?php echo esc_attr( $question_id ); ?>"><label><input type="radio" name="cemed_informacao_adicional" value="Não" <?php checked( $additional_needed, 'Não' ); ?>> Não</label><label><input type="radio" name="cemed_informacao_adicional" value="Sim" <?php checked( $additional_needed, 'Sim' ); ?>> Sim</label></div></div>
 						<div class="fafar-cemed-manage-field">
-							<span class="fafar-cemed-label" id="cemed-informacao-adicional-tipo-label-<?php echo esc_attr( $question_id ); ?>">Informações adicionais necessárias: <span aria-hidden="true">*</span></span>
+							<span class="fafar-cemed-label" id="cemed-informacao-adicional-tipo-label-<?php echo esc_attr( $question_id ); ?>">Informações adicionais necessárias:</span>
 							<div class="fafar-cemed-choices is-stacked" role="group" aria-labelledby="cemed-informacao-adicional-tipo-label-<?php echo esc_attr( $question_id ); ?>">
 								<?php foreach ( fafar_cemed_additional_info_options() as $additional_type ) : ?><label><input type="checkbox" name="cemed_informacao_adicional_tipo[]" value="<?php echo esc_attr( $additional_type ); ?>" <?php checked( in_array( $additional_type, $additional_types, true ) ); ?>> <?php echo esc_html( $additional_type ); ?></label><?php endforeach; ?>
 							</div>
 							<div data-cemed-additional-other <?php echo in_array( 'Outro', $additional_types, true ) ? '' : 'hidden'; ?>><label for="cemed-informacao-adicional-outro-<?php echo esc_attr( $question_id ); ?>">Outro tipo de informação</label><input id="cemed-informacao-adicional-outro-<?php echo esc_attr( $question_id ); ?>" name="cemed_informacao_adicional_outro" type="text" maxlength="1200" value="<?php echo esc_attr( $additional_types_other ); ?>"></div>
 						</div>
-						<div data-cemed-additional-details <?php echo 'Sim' === $additional_needed ? '' : 'hidden'; ?>><label for="cemed-informacoes-adicionais-detalhes-<?php echo esc_attr( $question_id ); ?>">Quais as informações adicionais foram solicitadas? <span aria-hidden="true">*</span></label><p class="fafar-cemed-help">Transcrever todas as informações adicionais solicitadas e as respostas obtidas. Caso nenhuma informação adicional tenha sido solicitada, escreva “Nenhuma”.</p><textarea id="cemed-informacoes-adicionais-detalhes-<?php echo esc_attr( $question_id ); ?>" name="cemed_informacoes_adicionais_detalhes" rows="4" maxlength="10000"><?php echo esc_textarea( $additional_details ); ?></textarea></div>
-										<p class="fafar-cemed-help">Publicar cria o post com comentários abertos e envia ao solicitante os links da resposta e da avaliação por e-mail. No dev, o envio real é desativado.</p>
+						<div data-cemed-additional-details <?php echo 'Sim' === $additional_needed ? '' : 'hidden'; ?>><label for="cemed-informacoes-adicionais-detalhes-<?php echo esc_attr( $question_id ); ?>">Quais as informações adicionais foram solicitadas?</label><p class="fafar-cemed-help">Transcrever as informações adicionais solicitadas e as respostas obtidas.</p><textarea id="cemed-informacoes-adicionais-detalhes-<?php echo esc_attr( $question_id ); ?>" name="cemed_informacoes_adicionais_detalhes" rows="4" maxlength="10000"><?php echo esc_textarea( $additional_details ); ?></textarea></div>
+											<p class="fafar-cemed-help">Salvar rascunho registra os campos preenchidos. Responder ao usuário envia a pergunta e a resposta por e-mail, sem criar um post. Publicar cria ou atualiza o post com comentários abertos e envia os links da resposta e da avaliação. No dev, o envio real é desativado.</p>
 										<div class="fafar-cemed-manage-actions">
-											<?php if ( ! $public_post_id ) : ?><button type="submit">Salvar rascunho</button><?php endif; ?>
-											<button type="submit" name="cemed_publish" value="1"><?php echo $public_post_id ? 'Atualizar post publicado' : 'Publicar resposta'; ?></button>
+							<button type="submit" name="cemed_action" value="draft">Salvar rascunho</button>
+							<button type="submit" name="cemed_action" value="respond_user">Responder ao Usuário</button>
+							<button type="submit" name="cemed_action" value="publish"><?php echo $public_post_id ? 'Atualizar post publicado' : 'Publicar resposta'; ?></button>
 										</div>
 									</form>
 								<?php elseif ( $answer ) : ?>
-									<h3>Resposta registrada</h3><div class="fafar-cemed-answer"><?php echo wpautop( esc_html( $answer ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped before wpautop. ?></div>
+										<h3>Resposta registrada</h3><div class="fafar-cemed-answer"><?php echo wp_kses_post( wpautop( $answer ) ); ?></div>
 								<?php endif; ?>
 							</div>
 						</details>

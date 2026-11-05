@@ -363,7 +363,7 @@ function fafar_cemed_email_delivery_enabled() {
 }
 
 function fafar_cemed_notification_meta_key( $type ) {
-	return in_array( $type, array( 'requester', 'team', 'response' ), true ) ? '_cemed_email_' . $type : '';
+	return in_array( $type, array( 'requester', 'team', 'response', 'direct_response' ), true ) ? '_cemed_email_' . $type : '';
 }
 
 /** O e-mail da equipe contém um link à página protegida, sem dados de saúde. */
@@ -404,6 +404,16 @@ function fafar_cemed_build_notification( $post_id, $type ) {
 		$feedback_url = add_query_arg( 'codigo', $token, home_url( '/feedback-pergunta-cemed/' ) );
 		$body = '<p>Olá, ' . esc_html( $data['nome'] ?? '' ) . '.</p><p>Sua pergunta <strong>' . esc_html( $code ) . '</strong> foi respondida pelo Cemed/UFMG.</p><p><a href="' . esc_url( $post_url ) . '">Leia a pergunta e a resposta</a>.</p><p><a href="' . esc_url( $feedback_url ) . '">Avalie a resposta recebida</a>.</p>' . $footer;
 		return array( 'to' => array( $data['email'] ), 'subject' => 'Cemed/UFMG — sua pergunta foi respondida: ' . $code, 'body' => $body, 'headers' => $headers );
+	}
+	if ( 'direct_response' === $type ) {
+		$question = get_post_meta( $post_id, '_cemed_public_question', true );
+		$question = is_string( $question ) && '' !== trim( $question ) ? $question : $post->post_content;
+		$answer = get_post_meta( $post_id, '_cemed_resposta', true );
+		if ( ! is_string( $answer ) || '' === trim( $answer ) ) {
+			return new WP_Error( 'missing_response', 'A resposta não está disponível.' );
+		}
+		$body = '<p>Olá, ' . esc_html( $data['nome'] ?? '' ) . '.</p><p>Segue a resposta do Cemed/UFMG à sua pergunta <strong>' . esc_html( $code ) . '</strong>:</p>' . fafar_cemed_public_answer_content( $question, $answer ) . $footer;
+		return array( 'to' => array( $data['email'] ), 'subject' => 'Cemed/UFMG — resposta à sua pergunta ' . $code, 'body' => $body, 'headers' => $headers );
 	}
 	return new WP_Error( 'invalid_type', 'Tipo de notificação inválido.' );
 }
@@ -456,7 +466,7 @@ function fafar_cemed_dispatch_notifications( $post_id ) {
 
 /** Prepara apenas a pergunta revisada e a resposta para o post público. */
 function fafar_cemed_public_answer_content( $question, $answer ) {
-	return '<h2>Pergunta</h2>' . wpautop( esc_html( $question ) ) . '<h2>Resposta</h2>' . wpautop( esc_html( $answer ) );
+	return '<h2>Pergunta</h2>' . wp_kses_post( wpautop( $question ) ) . '<h2>Resposta</h2>' . wp_kses_post( wpautop( $answer ) );
 }
 
 /** Publica uma vez; alterações posteriores atualizam o mesmo post. */
@@ -577,9 +587,12 @@ function fafar_cemed_manage_question() {
 	if ( ! $nonce || ! wp_verify_nonce( $nonce, 'fafar_cemed_manage_' . $post_id ) ) {
 		return new WP_Error( 'nonce', 'A sessão expirou. Atualize a página e tente novamente.' );
 	}
-	$status = '1' === fafar_cemed_post_value( 'cemed_publish' ) ? 'respondida' : 'em_analise';
-	if ( ! in_array( $status, array( 'nova', 'em_analise', 'respondida' ), true ) ) {
-		return new WP_Error( 'status', 'Selecione uma situação válida.' );
+	$action = fafar_cemed_post_value( 'cemed_action' );
+	if ( ! $action ) {
+		$action = '1' === fafar_cemed_post_value( 'cemed_publish' ) ? 'publish' : 'draft';
+	}
+	if ( ! in_array( $action, array( 'draft', 'respond_user', 'publish' ), true ) ) {
+		return new WP_Error( 'action', 'Ação inválida.' );
 	}
 	$answer = fafar_cemed_post_value( 'cemed_resposta' );
 	$public_title = fafar_cemed_post_value( 'cemed_public_title' );
@@ -597,12 +610,6 @@ function fafar_cemed_manage_question() {
 	if ( count( array_intersect( $classifications, $classifications_allowed ) ) !== count( $classifications ) ) {
 		return new WP_Error( 'classification', 'Selecione classificações válidas.' );
 	}
-	if ( 'respondida' === $status && ! $classifications ) {
-		return new WP_Error( 'classification', 'Classifique a solicitação antes de publicar a resposta.' );
-	}
-	if ( 'respondida' === $status && in_array( 'Outro', $classifications, true ) && '' === $classifications_other ) {
-		return new WP_Error( 'classification_other', 'Descreva a outra classificação.' );
-	}
 	if ( '' !== $additional_needed && ! in_array( $additional_needed, array( 'Sim', 'Não' ), true ) ) {
 		return new WP_Error( 'additional_info', 'Informe se foram necessárias informações adicionais.' );
 	}
@@ -610,81 +617,63 @@ function fafar_cemed_manage_question() {
 	if ( count( array_intersect( $additional_types, $additional_allowed ) ) !== count( $additional_types ) ) {
 		return new WP_Error( 'additional_info_types', 'Selecione opções válidas para as informações adicionais.' );
 	}
-	if ( 'Sim' === $additional_needed ) {
-		if ( 'respondida' === $status && ( ! $additional_types || in_array( 'Nenhuma', $additional_types, true ) ) ) {
-			return new WP_Error( 'additional_info_types', 'Selecione os tipos de informações adicionais solicitadas.' );
-		}
-		if ( 'respondida' === $status && in_array( 'Outro', $additional_types, true ) && '' === $additional_types_other ) {
-			return new WP_Error( 'additional_info_other', 'Descreva o outro tipo de informação solicitada.' );
-		}
-		if ( 'respondida' === $status && '' === $additional_details ) {
-			return new WP_Error( 'additional_info_details', 'Descreva as informações adicionais solicitadas e as respostas obtidas.' );
-		}
-	} elseif ( 'Não' === $additional_needed ) {
-		$additional_types = array( 'Nenhuma' );
-		$additional_types_other = '';
-		$additional_details = 'Nenhuma';
-	} elseif ( 'respondida' === $status ) {
-		return new WP_Error( 'additional_info', 'Informe se foram necessárias informações adicionais.' );
-	}
-	if ( 'respondida' === $status && 'Sim' === $additional_needed && in_array( 'Nenhuma', $additional_types, true ) ) {
-		return new WP_Error( 'additional_info_types', '“Nenhuma” não pode ser selecionada quando foram necessárias informações adicionais.' );
-	}
 	if ( strlen( $classifications_other ) > 1200 || strlen( $additional_types_other ) > 1200 || strlen( $additional_details ) > 10000 ) {
 		return new WP_Error( 'length', 'Um dos campos de classificação ou informações adicionais excede o tamanho permitido.' );
 	}
-	$answer = sanitize_textarea_field( $answer );
+	$answer = wp_kses_post( $answer );
 	$public_title = sanitize_text_field( $public_title );
-	$public_question = sanitize_textarea_field( $public_question );
+	$public_question = wp_kses_post( $public_question );
 	$classifications_other = sanitize_text_field( $classifications_other );
 	$additional_types_other = sanitize_text_field( $additional_types_other );
 	$additional_details = sanitize_textarea_field( $additional_details );
-	if ( '' === $public_title ) {
-		return new WP_Error( 'public_title', 'Informe um título próprio para a publicação.' );
-	}
 	$public_post_id = absint( get_post_meta( $post_id, '_cemed_public_post_id', true ) );
-	if ( $public_post_id && 'respondida' !== $status ) {
-		return new WP_Error( 'already_published', 'A resposta já foi publicada. Mantenha a situação como respondida.' );
+	if ( 'publish' === $action && ( '' === $public_title || '' === $public_question || '' === $answer ) ) {
+		return new WP_Error( 'required', 'Para publicar, preencha o título da publicação, a pergunta revisada e a resposta.' );
 	}
-	if ( 'respondida' === $status && ( '' === $answer || '' === $public_question ) ) {
-		return new WP_Error( 'required', 'Para publicar, preencha a pergunta revisada e a resposta.' );
+	if ( 'respond_user' === $action && '' === $answer ) {
+		return new WP_Error( 'required', 'Para responder ao usuário, preencha a resposta.' );
 	}
 	update_post_meta( $post_id, '_cemed_resposta', $answer );
 	update_post_meta( $post_id, '_cemed_public_title', $public_title );
 	update_post_meta( $post_id, '_cemed_public_question', $public_question );
 	update_post_meta( $post_id, '_cemed_classificacao', $classifications );
-	update_post_meta( $post_id, '_cemed_classificacao_outro', in_array( 'Outro', $classifications, true ) ? $classifications_other : '' );
+	update_post_meta( $post_id, '_cemed_classificacao_outro', $classifications_other );
 	update_post_meta( $post_id, '_cemed_informacao_adicional', $additional_needed );
 	update_post_meta( $post_id, '_cemed_informacao_adicional_tipo', $additional_types );
-	update_post_meta( $post_id, '_cemed_informacao_adicional_outro', in_array( 'Outro', $additional_types, true ) ? $additional_types_other : '' );
+	update_post_meta( $post_id, '_cemed_informacao_adicional_outro', $additional_types_other );
 	update_post_meta( $post_id, '_cemed_informacoes_adicionais_detalhes', $additional_details );
 	if (
 		get_post_meta( $post_id, '_cemed_resposta', true ) !== $answer ||
 		get_post_meta( $post_id, '_cemed_public_title', true ) !== $public_title ||
 		get_post_meta( $post_id, '_cemed_public_question', true ) !== $public_question ||
 		get_post_meta( $post_id, '_cemed_classificacao', true ) !== $classifications ||
-		get_post_meta( $post_id, '_cemed_classificacao_outro', true ) !== ( in_array( 'Outro', $classifications, true ) ? $classifications_other : '' ) ||
+		get_post_meta( $post_id, '_cemed_classificacao_outro', true ) !== $classifications_other ||
 		get_post_meta( $post_id, '_cemed_informacao_adicional', true ) !== $additional_needed ||
 		get_post_meta( $post_id, '_cemed_informacao_adicional_tipo', true ) !== $additional_types ||
-		get_post_meta( $post_id, '_cemed_informacao_adicional_outro', true ) !== ( in_array( 'Outro', $additional_types, true ) ? $additional_types_other : '' ) ||
+		get_post_meta( $post_id, '_cemed_informacao_adicional_outro', true ) !== $additional_types_other ||
 		get_post_meta( $post_id, '_cemed_informacoes_adicionais_detalhes', true ) !== $additional_details
 	) {
 		return new WP_Error( 'save', 'Não foi possível salvar o acompanhamento. Tente novamente.' );
 	}
-	if ( 'respondida' === $status ) {
+	if ( 'publish' === $action ) {
 		$publication = fafar_cemed_publish_answer( $post_id, $public_title, $public_question, $answer );
 		if ( is_wp_error( $publication ) ) {
 			return $publication;
 		}
 	}
+	$current_status = get_post_meta( $post_id, '_cemed_status', true );
+	$status = in_array( $action, array( 'respond_user', 'publish' ), true ) ? 'respondida' : ( $public_post_id || 'respondida' === $current_status ? 'respondida' : 'em_analise' );
 	update_post_meta( $post_id, '_cemed_status', $status );
 	if ( get_post_meta( $post_id, '_cemed_status', true ) !== $status ) {
 		return new WP_Error( 'save', 'Não foi possível salvar a situação da pergunta.' );
 	}
 	update_post_meta( $post_id, '_cemed_atualizada_em', current_time( 'mysql' ) );
 	update_post_meta( $post_id, '_cemed_atualizada_por', get_current_user_id() );
-	if ( 'respondida' === $status ) {
+	if ( 'publish' === $action ) {
 		fafar_cemed_process_notification( $post_id, 'response' );
+	} elseif ( 'respond_user' === $action ) {
+		delete_post_meta( $post_id, '_cemed_email_direct_response' );
+		fafar_cemed_process_notification( $post_id, 'direct_response' );
 	}
 
 	$page_number = max( 1, absint( fafar_cemed_post_value( 'cemed_page_number' ) ) );
