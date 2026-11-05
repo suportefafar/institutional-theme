@@ -243,8 +243,8 @@ function mapa_salas_content_handler()
                     <div class="dynamic-field"><label for="input_mapa_sala">Código ou nome da disciplina</label><input class="ffds-form-control" id="input_mapa_sala" type="search" placeholder="Ex.: ACT007" data-filter-column="0"></div>
                     <button class="ffds-btn ffds-btn-primary" id="button_mapa_sala" type="submit">Pesquisar</button>
                 </form><p class="dynamic-results" data-filter-status="tbody_mapa_sala" aria-live="polite"></p>
-                <div class="dynamic-table-scroll room-map-scroll" role="region" aria-label="Mapa de salas por disciplina" tabindex="0">
-                    <table class="dynamic-table room-map-table">
+                <div class="table-responsive dynamic-table-scroll room-map-scroll" role="region" aria-label="Mapa de salas por disciplina" tabindex="0">
+                    <table class="table dynamic-table room-map-table">
                         <colgroup><col><col class="room-map-room"><col class="room-map-days"><col class="room-map-time"><col class="room-map-time"></colgroup>
                         <thead>
                             <tr>

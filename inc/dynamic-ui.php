@@ -16,7 +16,7 @@ function fafar_dynamic_notice( $message, $type = 'info' ) {
 }
 
 function fafar_dynamic_table( $headings, $rows, $label, $body_id, $class = '' ) {
-    echo '<div class="dynamic-table-scroll" role="region" aria-label="' . esc_attr( $label ) . '" tabindex="0"><table class="dynamic-table ' . esc_attr( $class ) . '"><thead><tr>';
+    echo '<div class="table-responsive dynamic-table-scroll" role="region" aria-label="' . esc_attr( $label ) . '" tabindex="0"><table class="table dynamic-table ' . esc_attr( $class ) . '"><thead><tr>';
     foreach ( $headings as $heading ) { echo '<th scope="col">' . esc_html( $heading ) . '</th>'; }
     echo '</tr></thead><tbody id="' . esc_attr( $body_id ) . '">' . $rows;
     echo '<tr data-filter-empty' . ( $rows ? ' hidden' : '' ) . '><td colspan="' . count( $headings ) . '" class="dynamic-empty">Nenhum resultado encontrado.</td></tr></tbody></table></div>';
