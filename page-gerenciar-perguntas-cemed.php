@@ -21,16 +21,35 @@ $show_update = $updated_id && $confirmation && wp_verify_nonce( $confirmation, '
 $show_delete = $deleted_id && $confirmation && wp_verify_nonce( $confirmation, 'fafar_cemed_deleted_' . $deleted_id );
 $questions   = new WP_Query( array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => 20, 'paged' => $page_number, 'orderby' => 'date', 'order' => 'DESC' ) );
 $question_ids = get_posts( array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true, 'orderby' => 'none' ) );
-$cemed_stats = array( 'total' => count( $question_ids ), 'answered' => 0, 'evaluated' => 0, 'ratings' => array_fill_keys( array( '1', '2', '3', '4', '5' ), 0 ) );
+$feedback_options = array( 'Sim', 'Não', 'Parcialmente' );
+$cemed_stats = array(
+	'total' => count( $question_ids ),
+	'answered' => 0,
+	'evaluated' => 0,
+	'rating_sum' => 0,
+	'ratings' => array_fill_keys( array( '1', '2', '3', '4', '5' ), 0 ),
+	'clarified' => array_fill_keys( $feedback_options, 0 ),
+	'language' => array_fill_keys( $feedback_options, 0 ),
+);
 foreach ( $question_ids as $cemed_question_id ) {
 	if ( 'respondida' === get_post_meta( $cemed_question_id, '_cemed_status', true ) ) {
 		++$cemed_stats['answered'];
 	}
 	$stored_feedback = get_post_meta( $cemed_question_id, '_cemed_feedback', true );
-	$rating = is_array( $stored_feedback ) && isset( $stored_feedback['nota'] ) ? (string) $stored_feedback['nota'] : '';
+	if ( ! is_array( $stored_feedback ) ) {
+		continue;
+	}
+	foreach ( array( 'duvida_esclarecida' => 'clarified', 'linguagem_clara' => 'language' ) as $feedback_field => $stat_field ) {
+		$choice = $stored_feedback[ $feedback_field ] ?? '';
+		if ( is_string( $choice ) && isset( $cemed_stats[ $stat_field ][ $choice ] ) ) {
+			++$cemed_stats[ $stat_field ][ $choice ];
+		}
+	}
+	$rating = isset( $stored_feedback['nota'] ) ? (string) $stored_feedback['nota'] : '';
 	if ( isset( $cemed_stats['ratings'][ $rating ] ) ) {
 		++$cemed_stats['ratings'][ $rating ];
 		++$cemed_stats['evaluated'];
+		$cemed_stats['rating_sum'] += (int) $rating;
 	}
 }
 $status_labels = array( 'nova' => 'Nova', 'em_analise' => 'Em análise', 'respondida' => 'Respondida' );
@@ -56,6 +75,7 @@ get_header();
 						<div class="fafar-cemed-stat"><span>Perguntas recebidas</span><strong><?php echo esc_html( number_format_i18n( $cemed_stats['total'] ) ); ?></strong></div>
 						<div class="fafar-cemed-stat"><span>Perguntas respondidas</span><strong><?php echo esc_html( number_format_i18n( $cemed_stats['answered'] ) ); ?></strong></div>
 						<div class="fafar-cemed-stat"><span>Perguntas avaliadas</span><strong><?php echo esc_html( number_format_i18n( $cemed_stats['evaluated'] ) ); ?></strong></div>
+						<div class="fafar-cemed-stat"><span>Média das notas</span><strong><?php echo $cemed_stats['evaluated'] ? esc_html( number_format_i18n( $cemed_stats['rating_sum'] / $cemed_stats['evaluated'], 2 ) . ' / 5' ) : '—'; ?></strong></div>
 					</div>
 					<h3>Avaliações por nota</h3>
 					<dl class="fafar-cemed-rating-list">
@@ -63,6 +83,24 @@ get_header();
 							<dt><?php echo esc_html( $rating_value ); ?> / 5</dt><dd><?php echo esc_html( number_format_i18n( $rating_count ) ); ?> pergunta(s)</dd>
 						<?php endforeach; ?>
 					</dl>
+					<div class="fafar-cemed-feedback-breakdowns">
+						<section>
+							<h3>Dúvida esclarecida</h3>
+							<dl class="fafar-cemed-feedback-list">
+								<?php foreach ( $cemed_stats['clarified'] as $choice => $choice_count ) : ?>
+									<dt><?php echo esc_html( $choice ); ?></dt><dd><?php echo esc_html( number_format_i18n( $choice_count ) ); ?> pessoa(s)</dd>
+								<?php endforeach; ?>
+							</dl>
+						</section>
+						<section>
+							<h3>Linguagem clara</h3>
+							<dl class="fafar-cemed-feedback-list">
+								<?php foreach ( $cemed_stats['language'] as $choice => $choice_count ) : ?>
+									<dt><?php echo esc_html( $choice ); ?></dt><dd><?php echo esc_html( number_format_i18n( $choice_count ) ); ?> pessoa(s)</dd>
+								<?php endforeach; ?>
+							</dl>
+						</section>
+					</div>
 				</section>
 				<?php if ( $show_update ) : ?>
 					<p class="fafar-cemed-message is-success" role="status">Pergunta <?php echo esc_html( fafar_cemed_question_code( $updated_id ) ); ?> atualizada.</p>
