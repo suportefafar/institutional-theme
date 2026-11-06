@@ -919,10 +919,10 @@ function fafar_ppgcf_required_files( $data ) {
 
 	$vacancy_files = array(
 		'Reserva para autodeclarados negros' => array( 'ArquivoAutodeclaracaoEtnicoRacial' ),
-		'Pessoas indígenas' => array( 'ArquivoAutorreconhecimentoIndigena', 'ArquivoDeclaracaoLiderancaIndigena', 'ArquivoDeclaracaoFunai', 'ArquivoComprovantePertencimentoIndigena' ),
+		'Pessoas indígenas' => array( 'ArquivoAutorreconhecimentoIndigena', 'ArquivoDeclaracaoLiderancaIndigena' ),
 		'Pessoas quilombolas' => array( 'ArquivoAutorreconhecimentoQuilombola', 'ArquivoComprovantePertencimentoQuilombola' ),
-		'Pessoas trans e travestis' => array( 'ArquivoAutodeclaracaoTransTravesti', 'ArquivoDocumentoNomeSocial', 'ArquivoCertidaoInteiroTeor' ),
-		'Pessoas com deficiência' => array( 'ArquivoAutodeclaracaoDeficiente', 'ArquivoRelatorioMedico', 'ArquivoCondicoesEspeciaisProva' ),
+		'Pessoas trans e travestis' => array( 'ArquivoAutodeclaracaoTransTravesti', 'ArquivoDocumentoNomeSocial' ),
+		'Pessoas com deficiência' => array( 'ArquivoAutodeclaracaoDeficiente', 'ArquivoRelatorioMedico' ),
 	);
 
 	if ( isset( $vacancy_files[ $type ] ) ) {
