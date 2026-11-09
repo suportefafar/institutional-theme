@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 foreach ( array(
     'setup', 'seo', 'helpers', 'template-tags', 'responsive-tables', 'assets', 'shortcodes', 'banner', 'integrations',
     'modules/ppgcf', 'modules/ppgact', 'modules/cemed', 'modules/e-book',
-    'modules/cenex-permissions', 'modules/registration-pages', 'dynamic-pages',
+    'modules/cenex-permissions', 'modules/registration-pages', 'modules/auditorium-reservations', 'dynamic-pages',
 ) as $module ) {
     require_once __DIR__ . '/inc/' . $module . '.php';
 }

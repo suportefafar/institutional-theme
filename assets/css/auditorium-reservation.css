@@ -1,0 +1,32 @@
+#fafar-auditorium-status {
+	margin: 1rem 0;
+	padding: 0.85rem 1rem;
+	border-left: 4px solid #16803c;
+	background: #f0f8f2;
+}
+
+#fafar-auditorium-status.is-error,
+.fafar-auditorium-occurrence[data-unavailable] [data-occurrence-status] {
+	color: #8a1c1c;
+}
+
+#fafar-auditorium-status.is-error {
+	border-color: #b42318;
+	background: #fff3f2;
+}
+
+.fafar-auditorium-occurrence {
+	margin: 0 0 1rem;
+	padding: 0.75rem 0;
+	border-bottom: 1px solid #d8d5d0;
+}
+
+.fafar-auditorium-occurrence [data-occurrence-status]:empty {
+	display: none;
+}
+
+#fafar-auditorium-add,
+#fafar-auditorium-remove {
+	min-height: 2.5rem;
+	margin-right: 0.4rem;
+}

@@ -6,7 +6,8 @@ Não inclua senhas, tokens, bancos, arquivos recebidos, diretórios privados ou 
 | --- | --- | --- |
 | `HERMES_API_URL`, `HERMES_API_TOKEN` | Constantes em configuração privada do WordPress | Sem Hermes, `wp_mail` usa o transporte padrão; os fluxos que exigem Hermes retornam erro controlado. |
 | `INTRANET_DB_NAME` | Constante ou variável de ambiente | Banco `intranet`, para compatibilidade com a stack institucional. |
-| `INTRANET_AUDITORIUM_RESERVATION_URL` | Ambiente, ou opção `institutional_theme_auditorium_reservation_url` | Integração indisponível até ser configurada. |
+| `INTRANET_AUDITORIUM_RESERVATION_URL` | Ambiente, ou opção `institutional_theme_auditorium_reservation_url` | URL de `POST /api/v1/auditorium_reservations`; o caminho `/availability` é acrescentado para consultar horários. |
+| `INTRANET_AUDITORIUM_RESERVATION_TOKEN` | Ambiente/secret store privado | Bearer token do serviço `auditorium_source`; nunca armazenar no repositório nem expor ao navegador. |
 | `CENEX_DELEGATED_USER_ID` | Ambiente, ou chave `delegated_user_id` da opção `institutional_theme_cenex_delegation` | Sem delegação. |
 | `CENEX_TARGET_USER_ID` | Ambiente, ou chave `target_user_id` da mesma opção | Sem delegação. |
 | `CENEX_DELEGATION_EXPIRES_AT` | Ambiente, ou chave `expires_at` da mesma opção | Sem delegação. |

@@ -69,3 +69,19 @@ function create_ppgact_pages_if_missing() {
 	}
 }
 add_action( 'after_setup_theme', 'create_ppgact_pages_if_missing' );
+
+/** Cria a página pública de reserva do auditório quando ela ainda não existe. */
+function fafar_auditorium_create_page_if_missing() {
+	if ( get_page_by_path( 'reservaauditorio', OBJECT, 'page' ) ) {
+		return;
+	}
+	wp_insert_post(
+		array(
+			'post_name' => 'reservaauditorio',
+			'post_title' => 'Reserva do auditório',
+			'post_type' => 'page',
+			'post_status' => 'publish',
+		)
+	);
+}
+add_action( 'after_setup_theme', 'fafar_auditorium_create_page_if_missing' );

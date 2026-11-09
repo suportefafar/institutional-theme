@@ -4,58 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-add_action( 'fafar_cf7crud_before_create', 'site_fafar_before_send_mail_handler', 10, 1 );
-
-/**
- * Sends auditorium reservation data to the intranet API before creating a submission.
- *
- * @param array $form_data Form data to be processed.
- * @return array Modified form data or error message.
- */
-function site_fafar_before_send_mail_handler( $form_data ) {
-
-    // Validate the form data
-    if (
-        ! isset( $form_data['object_name'] ) ||
-        $form_data['object_name'] !== 'auditorium_reservation'
-    ) {
-        return $form_data;
-    }
-
-    // Prepare the API request
-    $api_url = getenv( 'INTRANET_AUDITORIUM_RESERVATION_URL' ) ?: get_option( 'institutional_theme_auditorium_reservation_url', '' );
-    if ( ! is_string( $api_url ) || ! wp_http_validate_url( $api_url ) ) {
-        // Private Docker hostnames may not pass the public URL validator; accept only explicit HTTP(S) configuration.
-        if ( ! is_string( $api_url ) || ! preg_match( '#^https?://[^\s]+$#', $api_url ) ) {
-            return array( 'error_msg' => __( 'O sistema está passando por manutenção...', 'institutional-theme' ) );
-        }
-    }
-    $args = [
-        'method'  => 'POST',
-        'headers' => [
-            'Content-Type' => 'application/json; charset=utf-8',
-        ],
-        'body'    => json_encode( $form_data['data'] ), // Ensure the data is properly encoded
-    ];
-
-    // Send the request to the intranet API
-    $response = wp_remote_request( $api_url, $args );
-
-    // Handle API errors
-    if ( is_wp_error( $response ) ) {
-        $error_message = 'Request failed: ' . $response->get_error_message();
-        error_log( $error_message );
-
-        return [
-            'error_msg' => __( 'O sistema está passando por manutenção...', 'fafar-cf7crud' ),
-        ];
-    }
-
-
-    // Return true to indicate success
-    return $form_data;
-}
-
 add_filter( 'pre_wp_mail', 'hermes_custom_wp_mail', 10, 2 );
 
 /**
