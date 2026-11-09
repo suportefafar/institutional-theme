@@ -1,6 +1,12 @@
 # Institutional Theme
 
-Tema WordPress independente para o site institucional da Faculdade de Farmácia da UFMG. Projeto e repositório próprios, com interface fixa baseada no Farmácia UFMG Design System.
+Tema WordPress independente para o site institucional da Faculdade de Farmácia da UFMG, com apresentação editorial responsiva e componentes compatíveis com o conteúdo institucional existente.
+
+## Prévia da página inicial
+
+Captura do ambiente de desenvolvimento, com postagens existentes no banco e imagens editoriais associadas aos destaques:
+
+![Página inicial da FAFAR no ambiente de desenvolvimento](docs/homepage-preview.png)
 
 ## Instalação
 
@@ -33,7 +39,7 @@ tests/                 Testes de regressão e integração
 docs/                  Documentação e revisão para publicação
 ```
 
-Os templates `page-*.php` permanecem na raiz para seguir a hierarquia de templates do WordPress. O screenshot do tema está em `screenshot.jpg`.
+Os templates `page-*.php` permanecem na raiz para seguir a hierarquia de templates do WordPress. A captura atual da home está em `docs/homepage-preview.png`; `screenshot.jpg` é a imagem de prévia cadastrada para o tema no WordPress.
 
 ## Recursos
 

@@ -1,4 +1,5 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'single-content' ); ?>>
+	<?php if ( has_post_thumbnail() ) : ?><figure class="single-feature-image"><?php the_post_thumbnail( 'large', array( 'loading' => 'eager', 'fetchpriority' => 'high' ) ); ?></figure><?php endif; ?>
 	<header class="entry-header">
 		<?php if ( 'post' === get_post_type() ) : ?><p class="eyebrow"><?php echo get_the_category_list( ' · ' ); ?></p><?php endif; ?>
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>

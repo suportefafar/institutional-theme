@@ -37,7 +37,7 @@ function get_custom_banner() {
 		$image = get_stylesheet_directory_uri() . '/assets/img/banners/' . $banner_images[ $alias ];
 	}
 	?>
-	<div class="site-container"><div class="page-banner">
+	<div class="site-container"><div class="page-banner<?php echo is_home() ? ' page-banner-home' : ''; ?>">
 		<img src="<?php echo esc_url( fafar_image_url( $image, get_stylesheet_directory_uri() . '/assets/img/fafar-vista-aerea.jpeg' ) ); ?>" alt="" width="1200" height="360" fetchpriority="high">
 		<div class="banner-content">
             <p class="banner-label"><?php echo esc_html( $label ); ?></p>

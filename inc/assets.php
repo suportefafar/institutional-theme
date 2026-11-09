@@ -18,6 +18,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	}
 	wp_enqueue_style( 'farmacia-ds', $uri . '/assets/css/farmacia-ds.css', array(), filemtime( $dir . '/assets/css/farmacia-ds.css' ) );
 	wp_enqueue_style( 'fafar-theme', $uri . '/style.css', $deps, filemtime( $dir . '/style.css' ) );
+	wp_enqueue_style( 'fafar-editorial', $uri . '/assets/css/editorial.css', array( 'fafar-theme' ), filemtime( $dir . '/assets/css/editorial.css' ) );
 	wp_enqueue_script( 'fafar-navigation', $uri . '/assets/js/navigation.js', array(), filemtime( $dir . '/assets/js/navigation.js' ), true );
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
 } );

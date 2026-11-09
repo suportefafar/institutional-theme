@@ -27,6 +27,18 @@ function fafar_image_url( $url, $fallback ) {
 	return $url;
 }
 
+/** Return generated editorial art for the selected homepage posts without changing WordPress media records. */
+function fafar_home_post_art_url( $post_id = 0 ) {
+	$post_id = $post_id ? absint( $post_id ) : get_the_ID();
+	$art = array(
+		50717 => 'cemed-pergunta.webp',
+		50708 => 'ppgact-doutorado-resultado.webp',
+		50703 => 'ppgact-bolsas-resultado.webp',
+	);
+	if ( ! isset( $art[ $post_id ] ) ) { return ''; }
+	return get_stylesheet_directory_uri() . '/assets/img/home-posts/' . $art[ $post_id ];
+}
+
 /** Preserve the configured logo, with the institutional asset available locally as a fallback. */
 function fafar_site_logo() {
 	$fallback = get_stylesheet_directory_uri() . '/assets/img/logo-fafar.png';
