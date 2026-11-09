@@ -20,6 +20,23 @@ get_header();
 		<header class="entry-header"><?php the_title( '<h1 class="entry-title">', '</h1>' ); ?></header>
 		<div class="entry-content clear fafar-inscricao-page-content">
 			<?php do_action( 'fafar_entry_content_before' ); ?>
+			<section aria-labelledby="fafar-auditorium-general-heading">
+				<h2 id="fafar-auditorium-general-heading">Informações gerais</h2>
+				<p>O envio deste formulário registra uma solicitação de reserva. A reserva só estará confirmada após o processamento interno do pedido e a confirmação do Setor de Apoio Logístico da Faculdade de Farmácia.</p>
+			</section>
+			<section aria-labelledby="fafar-auditorium-infrastructure-heading">
+				<h2 id="fafar-auditorium-infrastructure-heading">Infraestrutura</h2>
+				<p>O Auditório Aloísio Pimenta tem capacidade máxima para 192 pessoas e dispõe dos seguintes recursos:</p>
+				<ul>
+					<li>2 microfones sem fio;</li>
+					<li>4 microfones com fio;</li>
+					<li>2 microfones de mesa;</li>
+					<li>1 projetor multimídia;</li>
+					<li>1 notebook com configuração intermediária;</li>
+					<li>1 caneta apresentadora de slides;</li>
+					<li>1 aparelho de ar-condicionado.</li>
+				</ul>
+			</section>
 			<p>Preencha os dados do evento e informe cada data e horário. É possível adicionar várias ocorrências, com no máximo 31 datas. Todas serão verificadas antes do envio.</p>
 			<div id="fafar-auditorium-status" role="status" aria-live="polite" hidden></div>
 			<form class="fafar-inscricao-form" id="fafar-auditorium-form" method="post" action="" novalidate>
