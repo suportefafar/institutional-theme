@@ -1,0 +1,30 @@
+.fafar-ppgmaf-page .entry-content { max-width: 920px; }
+.fafar-ppgmaf-application { margin: 2rem 0 3rem; }
+.fafar-ppgmaf-application > h2 { margin-bottom: .5rem; }
+.fafar-ppgmaf-form { margin-top: 1.5rem; }
+.fafar-ppgmaf-form fieldset { border: 0; border-top: 2px solid var(--color-primary); margin: 2rem 0 0; padding: 1.25rem 0 0; min-width: 0; }
+.fafar-ppgmaf-form fieldset legend { color: var(--color-secondary); font-size: 1.2rem; font-weight: 700; padding: 0 .4rem 0 0; }
+.fafar-ppgmaf-form .fafar-ppgmaf-field { display: inline-block; margin: .75rem 1.5% .75rem 0; vertical-align: top; width: 48%; }
+.fafar-ppgmaf-form .fafar-ppgmaf-field label,
+.fafar-ppgmaf-form .fafar-ppgmaf-choice legend { display: block; font-weight: 600; margin-bottom: .4rem; }
+.fafar-ppgmaf-form .fafar-ppgmaf-field label span,
+.fafar-ppgmaf-form .fafar-ppgmaf-choice legend span { color: var(--color-error); }
+.fafar-ppgmaf-form input:not([type="radio"]),
+.fafar-ppgmaf-form select { background: var(--color-gray-50); border: 1px solid var(--border-color); border-radius: var(--radius-md); color: var(--color-secondary); display: block; font: inherit; min-height: 2.75rem; padding: .55rem .7rem; width: 100%; }
+.fafar-ppgmaf-form input[type="file"] { font-size: .9rem; padding: .45rem; }
+.fafar-ppgmaf-form input:focus,
+.fafar-ppgmaf-form select:focus { border-color: var(--color-primary); box-shadow: 0 0 0 2px rgba(242,182,0,.2); outline: 0; }
+.fafar-ppgmaf-form .fafar-ppgmaf-choice { border: 0; display: inline-block; margin: .75rem 1.5% .75rem 0; padding: 0; vertical-align: top; width: 48%; }
+.fafar-ppgmaf-form .fafar-ppgmaf-choice label { display: inline-flex; align-items: center; gap: .4rem; margin: .3rem 1rem .3rem 0; }
+.fafar-ppgmaf-form .fafar-ppgmaf-choice input { accent-color: var(--color-primary); }
+.fafar-ppgmaf-form .fafar-ppgmaf-conditional { border-left: 3px solid var(--color-primary); margin: .75rem 0; padding-left: 1rem; }
+.fafar-ppgmaf-form [hidden] { display: none !important; }
+.fafar-ppgmaf-help { color: var(--color-gray-600); font-size: .9rem; }
+.fafar-ppgmaf-notice { border-left: 4px solid; margin: 1rem 0; padding: .9rem 1rem; }
+.fafar-ppgmaf-notice.is-success { background: #edf8f0; border-color: #238344; color: #174f2c; }
+.fafar-ppgmaf-notice.is-error { background: #fff3f2; border-color: #ad2d24; color: #702018; }
+.fafar-ppgmaf-honeypot { left: -10000px; position: absolute; }
+@media (max-width: 640px) {
+  .fafar-ppgmaf-form .fafar-ppgmaf-field,
+  .fafar-ppgmaf-form .fafar-ppgmaf-choice { display: block; width: 100%; }
+}

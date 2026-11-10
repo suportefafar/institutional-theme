@@ -19,6 +19,10 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'farmacia-ds', $uri . '/assets/css/farmacia-ds.css', array(), filemtime( $dir . '/assets/css/farmacia-ds.css' ) );
 	wp_enqueue_style( 'fafar-theme', $uri . '/style.css', $deps, filemtime( $dir . '/style.css' ) );
 	wp_enqueue_script( 'fafar-navigation', $uri . '/assets/js/navigation.js', array(), filemtime( $dir . '/assets/js/navigation.js' ), true );
+	if ( is_page( 'matricula-disciplina-isolada-ppgmaf-personalizada' ) ) {
+		wp_enqueue_style( 'fafar-ppgmaf-registration', $uri . '/assets/css/ppgmaf-registration.css', array( 'farmacia-ds' ), filemtime( $dir . '/assets/css/ppgmaf-registration.css' ) );
+		wp_enqueue_script( 'fafar-ppgmaf-registration', $uri . '/assets/js/ppgmaf-registration.js', array(), filemtime( $dir . '/assets/js/ppgmaf-registration.js' ), true );
+	}
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
 } );
 add_action( 'wp_head', function () { echo '<meta name="theme-color" content="#f2b600">'; } );
