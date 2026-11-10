@@ -10,9 +10,10 @@ foreach ( array( 'primary', 'secondary_menu' ) as $location ) {
 		if ( $item->url && '#' !== $item->url ) { $footer_links[ wp_strip_all_tags( $item->title ) ] = $item->url; }
 	}
 }
+$footer_links['Intranet'] = $footer_links['Intranet'] ?? 'https://intranet.farmacia.ufmg.br/';
 $footer_groups = array(
 	'A Faculdade' => array( 'História' => 'História', 'Administração' => 'Administração', 'Corpo Docente' => 'Corpo docente', 'CENEX' => 'Extensão · CENEX', 'NAPQ' => 'Pesquisa · NAPQ', 'Eventos' => 'Eventos' ),
-	'Ensino e recursos' => array( 'O Curso' => 'Farmácia', 'Biomedicina' => 'Biomedicina', 'Biblioteca' => 'Biblioteca', 'Editais' => 'Editais', 'Mapa de Salas' => 'Mapa de salas', 'Ementas - Validar' => 'Validar ementas' ),
+	'Ensino e recursos' => array( 'O Curso' => 'Farmácia', 'Biomedicina' => 'Biomedicina', 'Biblioteca' => 'Biblioteca', 'Editais' => 'Editais', 'Mapa de Salas' => 'Mapa de salas', 'Ementas - Validar' => 'Validar ementas', 'Intranet' => 'Intranet' ),
 );
 ?>
 <footer class="site-footer">
