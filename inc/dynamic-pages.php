@@ -339,49 +339,57 @@ function ementas_content_handler()
 
 function baixar_ementas_content_handler()
 {
-    global $wpdb;
     echo '<div class="dynamic-toolbar"><p class="dynamic-intro">Selecione a versão curricular e procure pelo código da disciplina.</p><a href="' . esc_url( home_url( '/validarementa/' ) ) . '">Validar uma ementa →</a></div>';
-    $versions = fafar_dynamic_query( 'SELECT * FROM tipo_ementas WHERE ativo = 1 ORDER BY id DESC' );
-    $unavailable = false === $versions;
-    $versions = $unavailable ? array() : $versions;
+	$ementas = get_posts( array(
+		'post_type' => 'fafar_ementa',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+		'orderby' => array( 'meta_value' => 'ASC', 'title' => 'ASC' ),
+		'meta_key' => '_fafar_ementa_codigo',
+	) );
+	$versions = array();
     $options = '';
     $rows = '';
-    foreach ( $versions as $version ) {
-        $options .= '<option value="' . esc_attr( $version->descricao ) . '">' . esc_html( $version->descricao ) . '</option>';
-        $disciplines = fafar_dynamic_query( $wpdb->prepare( 'SELECT * FROM ementas WHERE versao = %d ORDER BY cod_disciplina, nome', $version->id ) );
-        if ( false === $disciplines ) { $unavailable = true; break; }
-        foreach ( $disciplines as $discipline ) {
-            $url = esc_url( $discipline->arquivo_ementa );
-            $action = $url ? '<a class="ffds-btn dynamic-download" href="' . $url . '" target="_blank" rel="noopener noreferrer">Baixar<span class="screen-reader-text"> ementa de ' . esc_html( $discipline->cod_disciplina ) . ' (abre em nova aba)</span></a>' : 'Documento indisponível';
-            $rows .= '<tr data-filter-row><td>' . esc_html( $version->descricao ) . '</td><th scope="row">' . esc_html( $discipline->cod_disciplina ) . '</th><td>' . esc_html( $discipline->nome ) . '</td><td>' . $action . '</td></tr>';
-        }
+	foreach ( $ementas as $ementa ) {
+		$version = get_post_meta( $ementa->ID, '_fafar_ementa_versao', true );
+		$code = get_post_meta( $ementa->ID, '_fafar_ementa_codigo', true );
+		$url = esc_url( get_post_meta( $ementa->ID, '_fafar_ementa_arquivo', true ) );
+		if ( '' !== $version ) { $versions[ $version ] = $version; }
+		$action = $url ? '<a class="ffds-btn dynamic-download" href="' . $url . '" target="_blank" rel="noopener noreferrer">Baixar<span class="screen-reader-text"> ementa de ' . esc_html( $code ) . ' (abre em nova aba)</span></a>' : 'Documento indisponível';
+		$rows .= '<tr data-filter-row><td>' . esc_html( $version ) . '</td><th scope="row">' . esc_html( $code ) . '</th><td>' . esc_html( get_the_title( $ementa ) ) . '</td><td>' . $action . '</td></tr>';
     }
-    if ( $unavailable ) { $rows = ''; echo fafar_dynamic_notice( 'As ementas estão temporariamente indisponíveis. Tente novamente mais tarde.' ); }
+	natcasesort( $versions );
+	foreach ( $versions as $version ) { $options .= '<option value="' . esc_attr( $version ) . '">' . esc_html( $version ) . '</option>'; }
     echo '<form class="dynamic-filters dynamic-filters-multiple" data-table-filter="tbody_baixar_ementas" role="search" aria-label="Filtrar ementas">
         <div class="dynamic-field"><label for="select_baixar_ementas">Versão curricular</label><select class="ffds-form-control" id="select_baixar_ementas" data-filter-column="0" data-filter-exact><option value="">Todas as versões</option>' . $options . '</select></div>
         <div class="dynamic-field"><label for="input_baixar_ementas">Código da disciplina</label><input class="ffds-form-control" id="input_baixar_ementas" type="search" data-filter-column="1" placeholder="Ex.: ACT007"></div>
-        <button class="ffds-btn ffds-btn-primary" id="button_baixar_ementas" type="submit"' . ( $unavailable ? ' disabled' : '' ) . '>Filtrar</button>
+        <button class="ffds-btn ffds-btn-primary" id="button_baixar_ementas" type="submit">Filtrar</button>
         </form><p class="dynamic-results" data-filter-status="tbody_baixar_ementas" aria-live="polite"></p>';
-    if ( ! $unavailable ) { fafar_dynamic_table( array( 'Versão', 'Código', 'Disciplina', 'Documento' ), $rows, 'Ementas disponíveis para download', 'tbody_baixar_ementas', 'dynamic-syllabus-table' ); }
+	fafar_dynamic_table( array( 'Versão', 'Código', 'Disciplina', 'Documento' ), $rows, 'Ementas disponíveis para download', 'tbody_baixar_ementas', 'dynamic-syllabus-table' );
 }
 
 function validar_ementas_content_handler()
 {
-    global $wpdb;
     $codigo = isset( $_GET['codigo'] ) && is_string( $_GET['codigo'] ) ? sanitize_text_field( wp_unslash( $_GET['codigo'] ) ) : '';
     echo '<div class="dynamic-toolbar"><p class="dynamic-intro">Informe o código de autenticação que aparece no documento.</p><a href="' . esc_url( home_url( '/baixar-ementas/' ) ) . '">Baixar ementas →</a></div>';
     echo '<form class="dynamic-filters" method="get" action="' . esc_url( home_url( '/validarementa/' ) ) . '"><div class="dynamic-field"><label for="dynamic-syllabus-code">Código de autenticação</label><input class="ffds-form-control" id="dynamic-syllabus-code" name="codigo" value="' . esc_attr( $codigo ) . '" maxlength="255" required></div><button class="ffds-btn ffds-btn-primary" type="submit">Validar ementa</button></form>';
     if ( '' === $codigo ) { return; }
-    $result = fafar_dynamic_query( $wpdb->prepare( 'SELECT * FROM ementas a JOIN tipo_ementas b ON a.versao = b.id WHERE cod_ementa = %s', $codigo ), true );
-    if ( false === $result ) { echo fafar_dynamic_notice( 'A validação de ementas está temporariamente indisponível. Tente novamente mais tarde.' ); return; }
-    if ( ! $result ) { echo fafar_dynamic_notice( 'Código de ementa inválido: ' . $codigo, 'error' ); return; }
+	$matches = get_posts( array(
+		'post_type' => 'fafar_ementa',
+		'post_status' => 'publish',
+		'posts_per_page' => 1,
+		'meta_key' => '_fafar_ementa_codigo_validacao',
+		'meta_value' => $codigo,
+	) );
+	if ( ! $matches ) { echo fafar_dynamic_notice( 'Código de ementa inválido: ' . $codigo, 'error' ); return; }
+	$result = $matches[0];
     echo fafar_dynamic_notice( 'Ementa encontrada. Confira os dados abaixo.', 'success' );
     echo '<dl class="dynamic-details">';
-    foreach ( array( 'Código' => $result->cod_disciplina, 'Nome' => $result->nome, 'Subnome' => $result->subnome, 'Versão curricular' => $result->descricao ) as $label => $value ) {
+	foreach ( array( 'Código' => get_post_meta( $result->ID, '_fafar_ementa_codigo', true ), 'Nome' => get_the_title( $result ), 'Versão curricular' => get_post_meta( $result->ID, '_fafar_ementa_versao', true ) ) as $label => $value ) {
         echo '<div><dt>' . esc_html( $label ) . '</dt><dd>' . esc_html( $value ) . '</dd></div>';
     }
     echo '</dl>';
-    $url = esc_url( $result->arquivo_ementa );
+	$url = esc_url( get_post_meta( $result->ID, '_fafar_ementa_arquivo', true ) );
     if ( $url ) { echo '<a class="ffds-btn ffds-btn-primary" href="' . $url . '" target="_blank" rel="noopener noreferrer">Abrir documento<span class="screen-reader-text"> (abre em nova aba)</span></a>'; }
 }
 

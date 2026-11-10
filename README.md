@@ -24,6 +24,7 @@ inc/banner.php          Banner institucional
 inc/shortcodes.php      Shortcodes compatíveis com o conteúdo existente
 inc/integrations.php    Integrações de reservas e e-mail
 inc/dynamic-pages.php   Mapas, ementas e diretórios de contatos
+inc/modules/ementas.php Cadastro administrativo do tipo de conteúdo Ementa
 inc/dynamic-ui.php      Componentes e registro das rotas dinâmicas
 inc/modules/            PPGCF, PPGACT, Cemed, e-books e permissões
 assets/                CSS, JavaScript, fontes e imagens locais
@@ -49,7 +50,7 @@ Credenciais e configuração operacional pertencem ao ambiente ou ao WordPress, 
 
 Os dados e as opções do WordPress não acompanham o repositório. Na migração de uma instalação existente, copie as opções de menus e logo para o novo identificador antes de ativar o tema e preserve os widgets e módulos já configurados.
 
-O catálogo legado depende de `tipo_ementas` e `ementas`. Na ausência dessas tabelas, downloads e validação exibem indisponibilidade sem expor SQL. A tabela `wp_ementas` usa outro esquema e não é substituta automática. A emissão de certificados permanece em manutenção.
+As ementas são gerenciadas no painel em **Ementas**. Cada registro publicado representa uma disciplina e armazena versão curricular, código, PDF e, opcionalmente, o código de autenticação usado na validação. Rascunhos e itens na lixeira não aparecem publicamente. A emissão de certificados permanece em manutenção.
 
 ## Testes
 
