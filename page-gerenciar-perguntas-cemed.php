@@ -9,8 +9,8 @@ if ( ! is_user_logged_in() ) {
 }
 
 nocache_headers();
-$manage_result = fafar_cemed_delete_public_post();
-if ( null === $manage_result ) {
+$manage_result = ! empty( $fafar_cemed_admin ) ? ( $GLOBALS['fafar_cemed_admin_result'] ?? null ) : fafar_cemed_delete_public_post();
+if ( null === $manage_result && empty( $fafar_cemed_admin ) ) {
 	$manage_result = fafar_cemed_manage_question();
 }
 $page_number = max( 1, get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : ( isset( $_GET['pagina'] ) ? absint( $_GET['pagina'] ) : 1 ) );
@@ -19,7 +19,27 @@ $deleted_id  = isset( $_GET['excluida'] ) && is_scalar( $_GET['excluida'] ) ? ab
 $confirmation = isset( $_GET['confirmacao'] ) && is_scalar( $_GET['confirmacao'] ) ? sanitize_text_field( wp_unslash( $_GET['confirmacao'] ) ) : '';
 $show_update = $updated_id && $confirmation && wp_verify_nonce( $confirmation, 'fafar_cemed_updated_' . $updated_id );
 $show_delete = $deleted_id && $confirmation && wp_verify_nonce( $confirmation, 'fafar_cemed_deleted_' . $deleted_id );
-$questions   = new WP_Query( array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => 20, 'paged' => $page_number, 'orderby' => 'date', 'order' => 'DESC' ) );
+$detail_id = ! empty( $fafar_cemed_admin ) && isset( $_GET['pergunta'] ) && is_scalar( $_GET['pergunta'] ) ? absint( $_GET['pergunta'] ) : 0;
+$search = ! empty( $fafar_cemed_admin ) && isset( $_GET['busca'] ) && is_scalar( $_GET['busca'] ) ? sanitize_text_field( wp_unslash( $_GET['busca'] ) ) : '';
+$dates = array();
+foreach ( array( 'de' => 'after', 'ate' => 'before' ) as $key => $bound ) {
+	$value = isset( $_GET[ $key ] ) && is_scalar( $_GET[ $key ] ) ? sanitize_text_field( wp_unslash( $_GET[ $key ] ) ) : '';
+	$date = DateTime::createFromFormat( '!Y-m-d', $value );
+	if ( ! empty( $fafar_cemed_admin ) && $date && $date->format( 'Y-m-d' ) === $value ) { $dates[ $bound ] = $value; }
+}
+$args = array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => ! empty( $fafar_cemed_admin ) ? 10 : 20, 'paged' => $page_number, 'orderby' => 'date', 'order' => 'DESC' );
+if ( $detail_id ) { $args['p'] = $detail_id; $args['paged'] = 1; }
+if ( $dates && ! $detail_id ) { $args['date_query'] = array( array_merge( $dates, array( 'inclusive' => true ) ) ); }
+if ( $search && ! $detail_id ) {
+	global $wpdb;
+	$like = '%' . $wpdb->esc_like( $search ) . '%';
+	$search_filter = function ( $where ) use ( $wpdb, $like ) {
+		return $where . $wpdb->prepare( " AND ({$wpdb->posts}.post_content LIKE %s OR EXISTS (SELECT 1 FROM {$wpdb->postmeta} cm WHERE cm.post_id = {$wpdb->posts}.ID AND cm.meta_key IN ('_cemed_resposta', '_cemed_public_question') AND cm.meta_value LIKE %s))", $like, $like );
+	};
+	add_filter( 'posts_where', $search_filter );
+}
+$questions = new WP_Query( $args );
+if ( isset( $search_filter ) ) { remove_filter( 'posts_where', $search_filter ); }
 $question_ids = get_posts( array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true, 'orderby' => 'none' ) );
 $feedback_options = array( 'Sim', 'Não', 'Parcialmente' );
 $cemed_stats = array(
@@ -59,16 +79,22 @@ $script      = get_stylesheet_directory() . '/assets/js/cemed-management.js';
 wp_enqueue_style( 'fafar-cemed', get_stylesheet_directory_uri() . '/assets/css/cemed.css', array( 'fafar-theme' ), file_exists( $style ) ? filemtime( $style ) : '1.0.0' );
 wp_enqueue_script( 'fafar-cemed-management', get_stylesheet_directory_uri() . '/assets/js/cemed-management.js', array(), file_exists( $script ) ? filemtime( $script ) : '1.0.0', true );
 wp_enqueue_editor();
-get_header();
+if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 ?>
 
 <div id="primary" class="content-area">
-	<?php while ( have_posts() ) : the_post(); ?>
+	<?php if ( ! empty( $fafar_cemed_admin ) ) : ?><div class="wrap"><h1>Perguntas Cemed</h1><?php else : ?><?php while ( have_posts() ) : the_post(); ?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<header class="entry-header"><?php the_title( '<h1 class="entry-title">', '</h1>' ); ?></header>
+			<?php endwhile; endif; ?>
 			<div class="entry-content clear fafar-cemed-page fafar-cemed-list">
-				<?php do_action( 'fafar_entry_content_before' ); ?>
+				<?php if ( ! empty( $fafar_cemed_admin ) && ! $detail_id ) : ?>
+
+				<?php elseif ( ! empty( $fafar_cemed_admin ) ) : ?>
+				<p><a class="button" href="<?php echo esc_url( remove_query_arg( array( 'pergunta', 'atualizada', 'excluida', 'confirmacao' ), fafar_cemed_management_url() ) ); ?>">← Voltar à lista</a></p>
+				<?php else : do_action( 'fafar_entry_content_before' ); endif; ?>
 				<p>Área restrita a usuários autenticados. Revise o texto da pergunta antes de publicar a resposta para retirar dados pessoais ou informações clínicas identificáveis.</p>
+				<?php if ( ! $detail_id ) : ?>
 				<section class="fafar-cemed-stats" aria-labelledby="fafar-cemed-stats-title">
 					<h2 id="fafar-cemed-stats-title">Estatísticas</h2>
 					<div class="fafar-cemed-stat-grid">
@@ -102,6 +128,15 @@ get_header();
 						</section>
 					</div>
 				</section>
+				<?php endif; ?>
+				<?php if ( ! empty( $fafar_cemed_admin ) && ! $detail_id ) : ?>
+				<form method="get"><input type="hidden" name="page" value="cemed-perguntas">
+					<label for="cemed-busca">Pesquisar na pergunta ou resposta</label> <input id="cemed-busca" name="busca" type="search" value="<?php echo esc_attr( $search ); ?>">
+					<label for="cemed-de">De</label> <input id="cemed-de" name="de" type="date" value="<?php echo esc_attr( $dates['after'] ?? '' ); ?>">
+					<label for="cemed-ate">Até</label> <input id="cemed-ate" name="ate" type="date" value="<?php echo esc_attr( $dates['before'] ?? '' ); ?>">
+					<button class="button button-primary">Filtrar</button> <a class="button" href="<?php echo esc_url( admin_url( 'admin.php?page=cemed-perguntas' ) ); ?>">Limpar</a>
+				</form>
+				<?php endif; ?>
 				<?php if ( $show_update ) : ?>
 					<p class="fafar-cemed-message is-success" role="status">Pergunta <?php echo esc_html( fafar_cemed_question_code( $updated_id ) ); ?> atualizada.</p>
 				<?php endif; ?>
@@ -111,7 +146,31 @@ get_header();
 				<?php if ( is_wp_error( $manage_result ) ) : ?>
 					<p class="fafar-cemed-message is-error" role="alert"><?php echo esc_html( $manage_result->get_error_message() ); ?></p>
 				<?php endif; ?>
-				<p><strong><?php echo esc_html( $questions->found_posts ); ?></strong> pergunta(s) recebida(s).</p>
+				<?php if ( ! $detail_id ) : ?><p><strong><?php echo esc_html( $questions->found_posts ); ?></strong> pergunta(s) recebida(s).</p><?php endif; ?>
+				<?php if ( ! empty( $fafar_cemed_admin ) && ! $detail_id ) : ?>
+					<?php if ( $questions->have_posts() ) : ?>
+					<table class="widefat striped"><thead><tr><th>Código</th><th>Solicitante</th><th>Status</th><th>Data</th><th>Município</th><th><span class="screen-reader-text">Ação</span></th></tr></thead><tbody>
+					<?php while ( $questions->have_posts() ) : $questions->the_post();
+						$id = get_the_ID();
+						$row_data = get_post_meta( $id, '_cemed_data', true );
+						$row_data = is_array( $row_data ) ? $row_data : array();
+						$row_status = get_post_meta( $id, '_cemed_status', true );
+						$detail_url = add_query_arg( array( 'pergunta' => $id, 'pagina' => $page_number ), fafar_cemed_management_url() );
+					?>
+					<tr><td><?php echo esc_html( fafar_cemed_question_code( $id ) ); ?></td><td><?php echo esc_html( $row_data['nome'] ?? 'Sem nome' ); ?></td><td><?php echo esc_html( $status_labels[ $row_status ] ?? 'Nova' ); ?></td><td><?php echo esc_html( get_the_date( 'd/m/Y H:i' ) ); ?></td><td><?php echo esc_html( $row_data['municipio'] ?? '—' ); ?><?php echo ! empty( $row_data['uf'] ) ? esc_html( ' / ' . $row_data['uf'] ) : ''; ?></td><td><a class="button" href="<?php echo esc_url( $detail_url ); ?>" aria-label="<?php echo esc_attr( 'Ver pergunta ' . fafar_cemed_question_code( $id ) ); ?>">Ver</a></td></tr>
+					<?php endwhile; wp_reset_postdata(); ?></tbody></table>
+					<div class="tablenav bottom"><div class="tablenav-pages">
+						<span class="displaying-num"><?php echo esc_html( sprintf( '%s pergunta(s)', number_format_i18n( $questions->found_posts ) ) ); ?></span>
+						<nav class="fafar-cemed-pagination" aria-label="Páginas de perguntas">
+							<?php if ( $questions->max_num_pages > 1 ) : ?>
+								<?php echo wp_kses_post( paginate_links( array( 'base' => add_query_arg( 'pagina', '%#%', fafar_cemed_management_url() ), 'format' => '', 'current' => $page_number, 'total' => $questions->max_num_pages, 'prev_text' => '← Anterior', 'next_text' => 'Próxima →' ) ) ); ?>
+							<?php else : ?>
+								<span aria-current="page">Página 1 de 1</span>
+							<?php endif; ?>
+						</nav>
+					</div></div>
+					<?php else : ?><p>Nenhuma pergunta encontrada.</p><?php endif; ?>
+				<?php else : ?>
 				<?php if ( $questions->have_posts() ) : ?>
 					<?php while ( $questions->have_posts() ) : $questions->the_post(); ?>
 						<?php
@@ -155,22 +214,22 @@ get_header();
 						$response_email = is_array( $response_email ) ? $response_email : array();
 						$direct_response_email = is_array( $direct_response_email ) ? $direct_response_email : array();
 					?>
-						<details class="fafar-cemed-item" id="cemed-pergunta-<?php echo esc_attr( $question_id ); ?>" <?php echo ( $show_update && $updated_id === $question_id ) || ( $show_delete && $deleted_id === $question_id ) ? 'open' : ''; ?>>
+						<details class="fafar-cemed-item" id="cemed-pergunta-<?php echo esc_attr( $question_id ); ?>" <?php echo $detail_id || ( $show_update && $updated_id === $question_id ) || ( $show_delete && $deleted_id === $question_id ) ? 'open' : ''; ?>>
 							<summary><strong><?php echo esc_html( $question_code ); ?> — <?php echo esc_html( $data['nome'] ?? 'Sem nome' ); ?></strong><span class="fafar-cemed-status is-<?php echo esc_attr( $status ); ?>"><?php echo esc_html( $status_labels[ $status ] ); ?></span><span><?php echo esc_html( get_the_date( 'd/m/Y H:i' ) ); ?></span><span><?php echo esc_html( $data['municipio'] ?? '' ); ?><?php echo ! empty( $data['uf'] ) ? esc_html( ' / ' . $data['uf'] ) : ''; ?></span></summary>
 							<div class="fafar-cemed-item-body">
 								<?php if ( $public_post_id ) : ?>
 									<p class="fafar-cemed-published"><strong>Resposta publicada:</strong> <a href="<?php echo esc_url( get_permalink( $public_post_id ) ); ?>" target="_blank" rel="noopener noreferrer">Abrir o post com a pergunta e a resposta ↗</a></p>
 									<div class="fafar-cemed-post-actions" aria-label="Ações do post publicado">
 										<?php $edit_post_url = get_edit_post_link( $public_post_id, '' ); ?>
-										<?php if ( $edit_post_url ) : ?><a class="ffds-btn ffds-btn-secondary" href="<?php echo esc_url( $edit_post_url ); ?>">Editar post</a><?php endif; ?>
+										<?php if ( $edit_post_url ) : ?><a class="<?php echo ! empty( $fafar_cemed_admin ) ? 'button' : 'ffds-btn ffds-btn-secondary'; ?>" href="<?php echo esc_url( $edit_post_url ); ?>">Editar post</a><?php endif; ?>
 										<?php if ( current_user_can( 'delete_post', $public_post_id ) ) : ?>
-											<form method="post" action="<?php echo esc_url( get_permalink( get_queried_object_id() ) ); ?>" data-cemed-delete-post data-confirm="Excluir este post? Ele será enviado para a lixeira e poderá ser recuperado pelo painel administrativo.">
+											<form method="post" action="<?php echo esc_url( fafar_cemed_management_url() ); ?>" data-cemed-delete-post data-confirm="Excluir este post? Ele será enviado para a lixeira e poderá ser recuperado pelo painel administrativo.">
 												<?php wp_nonce_field( 'fafar_cemed_delete_public_post_' . $question_id . '_' . $public_post_id, 'fafar_cemed_delete_nonce' ); ?>
 												<input type="hidden" name="fafar_cemed_manage_action" value="delete_public_post">
 												<input type="hidden" name="cemed_question_id" value="<?php echo esc_attr( $question_id ); ?>">
 												<input type="hidden" name="cemed_public_post_id" value="<?php echo esc_attr( $public_post_id ); ?>">
 												<input type="hidden" name="cemed_page_number" value="<?php echo esc_attr( $page_number ); ?>">
-												<button class="ffds-btn ffds-btn-danger" type="submit">Excluir post</button>
+												<button class="<?php echo ! empty( $fafar_cemed_admin ) ? 'button button-link-delete' : 'ffds-btn ffds-btn-danger'; ?>" type="submit">Excluir post</button>
 											</form>
 										<?php endif; ?>
 									</div>
@@ -217,7 +276,7 @@ get_header();
 									<dl><dt>Dúvida esclarecida</dt><dd><?php echo esc_html( $feedback['duvida_esclarecida'] ?? '—' ); ?></dd><dt>Linguagem clara</dt><dd><?php echo esc_html( $feedback['linguagem_clara'] ?? '—' ); ?></dd><dt>Nota</dt><dd><?php echo esc_html( $feedback['nota'] ?? '—' ); ?> / 5</dd><dt>Comentários</dt><dd><?php echo nl2br( esc_html( $feedback['comentarios'] ?? '—' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped before nl2br. ?></dd></dl>
 								<?php endif; ?>
 								<?php if ( is_user_logged_in() ) : ?>
-									<form class="fafar-cemed-manage" id="cemed-responder-<?php echo esc_attr( $question_id ); ?>" method="post" action="<?php echo esc_url( get_permalink( get_queried_object_id() ) ); ?>">
+									<form class="fafar-cemed-manage" id="cemed-responder-<?php echo esc_attr( $question_id ); ?>" method="post" action="<?php echo esc_url( fafar_cemed_management_url() ); ?>">
 										<h3><?php echo $public_post_id ? 'Atualizar resposta publicada' : 'Responder pergunta'; ?></h3>
 										<?php wp_nonce_field( 'fafar_cemed_manage_' . $question_id, 'fafar_cemed_manage_nonce' ); ?>
 										<input type="hidden" name="fafar_cemed_manage_action" value="save">
@@ -248,9 +307,9 @@ get_header();
 						<div data-cemed-additional-details <?php echo 'Sim' === $additional_needed ? '' : 'hidden'; ?>><label for="cemed-informacoes-adicionais-detalhes-<?php echo esc_attr( $question_id ); ?>">Quais as informações adicionais foram solicitadas?</label><p class="fafar-cemed-help">Transcrever as informações adicionais solicitadas e as respostas obtidas.</p><textarea id="cemed-informacoes-adicionais-detalhes-<?php echo esc_attr( $question_id ); ?>" name="cemed_informacoes_adicionais_detalhes" rows="4" maxlength="10000"><?php echo esc_textarea( $additional_details ); ?></textarea></div>
 											<p class="fafar-cemed-help">Salvar rascunho registra os campos preenchidos. Responder ao usuário envia a pergunta e a resposta por e-mail, sem criar um post. Publicar cria ou atualiza o post com comentários abertos e envia os links da resposta e da avaliação. No dev, o envio real é desativado.</p>
 										<div class="fafar-cemed-manage-actions">
-							<button type="submit" name="cemed_action" value="draft">Salvar rascunho</button>
-							<button type="submit" name="cemed_action" value="respond_user">Responder ao Usuário</button>
-							<button type="submit" name="cemed_action" value="publish"><?php echo $public_post_id ? 'Atualizar post publicado' : 'Publicar resposta'; ?></button>
+							<button <?php echo ! empty( $fafar_cemed_admin ) ? 'class="button"' : ''; ?> type="submit" name="cemed_action" value="draft">Salvar rascunho</button>
+							<button <?php echo ! empty( $fafar_cemed_admin ) ? 'class="button"' : ''; ?> type="submit" name="cemed_action" value="respond_user">Responder ao Usuário</button>
+							<button <?php echo ! empty( $fafar_cemed_admin ) ? 'class="button button-primary"' : ''; ?> type="submit" name="cemed_action" value="publish"><?php echo $public_post_id ? 'Atualizar post publicado' : 'Publicar resposta'; ?></button>
 										</div>
 									</form>
 								<?php elseif ( $answer ) : ?>
@@ -260,14 +319,14 @@ get_header();
 						</details>
 					<?php endwhile; wp_reset_postdata(); ?>
 					<?php if ( $questions->max_num_pages > 1 ) : ?>
-						<nav class="fafar-cemed-pagination" aria-label="Páginas de perguntas"><?php echo wp_kses_post( paginate_links( array( 'base' => add_query_arg( 'pagina', '%#%', get_permalink() ), 'format' => '', 'current' => $page_number, 'total' => $questions->max_num_pages, 'prev_text' => '← Anterior', 'next_text' => 'Próxima →' ) ) ); ?></nav>
+						<nav class="fafar-cemed-pagination" aria-label="Páginas de perguntas"><?php echo wp_kses_post( paginate_links( array( 'base' => add_query_arg( 'pagina', '%#%', fafar_cemed_management_url() ), 'format' => '', 'current' => $page_number, 'total' => $questions->max_num_pages, 'prev_text' => '← Anterior', 'next_text' => 'Próxima →' ) ) ); ?></nav>
 					<?php endif; ?>
 				<?php else : ?>
-					<p>Nenhuma pergunta recebida até agora.</p>
+					<p><?php echo $detail_id ? 'Pergunta não encontrada.' : 'Nenhuma pergunta recebida até agora.'; ?></p>
+				<?php endif; ?>
 				<?php endif; ?>
 			</div>
-		</article>
-	<?php endwhile; ?>
+		<?php if ( empty( $fafar_cemed_admin ) ) : ?></article><?php else : ?></div><?php endif; ?>
 </div>
 
-<?php get_footer(); ?>
+<?php if ( empty( $fafar_cemed_admin ) ) { get_footer(); } ?>

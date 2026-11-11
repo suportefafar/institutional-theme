@@ -1,0 +1,67 @@
+/* Use WordPress admin controls while retaining the Cemed layout. */
+.wp-admin .fafar-cemed-item {
+	border: 1px solid #c3c4c7;
+	background: #fff;
+}
+.wp-admin .fafar-cemed-item summary {
+	background: #f6f7f7;
+}
+.wp-admin .fafar-cemed-item summary span {
+	color: #50575e;
+}
+.wp-admin .fafar-cemed-item-body dt,
+.wp-admin .fafar-cemed-item-body dd {
+	border-color: #dcdcde;
+}
+.wp-admin .fafar-cemed-manage {
+	border-color: #dcdcde;
+}
+.wp-admin .fafar-cemed-manage select,
+.wp-admin .fafar-cemed-manage textarea,
+.wp-admin .fafar-cemed-manage input:not([type="checkbox"]):not([type="radio"]) {
+	background: #fff;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	color: #2c3338;
+	padding: 2px 8px;
+	font: inherit;
+}
+.wp-admin .fafar-cemed-manage .wp-editor-wrap {
+	border: 0;
+	border-radius: 0;
+	overflow: visible;
+}
+.wp-admin .fafar-cemed-manage .wp-editor-container textarea {
+	border: 0;
+	border-radius: 0;
+}
+.wp-admin .fafar-cemed-manage .mce-toolbar-grp {
+	background: #f0f0f1;
+	border-color: #c3c4c7;
+}
+.wp-admin .fafar-cemed-manage-actions .button,
+.wp-admin .fafar-cemed-manage-actions .button:first-child:not(:last-child) {
+	background: #f6f7f7;
+	border: 1px solid #2271b1;
+	color: #2271b1;
+	font: inherit;
+	padding: 0 10px;
+}
+.wp-admin .fafar-cemed-manage-actions .button:hover,
+.wp-admin .fafar-cemed-manage-actions .button:focus {
+	background: #f0f0f1;
+	border-color: #135e96;
+	color: #135e96;
+}
+.wp-admin .fafar-cemed-manage-actions .button-primary,
+.wp-admin .fafar-cemed-manage-actions .button-primary:hover,
+.wp-admin .fafar-cemed-manage-actions .button-primary:focus {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+.wp-admin .fafar-cemed-manage-actions .button-primary:hover,
+.wp-admin .fafar-cemed-manage-actions .button-primary:focus {
+	background: #135e96;
+	border-color: #135e96;
+}

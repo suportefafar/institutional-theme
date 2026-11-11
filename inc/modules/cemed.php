@@ -108,7 +108,7 @@ function fafar_cemed_register_post_type() {
 			'exclude_from_search' => true,
 			'publicly_queryable'  => false,
 			'show_ui'             => true,
-			'show_in_menu'        => true,
+			'show_in_menu'        => false,
 			'show_in_rest'        => false,
 			'supports'            => array( 'title', 'editor' ),
 			'capability_type'     => 'post',
@@ -566,7 +566,7 @@ function fafar_cemed_delete_public_post() {
 	update_post_meta( $question_id, '_cemed_atualizada_por', get_current_user_id() );
 
 	$page_number = max( 1, absint( fafar_cemed_post_value( 'cemed_page_number' ) ) );
-	wp_safe_redirect( add_query_arg( array( 'excluida' => $question_id, 'confirmacao' => wp_create_nonce( 'fafar_cemed_deleted_' . $question_id ), 'pagina' => $page_number ), get_permalink() ) . '#cemed-pergunta-' . $question_id, 303 );
+	wp_safe_redirect( add_query_arg( array( 'excluida' => $question_id, 'confirmacao' => wp_create_nonce( 'fafar_cemed_deleted_' . $question_id ), 'pagina' => $page_number ), fafar_cemed_management_url() ) . '#cemed-pergunta-' . $question_id, 303 );
 	exit;
 }
 
@@ -677,7 +677,7 @@ function fafar_cemed_manage_question() {
 	}
 
 	$page_number = max( 1, absint( fafar_cemed_post_value( 'cemed_page_number' ) ) );
-	wp_safe_redirect( add_query_arg( array( 'atualizada' => $post_id, 'confirmacao' => wp_create_nonce( 'fafar_cemed_updated_' . $post_id ), 'pagina' => $page_number ), get_permalink() ) . '#cemed-pergunta-' . $post_id, 303 );
+	wp_safe_redirect( add_query_arg( array( 'atualizada' => $post_id, 'confirmacao' => wp_create_nonce( 'fafar_cemed_updated_' . $post_id ), 'pagina' => $page_number ), fafar_cemed_management_url() ) . '#cemed-pergunta-' . $post_id, 303 );
 	exit;
 }
 
@@ -731,3 +731,39 @@ function fafar_cemed_handle_feedback( $question, $token ) {
 	wp_safe_redirect( add_query_arg( array( 'codigo' => $token, 'enviado' => '1' ), get_permalink() ), 303 );
 	exit;
 }
+
+/** Gestão das perguntas no painel administrativo. */
+add_action( 'admin_menu', function () {
+	add_menu_page( 'Gerenciar perguntas Cemed', 'Gerenciar perguntas Cemed', 'manage_options', 'cemed-perguntas', 'fafar_cemed_admin_page', 'dashicons-format-chat' );
+} );
+add_action( 'admin_init', function () {
+	if ( ! isset( $_GET['page'] ) || 'cemed-perguntas' !== $_GET['page'] || ! current_user_can( 'manage_options' ) ) { return; }
+	$GLOBALS['fafar_cemed_admin_result'] = fafar_cemed_delete_public_post();
+	if ( null === $GLOBALS['fafar_cemed_admin_result'] ) { $GLOBALS['fafar_cemed_admin_result'] = fafar_cemed_manage_question(); }
+} );
+add_action( 'admin_enqueue_scripts', function ( $hook ) {
+	if ( 'toplevel_page_cemed-perguntas' !== $hook ) { return; }
+	$dir = get_stylesheet_directory();
+	$uri = get_stylesheet_directory_uri();
+	wp_enqueue_style( 'fafar-cemed-admin', $uri . '/assets/css/cemed.css', array(), filemtime( $dir . '/assets/css/cemed.css' ) );
+	wp_enqueue_style( 'fafar-cemed-admin-overrides', $uri . '/assets/css/cemed-admin.css', array( 'fafar-cemed-admin' ), filemtime( $dir . '/assets/css/cemed-admin.css' ) );
+	wp_enqueue_script( 'fafar-cemed-management', $uri . '/assets/js/cemed-management.js', array(), filemtime( $dir . '/assets/js/cemed-management.js' ), true );
+	wp_enqueue_editor();
+} );
+function fafar_cemed_admin_page() {
+	if ( ! current_user_can( 'manage_options' ) ) { wp_die( 'Acesso negado.' ); }
+	$fafar_cemed_admin = true;
+	include get_stylesheet_directory() . '/page-gerenciar-perguntas-cemed.php';
+}
+function fafar_cemed_management_url() {
+	if ( is_admin() ) {
+		$args = array( 'page' => 'cemed-perguntas' );
+		foreach ( array( 'busca', 'de', 'ate', 'pagina', 'pergunta' ) as $key ) {
+			if ( isset( $_GET[ $key ] ) && is_scalar( $_GET[ $key ] ) ) { $args[ $key ] = sanitize_text_field( wp_unslash( $_GET[ $key ] ) ); }
+		}
+		return add_query_arg( $args, admin_url( 'admin.php' ) );
+	}
+	return get_permalink();
+}
+
+require_once __DIR__ . '/cemed-report.php';

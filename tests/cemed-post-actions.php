@@ -20,6 +20,7 @@ function add_filter( ...$args ) {}
 function absint( $value ) { return abs( (int) $value ); }
 function wp_unslash( $value ) { return $value; }
 function is_user_logged_in() { return true; }
+function is_admin() { return false; }
 function get_post( $id ) { return $GLOBALS['posts'][ $id ] ?? null; }
 function get_post_meta( $id, $key, $single ) { return $GLOBALS['meta'][ $id ][ $key ] ?? ''; }
 function current_user_can( $capability, $id ) { return 'delete_post' === $capability && $GLOBALS['can_delete']; }
