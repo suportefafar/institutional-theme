@@ -191,6 +191,7 @@ get_header();
 
 							<div class="fafar-file-grid">
 								<div class="fafar-file-field"><label for="ArquivoDiplomaGraduacao">Cópia, frente e verso em arquivo único, do diploma de graduação em Farmácia ou em áreas afins reconhecido pelo MEC <span aria-hidden="true">*</span></label><input id="ArquivoDiplomaGraduacao" name="ArquivoDiplomaGraduacao" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
+								<div class="fafar-file-field"><label for="ArquivoHistoricoGraduacao">Histórico escolar do curso de graduação <span aria-hidden="true">*</span></label><input id="ArquivoHistoricoGraduacao" name="ArquivoHistoricoGraduacao" type="file" accept=".pdf,application/pdf" data-max-size="8388608" required></div>
 							</div>
 
 							<div class="fafar-conditional fafar-file-grid" data-condition="doutorado" hidden>

@@ -311,6 +311,7 @@ function fafar_ppgact_file_rules() {
 		'ArquivoCPF',
 		'ArquivoPassaporte',
 		'ArquivoDiplomaGraduacao',
+		'ArquivoHistoricoGraduacao',
 		'ArquivoProjetoTese',
 		'ArquivoDiplomaMestrado',
 		'ArquivoHistoricoPosGraduacao',
@@ -889,6 +890,7 @@ function fafar_ppgact_required_files( $data ) {
 		'ArquivoCertidaoQuitacaoEleitoral',
 		'ArquivoComprovanteResidencia',
 		'ArquivoDiplomaGraduacao',
+		'ArquivoHistoricoGraduacao',
 	);
 
 	$type  = isset( $data['TipoDaVaga'] ) ? $data['TipoDaVaga'] : '';

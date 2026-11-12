@@ -94,6 +94,10 @@ foreach(['Mestrado','Doutorado'] as $level) {
 $master_files=fafar_ppgact_required_files(['NivelDaVaga'=>'Mestrado']);
 $doctor_files=fafar_ppgact_required_files(['NivelDaVaga'=>'Doutorado']);
 check(!in_array('ArquivoProjetoTese',$master_files,true) && in_array('ArquivoProjetoTese',$doctor_files,true),'Documentos de doutorado exigidos no mestrado.');
+foreach(['Mestrado','Doutorado'] as $level) foreach(['Ampla concorrência','Estrangeiro'] as $type) {
+    check(in_array('ArquivoHistoricoGraduacao',fafar_ppgact_required_files(['NivelDaVaga'=>$level,'TipoDaVaga'=>$type]),true),'Histórico de graduação não é obrigatório para '.$level.' / '.$type.'.');
+}
+check(fafar_ppgact_file_rules()['ArquivoHistoricoGraduacao']===['pdf'],'Histórico de graduação não aceita PDF.');
 echo "PASS: uploads e submissão do mestrado encerrado bloqueados mesmo com doutorado aberto.\n";
 settings_request(saved());
 check(fafar_ppgact_save_registration_schedules_from_request()===true,'Não salvou configuração.');
@@ -158,6 +162,7 @@ foreach($timeline as [$time,$expected,$status]) {
     $xml=xpath($html);$actual=[];
     foreach($xml->query('//input[@name="NivelDaVaga"]') as $node) { $actual[]=$node->getAttribute('value'); }
     check($actual===$expected,'Formulário exibe nível fora do período em '.$time);
+    check($xml->query('//input[@name="ArquivoHistoricoGraduacao" and @type="file" and @required]')->length===1,'Histórico de graduação obrigatório ausente em '.$time);
     if($expected) check($xml->query('//input[@name="NivelDaVaga" and @checked]')->length===1,'Nenhum nível inicialmente selecionado.');
 }
 $GLOBALS['now']=new DateTimeImmutable('2026-11-06T10:00',wp_timezone());

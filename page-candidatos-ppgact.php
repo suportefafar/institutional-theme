@@ -95,6 +95,7 @@ $document_labels = array(
 	'ArquivoCPF'                             => 'CPF (documento)',
 	'ArquivoPassaporte'                      => 'Passaporte (documento)',
 	'ArquivoDiplomaGraduacao'                => 'Diploma de graduação',
+	'ArquivoHistoricoGraduacao'              => 'Histórico escolar da graduação',
 	'ArquivoProjetoTese'                     => 'Pré-projeto de tese',
 	'ArquivoDiplomaMestrado'                 => 'Diploma de mestrado ou ata de defesa',
 	'ArquivoHistoricoPosGraduacao'           => 'Histórico escolar da pós-graduação',
