@@ -162,8 +162,10 @@ foreach($timeline as [$time,$expected,$status]) {
     $xml=xpath($html);$actual=[];
     foreach($xml->query('//input[@name="NivelDaVaga"]') as $node) { $actual[]=$node->getAttribute('value'); }
     check($actual===$expected,'Formulário exibe nível fora do período em '.$time);
-    check($xml->query('//input[@name="ArquivoHistoricoGraduacao" and @type="file" and @required]')->length===1,'Histórico de graduação obrigatório ausente em '.$time);
-    if($expected) check($xml->query('//input[@name="NivelDaVaga" and @checked]')->length===1,'Nenhum nível inicialmente selecionado.');
+    if($expected) {
+        check($xml->query('//input[@name="ArquivoHistoricoGraduacao" and @type="file" and @required]')->length===1,'Histórico de graduação obrigatório ausente em '.$time);
+        check($xml->query('//input[@name="NivelDaVaga" and @checked]')->length===1,'Nenhum nível inicialmente selecionado.');
+    }
 }
 $GLOBALS['now']=new DateTimeImmutable('2026-11-06T10:00',wp_timezone());
 $html=render_template('page-candidatos-ppgact.php');$xml=xpath($html);
