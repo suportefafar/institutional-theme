@@ -8,7 +8,7 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: institutional-theme
 */
 @font-face{font-family:'DM Sans';font-style:normal;font-weight:100 1000;font-display:swap;src:url('assets/fonts/dm-sans-latin.woff2') format('woff2')}
-@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;src:url('assets/fonts/playfair-display-latin.woff2') format('woff2')}
+@font-face{font-family:'Exo';font-style:normal;font-weight:100 900;font-display:swap;src:url('assets/fonts/exo-latin.woff2') format('woff2')}
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-padding-top:var(--space-6);color-scheme:light}
 body.fafar-site{margin:0;background:var(--color-gray-50);color:var(--color-gray-800);font-family:var(--font-body);line-height:1.65}
