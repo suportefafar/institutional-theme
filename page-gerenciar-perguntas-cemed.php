@@ -222,7 +222,7 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 									<div class="fafar-cemed-post-actions" aria-label="Ações do post publicado">
 										<?php $edit_post_url = get_edit_post_link( $public_post_id, '' ); ?>
 										<?php if ( $edit_post_url ) : ?><a class="<?php echo ! empty( $fafar_cemed_admin ) ? 'button' : 'ffds-btn ffds-btn-secondary'; ?>" href="<?php echo esc_url( $edit_post_url ); ?>">Editar post</a><?php endif; ?>
-										<?php if ( current_user_can( 'delete_post', $public_post_id ) ) : ?>
+										<?php if ( ! empty( $fafar_cemed_admin ) ? current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) : current_user_can( 'delete_post', $public_post_id ) ) : ?>
 											<form method="post" action="<?php echo esc_url( fafar_cemed_management_url() ); ?>" data-cemed-delete-post data-confirm="Excluir este post? Ele será enviado para a lixeira e poderá ser recuperado pelo painel administrativo.">
 												<?php wp_nonce_field( 'fafar_cemed_delete_public_post_' . $question_id . '_' . $public_post_id, 'fafar_cemed_delete_nonce' ); ?>
 												<input type="hidden" name="fafar_cemed_manage_action" value="delete_public_post">

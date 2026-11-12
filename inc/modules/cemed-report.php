@@ -3,12 +3,12 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 add_action( 'admin_menu', function () {
-	add_submenu_page( 'cemed-perguntas', 'Relatório de perguntas', 'Relatórios', 'manage_options', 'cemed-relatorios', 'fafar_cemed_report_form' );
+	add_submenu_page( 'cemed-perguntas', 'Relatório de perguntas', 'Relatórios', FAFAR_CEMED_MANAGE_CAPABILITY, 'cemed-relatorios', 'fafar_cemed_report_form' );
 } );
 add_action( 'admin_post_fafar_cemed_report', 'fafar_cemed_report_download' );
 
 function fafar_cemed_report_form() {
-	if ( ! current_user_can( 'manage_options' ) ) { wp_die( 'Acesso negado.' ); }
+	if ( ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) ) { wp_die( 'Acesso negado.' ); }
 	?>
 	<div class="wrap">
 		<h1>Relatório de perguntas Cemed</h1>
@@ -66,7 +66,7 @@ function fafar_cemed_report_pdf( $lines ) {
 }
 
 function fafar_cemed_report_download() {
-	if ( ! current_user_can( 'manage_options' ) ) { wp_die( 'Acesso negado.' ); }
+	if ( ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) ) { wp_die( 'Acesso negado.' ); }
 	check_admin_referer( 'fafar_cemed_report' );
 	$values = array();
 	foreach ( array( 'de', 'ate', 'ano', 'tema' ) as $key ) {
