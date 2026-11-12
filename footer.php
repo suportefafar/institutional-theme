@@ -13,7 +13,18 @@ foreach ( array( 'primary', 'secondary_menu' ) as $location ) {
 $footer_links['Intranet'] = $footer_links['Intranet'] ?? 'https://intranet.farmacia.ufmg.br/';
 $footer_groups = array(
 	'A Faculdade' => array( 'História' => 'História', 'Administração' => 'Administração', 'Corpo Docente' => 'Corpo docente', 'CENEX' => 'Extensão · CENEX', 'NAPQ' => 'Pesquisa · NAPQ', 'Eventos' => 'Eventos' ),
-	'Ensino e recursos' => array( 'O Curso' => 'Farmácia', 'Biomedicina' => 'Biomedicina', 'Biblioteca' => 'Biblioteca', 'Editais' => 'Editais', 'Mapa de Salas' => 'Mapa de salas', 'Ementas - Validar' => 'Validar ementas', 'Intranet' => 'Intranet' ),
+	'Ensino e recursos' => array( 'O Curso' => 'Farmácia', 'Biomedicina' => 'Biomedicina', 'Biblioteca' => 'Biblioteca', 'Editais' => 'Editais', 'Mapa de Salas' => 'Mapa de salas', 'Ementas - Validar' => 'Validar ementas' ),
+);
+$footer_applications = array(
+	'Nodus' => 'https://nodus.farmacia.ufmg.br/',
+	'ChatRápido' => 'https://chatrapido.farmacia.ufmg.br/',
+	'Ciclum' => 'https://ciclum.farmacia.ufmg.br/',
+	'Redação' => 'https://redacao.farmacia.ufmg.br/',
+	'StageManager' => 'https://stagemanager.farmacia.ufmg.br/',
+	'Athenas' => 'https://athenas.farmacia.ufmg.br/',
+	'Cloud' => 'https://cloud.farmacia.ufmg.br/',
+	'LARAS 2026' => 'https://laras2026.farmacia.ufmg.br/',
+	'Intranet' => $footer_links['Intranet'],
 );
 ?>
 <footer class="site-footer">
@@ -27,6 +38,14 @@ $footer_groups = array(
 				<?php endforeach; ?></ul>
 			</nav>
 		<?php endforeach; ?>
+		<nav class="footer-group" aria-label="Aplicações">
+			<h2>Aplicações</h2>
+			<ul>
+				<?php foreach ( $footer_applications as $label => $url ) : ?>
+					<li><a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="<?php echo in_array( $label, array( 'Athenas', 'Intranet' ), true ) ? 'nofollow noopener' : 'noopener'; ?>"><?php echo esc_html( $label ); ?></a></li>
+				<?php endforeach; ?>
+			</ul>
+		</nav>
 		</div>
 		<a class="footer-feature" href="<?php echo esc_url( $footer_links['Institucional'] ?? home_url( '/' ) ); ?>">
 			<img src="<?php echo esc_url( get_stylesheet_directory_uri() . '/assets/img/fafar-vista-aerea.jpeg' ); ?>" width="600" height="600" alt="Vista aérea da Faculdade de Farmácia da UFMG" loading="lazy">
