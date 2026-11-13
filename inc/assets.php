@@ -20,6 +20,9 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'fafar-theme', $uri . '/style.css', $deps, filemtime( $dir . '/style.css' ) );
 	wp_enqueue_script( 'fafar-navigation', $uri . '/assets/js/navigation.js', array(), filemtime( $dir . '/assets/js/navigation.js' ), true );
 	if ( is_page( 'comece-por-aqui' ) ) {
+		if ( isset( $_GET['procedimentos'] ) && '1' === $_GET['procedimentos'] ) {
+			wp_enqueue_script( 'fafar-student-procedures', $uri . '/assets/js/student-procedures.js', array(), filemtime( $dir . '/assets/js/student-procedures.js' ), true );
+		}
 		wp_enqueue_style( 'fafar-student-guide', $uri . '/assets/css/student-guide.css', array( 'fafar-theme' ), filemtime( $dir . '/assets/css/student-guide.css' ) );
 	}
 	if ( is_page( 'matricula-disciplina-isolada-ppgmaf-personalizada' ) ) {

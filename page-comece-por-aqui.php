@@ -2,6 +2,11 @@
 /** Guia de primeiros passos para estudantes da Faculdade de Farmácia. */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
+if ( isset( $_GET['procedimentos'] ) && '1' === $_GET['procedimentos'] ) {
+	require __DIR__ . '/template-procedimentos-estudantes.php';
+	return;
+}
+
 get_header();
 $home = untrailingslashit( home_url( '/' ) );
 ?>
@@ -34,10 +39,12 @@ $home = untrailingslashit( home_url( '/' ) );
 	<section class="student-guide-section" id="vida-academica" aria-labelledby="student-guide-academic-title">
 		<div class="student-guide-section-heading"><span class="student-guide-number">02</span><div><p class="student-guide-overline">Organize seu percurso</p><h2 id="student-guide-academic-title">Vida acadêmica</h2></div></div>
 		<div class="student-guide-grid">
-			<a class="student-guide-card" href="<?php echo esc_url( $home . '/matricula/' ); ?>"><span class="student-guide-card-icon" aria-hidden="true">↗</span><span class="student-guide-card-content"><strong>Matrícula</strong><span>Consulte orientações, etapas e cronogramas de matrícula da graduação.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
-			<a class="student-guide-card" href="<?php echo esc_url( $home . '/calendario-escolar-1/' ); ?>"><span class="student-guide-card-icon" aria-hidden="true">▦</span><span class="student-guide-card-content"><strong>Calendário acadêmico</strong><span>Acompanhe as datas importantes do semestre e do curso de Farmácia.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
+			<a class="student-guide-card student-guide-card--biomedicina" href="<?php echo esc_url( $home . '/matricula/' ); ?>"><span class="student-guide-card-icon" aria-hidden="true">↗</span><span class="student-guide-card-content"><strong>Matrícula · Biomedicina</strong><span>Consulte orientações, etapas e cronogramas de matrícula.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
+			<a class="student-guide-card student-guide-card--farmacia" href="<?php echo esc_url( $home . '/calendario-escolar-1/' ); ?>"><span class="student-guide-card-icon" aria-hidden="true">↗</span><span class="student-guide-card-content"><strong>Matrícula · Farmácia</strong><span>Consulte os prazos de matrícula no calendário do curso.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
+			<a class="student-guide-card student-guide-card--biomedicina" href="<?php echo esc_url( $home . '/calendario/' ); ?>"><span class="student-guide-card-icon" aria-hidden="true">▦</span><span class="student-guide-card-content"><strong>Calendário acadêmico · Biomedicina</strong><span>Acompanhe as datas importantes do curso.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
+			<a class="student-guide-card student-guide-card--farmacia" href="<?php echo esc_url( $home . '/calendario-escolar-1/' ); ?>"><span class="student-guide-card-icon" aria-hidden="true">▦</span><span class="student-guide-card-content"><strong>Calendário acadêmico · Farmácia</strong><span>Acompanhe as datas importantes do curso.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
 			<a class="student-guide-card" href="https://sistemas.ufmg.br/" target="_blank" rel="noopener noreferrer"><span class="student-guide-card-icon" aria-hidden="true">▤</span><span class="student-guide-card-content"><strong>SiGA e requerimentos</strong><span>Acesse o sistema acadêmico para acompanhar sua vida escolar e fazer solicitações.</span></span><span class="student-guide-arrow" aria-hidden="true">↗</span></a>
-		<a class="student-guide-card" href="<?php echo esc_url( $home . '/farmacia/' ); ?>"><span class="student-guide-card-icon" aria-hidden="true">＋</span><span class="student-guide-card-content"><strong>Procedimentos e documentos</strong><span>Encontre orientações sobre trancamento, colação de grau e outros assuntos acadêmicos.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
+		<a class="student-guide-card" href="<?php echo esc_url( add_query_arg( 'procedimentos', '1', $home . '/comece-por-aqui/' ) ); ?>"><span class="student-guide-card-icon" aria-hidden="true">＋</span><span class="student-guide-card-content"><strong>Procedimentos e documentos</strong><span>Encontre orientações sobre trancamento, colação de grau e outros assuntos acadêmicos.</span></span><span class="student-guide-arrow" aria-hidden="true">→</span></a>
 		</div>
 		<p class="student-guide-note">Precisa consultar horários, currículo ou regras do curso? <a href="<?php echo esc_url( $home . '/farmacia/' ); ?>">Acesse as informações da graduação em Farmácia</a>.</p>
 	</section>
