@@ -1,0 +1,1728 @@
+{
+  "biomedicina": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "ACT080",
+      "nome": "INTRODUÇÃO À BIOMEDICINA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF143",
+      "nome": "CITOLOGIA E HISTOLOGIA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIG157",
+      "nome": "GENÉTICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "MOF143"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FIB618",
+      "nome": "BIOFÍSICA B",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "MOF008",
+      "nome": "EMBRIOLOGIA GERAL",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "FIB619",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 75,
+      "pratica": 15,
+      "requisitos": "MOF143, FIB618, MOF009"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI095",
+      "nome": "INTRODUÇÃO À QUÍMICA ORGÂNICA",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI297",
+      "nome": "QUÍMICA ANALÍTICA EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI298",
+      "nome": "QUÍMICA ANALÍTICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "BIQ058",
+      "nome": "BIOLOGIA MOLECULAR F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "FAR122",
+      "nome": "FARMACOLOGIA BÁSICA",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FIB618, FIB619, BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "MIC123",
+      "nome": "MICROBIOLOGIA BÁSICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "MOF143, BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAG011",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ602, FIB619"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAR106",
+      "nome": "PARASITOLOGIA HUMANA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "MOF143, BIQ602"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT017",
+      "nome": "BIOLOGIA MOLECULAR APLICADA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "BIG157, BIQ058"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT026",
+      "nome": "ETICA E LEGISLACAO BIOMEDICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT080"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT140",
+      "nome": "BIOQUÍMICA CLÍNICA I",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT605",
+      "nome": "IMUNOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT081",
+      "nome": "TOXICOLOGIA AMBIENTAL",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FAR122"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT141",
+      "nome": "BACTERIOLOGIA CLÍNICA",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "MIC123"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT142",
+      "nome": "BIOQUÍMICA CLÍNICA II",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "ACT140, QUI095"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "FAS135",
+      "nome": "EPIDEMIOLOGIA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "EST083"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT045",
+      "nome": "HEMATOLOGIA CLINICA",
+      "total": 105,
+      "teorica": 45,
+      "pratica": 60,
+      "requisitos": "FIB619"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT143",
+      "nome": "PARASITOLOGIA CLÍNICA",
+      "total": 60,
+      "teorica": 15,
+      "pratica": 45,
+      "requisitos": "PAR106, ACT605"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ALM139",
+      "nome": "MÉTODOS ANALÍTICOS APLICADOS A ALIMENTOS",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "QUI297, MIC123, QUI298"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAS135"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT016",
+      "nome": "RADIOISOTOPOS EM DIAGNOSTICO",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT018",
+      "nome": "GESTAO DA QUALIDADE NO LAB. CLINICO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT141, ACT142, ACT045"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT072",
+      "nome": "MICOLOGIA CLINICA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "MIC123"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT082",
+      "nome": "ATIVIDADE INTEGRADORA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT142, ACT045"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT602",
+      "nome": "CITOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "PAG011"
+    },
+    {
+      "periodo": 9,
+      "tipo": "ETG",
+      "codigo": "ACT144",
+      "nome": "ESTÁGIO EM CIÊNCIAS BIOMÉDICAS I",
+      "total": 330,
+      "teorica": 30,
+      "pratica": 300,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "ACT086",
+      "nome": "MONOGRAFIA DE CONCLUSÃO DE CURSO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 10,
+      "tipo": "ETG",
+      "codigo": "ACT145",
+      "nome": "ESTÁGIO EM CIÊNCIAS BIOMÉDICAS II",
+      "total": 315,
+      "teorica": 30,
+      "pratica": 285,
+      "requisitos": "ACT141, ACT142, ACT045"
+    }
+  ],
+  "farmacia-diurno": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "FAF116",
+      "nome": "ORIENTAÇÃO À VIDA ACADÊMICA",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "FAS112",
+      "nome": "FARMÁCIA E SOCIEDADE",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "FIB618",
+      "nome": "BIOFÍSICA B",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MAT130",
+      "nome": "MATEMATICA",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF143",
+      "nome": "CITOLOGIA E HISTOLOGIA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "PFA153",
+      "nome": "FUNDAMENTOS DE CIÊNCIAS FARMACÊUTICAS",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "PFA173",
+      "nome": "PROCESSO DE UTILIZAÇÃO DE MEDICAMENTOS",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIG157",
+      "nome": "GENÉTICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FAS117",
+      "nome": "CLÍNICA FARMACÊUTICA I",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "PFA173, FAS112"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FIB619",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 75,
+      "pratica": 15,
+      "requisitos": "MOF143, FIB618"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI291",
+      "nome": "QUÍMICA INORGÂNICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI292",
+      "nome": "QUÍMICA INORGÂNICA EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI299",
+      "nome": "ELEMENTOS DE FÍSICO-QUÍMICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "MAT130, QUI203, QUI204"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BOT035",
+      "nome": "BOTÂNICA F",
+      "total": 30,
+      "teorica": 20,
+      "pratica": 10,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 3,
+      "tipo": "ETG",
+      "codigo": "FAS124",
+      "nome": "ESTÁGIO INTRODUTÓRIO EM FARMÁCIA NA ATENÇÃO PRIMÁRIA À",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "FAS117"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "PAG611",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "FIB619"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "PAR026",
+      "nome": "PARASITOLOGIA HUMANA F",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "MOF143"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "PFA150",
+      "nome": "FARMACOCINÉTICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI299"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI207",
+      "nome": "QUIMICA ORGANICA I F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "FAR024",
+      "nome": "FARMACOLOGIA BASICA F",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FIB619, BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "MIC122",
+      "nome": "INTRODUÇÃO À MICROBIOLOGIA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAG612",
+      "nome": "PATOLOGIA DOS SISTEMAS",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "PAG611"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PFA158",
+      "nome": "CLÍNICA FARMACÊUTICA II",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "FAS117"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI210",
+      "nome": "QUIMICA ORGANICA EXPERIMENTAL F",
+      "total": 60,
+      "teorica": 0,
+      "pratica": 60,
+      "requisitos": "QUI207"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI294",
+      "nome": "QUÍMICA ORGÂNICA II F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "QUI207"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI297",
+      "nome": "QUÍMICA ANALÍTICA EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI291, QUI292"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI298",
+      "nome": "QUÍMICA ANALÍTICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI291, QUI292"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT127",
+      "nome": "DIAGNÓSTICO LABORATORIAL DAS DOENÇAS HUMANAS I",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "PAG612"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAF117",
+      "nome": "SEMIOLOGIA FARMACÊUTICA E HABILIDADES CLÍNICAS I",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAR024, PAG612"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAS011",
+      "nome": "ETICA E LEGISLACAO FARMACEUTICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAS113",
+      "nome": "FARMACOEPIDEMIOLOGIA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "FAR024, EST083, FAS112"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "PFA026",
+      "nome": "QUIMICA FARMACEUTICA E MEDICINAL I",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "FAR024, QUI210, QUI294"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "PFA154",
+      "nome": "FARMACOTERAPIA I",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "FAR024, PAG612"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "PFA175",
+      "nome": "BASES QUÍMICAS E MOLECULARES DE PRODUTOS NATURAIS",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI210, QUI294"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT124",
+      "nome": "TOXICOLOGIA",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FAR024"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT128",
+      "nome": "DIAGNÓSTICO LABORATORIAL DE DOENÇAS HUMANAS II",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ602, PAR026, MIC122"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "FAS114",
+      "nome": "ASSISTÊNCIA FARMACÊUTICA",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "PFA173, FAS011"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "PFA155",
+      "nome": "FARMACOTERAPIA II",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAR024, PAR026, PFA026, MIC122"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "PFA174",
+      "nome": "SEMIOLOGIA FARMACÊUTICA E HABILIDADE CLÍNÍCAS II",
+      "total": 15,
+      "teorica": 0,
+      "pratica": 15,
+      "requisitos": "FAF117"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "PFA177",
+      "nome": "FARMACOTÉCNICA I",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "FAR024, QUI299"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "PFA603",
+      "nome": "FARMACOGNOSIA I",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "QUI298, PFA175"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "QUI295",
+      "nome": "QUÍMICA ANALÍTICA INSTRUMENTAL F",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "QUI297, QUI298"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ALM126",
+      "nome": "BROMATOLOGIA",
+      "total": 90,
+      "teorica": 75,
+      "pratica": 15,
+      "requisitos": "QUI298"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "FAS118",
+      "nome": "COMPETÊNCIAS CLÍNICAS AVANÇADAS I",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "FAS124, PFA154, PFA155"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "PFA028",
+      "nome": "FARMACOGNOSIA II",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "PFA603"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "PFA029",
+      "nome": "ANALISES FARMACOPEICAS",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "QUI295"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "PFA031",
+      "nome": "INTRODUCAO A FARMACIA HOSPITALAR",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAS113, FAS114, PFA154, PFA177, PFA155, PFA158"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "PFA169",
+      "nome": "MEDICAMENTOS BIOLÓGICOS I",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ602, BIG157"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "PFA178",
+      "nome": "FARMACOTÉCNICA II",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "PFA177"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT125",
+      "nome": "RADIOFARMACIA I",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "FIB619, QUI291"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT133",
+      "nome": "HABILIDADES LABORATORIAIS EM ANÁLISES CLÍNICAS E",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT127, ACT128"
+    },
+    {
+      "periodo": 8,
+      "tipo": "ETG",
+      "codigo": "FAS122",
+      "nome": "ESTÁGIO EM FARMÁCIA COMUNITÁRIA",
+      "total": 120,
+      "teorica": 15,
+      "pratica": 105,
+      "requisitos": "FAS114, FAS118"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "FAS133",
+      "nome": "METODOLOGIA DE PESQUISA CIENTÍFICA",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "FAS113"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "GES055",
+      "nome": "FUNDAMENTOS DE GESTÃO EM SAÚDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "PFA166",
+      "nome": "FARMACOTÉCNICA III",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "PFA178"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "PFA176",
+      "nome": "ASSUNTOS REGULATÓRIOS",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "PFA029, PFA177"
+    },
+    {
+      "periodo": 9,
+      "tipo": "ETG",
+      "codigo": "FAF107",
+      "nome": "ESTÁGIO EM ANÁLISES CLÍNICAS E TOXICOLÓGICAS E CIÊNCIA DE AL",
+      "total": 255,
+      "teorica": 15,
+      "pratica": 240,
+      "requisitos": "ACT133, ALM126"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "FAS134",
+      "nome": "MONOGRAFIA EM CIÊNCIAS FARMACÊUTICAS",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "FAS133"
+    },
+    {
+      "periodo": 10,
+      "tipo": "ETG",
+      "codigo": "FAF108",
+      "nome": "ESTÁGIO EM FÁRMACOS, MEDICAMENTOS, COSMÉTICOS E ASSISTÊNCIA",
+      "total": 435,
+      "teorica": 15,
+      "pratica": 420,
+      "requisitos": "PFA028, PFA029, FAS122, PFA031, PFA166"
+    }
+  ],
+  "farmacia-noturno": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "FAF116",
+      "nome": "ORIENTAÇÃO À VIDA ACADÊMICA",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "FAS112",
+      "nome": "FARMÁCIA E SOCIEDADE",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF143",
+      "nome": "CITOLOGIA E HISTOLOGIA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "PFA153",
+      "nome": "FUNDAMENTOS DE CIÊNCIAS FARMACÊUTICAS",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "PFA173",
+      "nome": "PROCESSO DE UTILIZAÇÃO DE MEDICAMENTOS",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIG157",
+      "nome": "GENÉTICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FAS117",
+      "nome": "CLÍNICA FARMACÊUTICA I",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "PFA173, FAS112"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "MAT130",
+      "nome": "MATEMATICA",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI291",
+      "nome": "QUÍMICA INORGÂNICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI292",
+      "nome": "QUÍMICA INORGÂNICA EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "ETG",
+      "codigo": "FAS124",
+      "nome": "ESTÁGIO INTRODUTÓRIO EM FARMÁCIA NA ATENÇÃO PRIMÁRIA À",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "FAS117"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "FIB618",
+      "nome": "BIOFÍSICA B",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "PAR026",
+      "nome": "PARASITOLOGIA HUMANA F",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "MOF143"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI207",
+      "nome": "QUIMICA ORGANICA I F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203, QUI204"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI299",
+      "nome": "ELEMENTOS DE FÍSICO-QUÍMICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "MAT130, QUI203, QUI204"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "FIB619",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 75,
+      "pratica": 15,
+      "requisitos": "MOF143, FIB618"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "MIC122",
+      "nome": "INTRODUÇÃO À MICROBIOLOGIA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PFA150",
+      "nome": "FARMACOCINÉTICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI299"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI210",
+      "nome": "QUIMICA ORGANICA EXPERIMENTAL F",
+      "total": 60,
+      "teorica": 0,
+      "pratica": 60,
+      "requisitos": "QUI207"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI294",
+      "nome": "QUÍMICA ORGÂNICA II F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "QUI207"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAR024",
+      "nome": "FARMACOLOGIA BASICA F",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FIB619, BIQ050"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAS011",
+      "nome": "ETICA E LEGISLACAO FARMACEUTICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "PAG611",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "FIB619"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "QUI297",
+      "nome": "QUÍMICA ANALÍTICA EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI291, QUI292"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "QUI298",
+      "nome": "QUÍMICA ANALÍTICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI291, QUI292"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "BOT035",
+      "nome": "BOTÂNICA F",
+      "total": 30,
+      "teorica": 20,
+      "pratica": 10,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "PAG612",
+      "nome": "PATOLOGIA DOS SISTEMAS",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "PAG611"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "PFA026",
+      "nome": "QUIMICA FARMACEUTICA E MEDICINAL I",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "FAR024, QUI210, QUI294"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "PFA158",
+      "nome": "CLÍNICA FARMACÊUTICA II",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "FAS117"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT127",
+      "nome": "DIAGNÓSTICO LABORATORIAL DAS DOENÇAS HUMANAS I",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "PAG612"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "FAF117",
+      "nome": "SEMIOLOGIA FARMACÊUTICA E HABILIDADES CLÍNICAS I",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAR024, PAG612"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "FAS113",
+      "nome": "FARMACOEPIDEMIOLOGIA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "FAR024, EST083, FAS112"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "FAS114",
+      "nome": "ASSISTÊNCIA FARMACÊUTICA",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "PFA173, FAS011"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "PFA154",
+      "nome": "FARMACOTERAPIA I",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "FAR024, PAG612"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "PFA175",
+      "nome": "BASES QUÍMICAS E MOLECULARES DE PRODUTOS NATURAIS",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI210, QUI294"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT124",
+      "nome": "TOXICOLOGIA",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FAR024"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT128",
+      "nome": "DIAGNÓSTICO LABORATORIAL DE DOENÇAS HUMANAS II",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ602, PAR026, MIC122"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "PFA155",
+      "nome": "FARMACOTERAPIA II",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAR024, PAR026, PFA026, MIC122"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "PFA174",
+      "nome": "SEMIOLOGIA FARMACÊUTICA E HABILIDADE CLÍNÍCAS II",
+      "total": 15,
+      "teorica": 0,
+      "pratica": 15,
+      "requisitos": "FAF117"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "PFA603",
+      "nome": "FARMACOGNOSIA I",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "QUI298, PFA175"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "QUI295",
+      "nome": "QUÍMICA ANALÍTICA INSTRUMENTAL F",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "QUI297, QUI298"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT133",
+      "nome": "HABILIDADES LABORATORIAIS EM ANÁLISES CLÍNICAS E",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT127, ACT128"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ALM126",
+      "nome": "BROMATOLOGIA",
+      "total": 90,
+      "teorica": 75,
+      "pratica": 15,
+      "requisitos": "QUI298"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "FAS118",
+      "nome": "COMPETÊNCIAS CLÍNICAS AVANÇADAS I",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "FAS124, PFA154, PFA155"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "PFA028",
+      "nome": "FARMACOGNOSIA II",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "PFA603"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "PFA177",
+      "nome": "FARMACOTÉCNICA I",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "FAR024, QUI299"
+    },
+    {
+      "periodo": 10,
+      "tipo": "ETG",
+      "codigo": "FAS122",
+      "nome": "ESTÁGIO EM FARMÁCIA COMUNITÁRIA",
+      "total": 120,
+      "teorica": 15,
+      "pratica": 105,
+      "requisitos": "FAS114, FAS118"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "FAS133",
+      "nome": "METODOLOGIA DE PESQUISA CIENTÍFICA",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "FAS113"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "PFA029",
+      "nome": "ANALISES FARMACOPEICAS",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "QUI295"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "PFA031",
+      "nome": "INTRODUCAO A FARMACIA HOSPITALAR",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAS113, FAS114, PFA154, PFA177, PFA155, PFA158"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "PFA169",
+      "nome": "MEDICAMENTOS BIOLÓGICOS I",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ602, BIG157"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "PFA178",
+      "nome": "FARMACOTÉCNICA II",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "PFA177"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT125",
+      "nome": "RADIOFARMACIA I",
+      "total": 30,
+      "teorica": 15,
+      "pratica": 15,
+      "requisitos": "FIB619, QUI291"
+    },
+    {
+      "periodo": 11,
+      "tipo": "ETG",
+      "codigo": "FAF107",
+      "nome": "ESTÁGIO EM ANÁLISES CLÍNICAS E TOXICOLÓGICAS E CIÊNCIA DE AL",
+      "total": 255,
+      "teorica": 15,
+      "pratica": 240,
+      "requisitos": "ACT133, ALM126"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "FAS134",
+      "nome": "MONOGRAFIA EM CIÊNCIAS FARMACÊUTICAS",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "FAS133"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "GES055",
+      "nome": "FUNDAMENTOS DE GESTÃO EM SAÚDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "PFA166",
+      "nome": "FARMACOTÉCNICA III",
+      "total": 75,
+      "teorica": 45,
+      "pratica": 30,
+      "requisitos": "PFA178"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "PFA176",
+      "nome": "ASSUNTOS REGULATÓRIOS",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "PFA029, PFA177"
+    },
+    {
+      "periodo": 12,
+      "tipo": "ETG",
+      "codigo": "FAF108",
+      "nome": "ESTÁGIO EM FÁRMACOS, MEDICAMENTOS, COSMÉTICOS E ASSISTÊNCIA",
+      "total": 435,
+      "teorica": 15,
+      "pratica": 420,
+      "requisitos": "PFA028, PFA029, FAS122, PFA031, PFA166"
+    }
+  ]
+}
