@@ -158,6 +158,7 @@ function fafar_cemed_protect_submissions_page() {
 		auth_redirect();
 		exit;
 	}
+	if ( ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) ) { wp_die( 'Acesso negado.', '', array( 'response' => 403 ) ); }
 }
 
 /** Lê somente valores escalares, evitando arrays injetados nos campos. */
@@ -577,7 +578,7 @@ function fafar_cemed_manage_question() {
 	if ( 'POST' !== $_SERVER['REQUEST_METHOD'] || 'save' !== fafar_cemed_post_value( 'fafar_cemed_manage_action' ) ) {
 		return null;
 	}
-	if ( ! is_user_logged_in() ) {
+	if ( ! is_user_logged_in() || ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) ) {
 		return new WP_Error( 'forbidden', 'Sua conta não pode gerenciar perguntas.' );
 	}
 	$post_id = absint( fafar_cemed_post_value( 'cemed_question_id' ) );

@@ -34,7 +34,7 @@ if ( $search && ! $detail_id ) {
 	global $wpdb;
 	$like = '%' . $wpdb->esc_like( $search ) . '%';
 	$search_filter = function ( $where ) use ( $wpdb, $like ) {
-		return $where . $wpdb->prepare( " AND ({$wpdb->posts}.post_content LIKE %s OR EXISTS (SELECT 1 FROM {$wpdb->postmeta} cm WHERE cm.post_id = {$wpdb->posts}.ID AND cm.meta_key IN ('_cemed_resposta', '_cemed_public_question') AND cm.meta_value LIKE %s))", $like, $like );
+		return $where . $wpdb->prepare( " AND ({$wpdb->posts}.post_content LIKE %s OR EXISTS (SELECT 1 FROM {$wpdb->postmeta} cm WHERE cm.post_id = {$wpdb->posts}.ID AND cm.meta_key IN ('_cemed_resposta', '_cemed_public_question', '_cemed_legacy_code') AND cm.meta_value LIKE %s))", $like, $like );
 	};
 	add_filter( 'posts_where', $search_filter );
 }
@@ -146,10 +146,14 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 				<?php if ( is_wp_error( $manage_result ) ) : ?>
 					<p class="fafar-cemed-message is-error" role="alert"><?php echo esc_html( $manage_result->get_error_message() ); ?></p>
 				<?php endif; ?>
+				<?php if ( ! empty( $fafar_cemed_admin ) && ! $detail_id && current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) && ( $legacy_archive = get_option( 'fafar_cemed_legacy_archive_v1', array() ) ) ) : ?>
+					<details><summary>Registros legados sem vínculo para revisão</summary><p>Os registros abaixo foram preservados sem associação automática. Consulte o código e o conteúdo antes de vinculá-los.</p>
+					<?php foreach ( $legacy_archive['unmatched'] as $sheet => $records ) : ?><h3><?php echo esc_html( ucfirst( $sheet ) . ' (' . count( $records ) . ')' ); ?></h3><?php foreach ( $records as $record ) : ?><details><summary><?php echo esc_html( 'Linha ' . $record['linha'] ); ?></summary><dl><?php foreach ( $record['valores'] as $index => $value ) : if ( '' === trim( (string) $value ) ) { continue; } ?><dt><?php echo esc_html( $legacy_archive['headers'][$sheet][$index] ?? ( 'Campo ' . ( $index + 1 ) ) ); ?></dt><dd><?php echo nl2br( esc_html( $value ) ); ?></dd><?php endforeach; ?></dl></details><?php endforeach; endforeach; ?></details>
+				<?php endif; ?>
 				<?php if ( ! $detail_id ) : ?><p><strong><?php echo esc_html( $questions->found_posts ); ?></strong> pergunta(s) recebida(s).</p><?php endif; ?>
 				<?php if ( ! empty( $fafar_cemed_admin ) && ! $detail_id ) : ?>
 					<?php if ( $questions->have_posts() ) : ?>
-					<table class="widefat striped"><thead><tr><th>Código</th><th>Solicitante</th><th>Status</th><th>Data</th><th>Município</th><th><span class="screen-reader-text">Ação</span></th></tr></thead><tbody>
+					<table class="widefat striped"><thead><tr><th>Código</th><th>Código legado</th><th>Solicitante</th><th>Status</th><th>Data</th><th>Município</th><th><span class="screen-reader-text">Ação</span></th></tr></thead><tbody>
 					<?php while ( $questions->have_posts() ) : $questions->the_post();
 						$id = get_the_ID();
 						$row_data = get_post_meta( $id, '_cemed_data', true );
@@ -157,7 +161,7 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 						$row_status = get_post_meta( $id, '_cemed_status', true );
 						$detail_url = add_query_arg( array( 'pergunta' => $id, 'pagina' => $page_number ), fafar_cemed_management_url() );
 					?>
-					<tr><td><?php echo esc_html( fafar_cemed_question_code( $id ) ); ?></td><td><?php echo esc_html( $row_data['nome'] ?? 'Sem nome' ); ?></td><td><?php echo esc_html( $status_labels[ $row_status ] ?? 'Nova' ); ?></td><td><?php echo esc_html( get_the_date( 'd/m/Y H:i' ) ); ?></td><td><?php echo esc_html( $row_data['municipio'] ?? '—' ); ?><?php echo ! empty( $row_data['uf'] ) ? esc_html( ' / ' . $row_data['uf'] ) : ''; ?></td><td><a class="button" href="<?php echo esc_url( $detail_url ); ?>" aria-label="<?php echo esc_attr( 'Ver pergunta ' . fafar_cemed_question_code( $id ) ); ?>">Ver</a></td></tr>
+					<tr><td><?php echo esc_html( fafar_cemed_question_code( $id ) ); ?></td><td><?php echo esc_html( get_post_meta( $id, '_cemed_legacy_code', true ) ?: '—' ); ?></td><td><?php echo esc_html( $row_data['nome'] ?? 'Sem nome' ); ?></td><td><?php echo esc_html( $status_labels[ $row_status ] ?? 'Nova' ); ?></td><td><?php echo esc_html( get_the_date( 'd/m/Y H:i' ) ); ?></td><td><?php echo esc_html( $row_data['municipio'] ?? '—' ); ?><?php echo ! empty( $row_data['uf'] ) ? esc_html( ' / ' . $row_data['uf'] ) : ''; ?></td><td><a class="button" href="<?php echo esc_url( $detail_url ); ?>" aria-label="<?php echo esc_attr( 'Ver pergunta ' . fafar_cemed_question_code( $id ) ); ?>">Ver</a></td></tr>
 					<?php endwhile; wp_reset_postdata(); ?></tbody></table>
 					<div class="tablenav bottom"><div class="tablenav-pages">
 						<span class="displaying-num"><?php echo esc_html( sprintf( '%s pergunta(s)', number_format_i18n( $questions->found_posts ) ) ); ?></span>
@@ -234,7 +238,7 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 										<?php endif; ?>
 									</div>
 								<?php else : ?>
-									<p class="fafar-cemed-pending"><strong>Post ainda não criado.</strong> Esta pergunta está aguardando resposta. <a href="#cemed-responder-<?php echo esc_attr( $question_id ); ?>">Ir para a resposta e publicação ↓</a></p>
+									<p class="fafar-cemed-pending"><strong>Post ainda não criado.</strong> <?php echo 'respondida' === $status ? 'A pergunta consta como respondida.' : 'Esta pergunta está em acompanhamento.'; ?> <a href="#cemed-responder-<?php echo esc_attr( $question_id ); ?>">Ir para a resposta e publicação ↓</a></p>
 								<?php endif; ?>
 								<dl>
 									<dt>Nome</dt><dd><?php echo esc_html( $data['nome'] ?? '—' ); ?></dd>
@@ -260,6 +264,16 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 									<?php if ( $public_post_id ) : ?><dt>E-mail da resposta</dt><dd><?php echo esc_html( $email_labels[ $response_email['status'] ?? '' ] ?? 'Pendente' ); ?></dd><?php endif; ?>
 											<?php if ( $direct_response_email ) : ?><dt>E-mail direto da resposta</dt><dd><?php echo esc_html( $email_labels[ $direct_response_email['status'] ?? '' ] ?? 'Pendente' ); ?></dd><?php endif; ?>
 								</dl>
+								<?php if ( ! empty( $fafar_cemed_admin ) && current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) && ( $legacy_history = get_post_meta( $question_id, '_cemed_legacy_history', true ) ) && is_array( $legacy_history ) ) : ?>
+									<details><summary>Dados e histórico da planilha legada</summary>
+									<p><strong>Código legado:</strong> <?php echo esc_html( get_post_meta( $question_id, '_cemed_legacy_code', true ) ?: 'Não informado' ); ?>. <strong>Data original:</strong> <?php echo esc_html( $legacy_history['data_original'] ?? '' ); ?><?php echo ! empty( $legacy_history['data_sem_horario'] ) ? ' (sem horário informado; usado 00:00 para o código)' : ''; ?>.</p>
+									<?php $legacy_archive = get_option( 'fafar_cemed_legacy_archive_v1', array() ); foreach ( array( 'solicitacao' => 'solicitacoes', 'respostas' => 'resposta', 'emails' => 'email', 'avaliacoes' => 'avaliacao' ) as $history_key => $sheet ) :
+										$records = 'solicitacao' === $history_key ? array( array( 'valores' => $legacy_history[$history_key] ?? array() ) ) : ( $legacy_history[$history_key] ?? array() );
+										foreach ( $records as $record ) : ?>
+										<h4><?php echo esc_html( ucfirst( $history_key ) ); ?><?php if ( isset( $record['linha'] ) ) { echo esc_html( ' · linha ' . $record['linha'] ); } ?></h4><dl>
+										<?php foreach ( $record['valores'] as $index => $value ) : if ( '' === trim( (string) $value ) ) { continue; } ?><dt><?php echo esc_html( $legacy_archive['headers'][$sheet][$index] ?? ( 'Campo ' . ( $index + 1 ) ) ); ?></dt><dd><?php echo nl2br( esc_html( $value ) ); ?></dd><?php endforeach; ?></dl>
+									<?php endforeach; endforeach; ?></details>
+								<?php endif; ?>
 								<h3>Pergunta</h3><div class="fafar-cemed-answer"><?php echo wpautop( esc_html( get_the_content( null, false ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped before wpautop. ?></div>
 								<h3>Outras informações</h3><div class="fafar-cemed-answer"><?php echo wpautop( esc_html( $data['informacoes_adicionais'] ?? '—' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped before wpautop. ?></div>
 								<?php if ( $classifications || $additional_needed ) : ?>
