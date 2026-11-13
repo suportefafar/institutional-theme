@@ -36,11 +36,12 @@ function get_people_from_intranet($args = [])
     }
     // Consulta isolada: não troca as tabelas globais nem mistura caches de usuários dos dois sites.
     $query = $wpdb->prepare(
-        "SELECT u.display_name, u.user_email, ext.meta_value AS workplace_extension, caps.meta_value AS capabilities
+        "SELECT u.display_name, u.user_email, ext.meta_value AS workplace_extension, place.meta_value AS workplace_place, caps.meta_value AS capabilities
          FROM `{$database}`.wp_users u
          INNER JOIN `{$database}`.wp_usermeta status ON status.user_id=u.ID AND status.meta_key='bond_status' AND status.meta_value='ATIVO'
          INNER JOIN `{$database}`.wp_usermeta bond ON bond.user_id=u.ID AND bond.meta_key='public_servant_bond_category' AND bond.meta_value=%s
          LEFT JOIN `{$database}`.wp_usermeta ext ON ext.user_id=u.ID AND ext.meta_key='workplace_extension'
+         LEFT JOIN `{$database}`.wp_usermeta place ON place.user_id=u.ID AND place.meta_key='workplace_place'
          LEFT JOIN `{$database}`.wp_usermeta caps ON caps.user_id=u.ID AND caps.meta_key='wp_capabilities'
          ORDER BY u.display_name", $category
     );
@@ -49,6 +50,8 @@ function get_people_from_intranet($args = [])
     if ( false === $users || false === $option ) { fafar_intranet_unavailable(); return; }
     $roles = $option ? unserialize( $option->option_value, array( 'allowed_classes' => false ) ) : array();
     $people = array();
+    $show_room = 'DOCENTE' === $category;
+    $room_ids = array();
     foreach ( $users as $user ) {
         $caps = $user->capabilities ? unserialize( $user->capabilities, array( 'allowed_classes' => false ) ) : array();
         $caps = is_array( $caps ) ? $caps : array();
@@ -57,12 +60,32 @@ function get_people_from_intranet($args = [])
         foreach ( $caps as $capability => $enabled ) {
             if ( $enabled && isset( $roles[ $capability ]['name'] ) ) { $label = $roles[ $capability ]['name']; break; }
         }
-        $people[] = array( 'display_name' => $user->display_name, 'roles' => array( $label ), 'user_email' => $user->user_email, 'workplace_extension' => $user->workplace_extension );
+        if ( $show_room && $user->workplace_place ) { $room_ids[ $user->workplace_place ] = true; }
+        $people[] = array( 'display_name' => $user->display_name, 'roles' => array( $label ), 'user_email' => $user->user_email, 'workplace_extension' => $user->workplace_extension, 'workplace_place' => $user->workplace_place );
     }
-    people_content_handler( $people );
+    $rooms = array();
+    if ( $room_ids ) {
+        $placeholders = implode( ', ', array_fill( 0, count( $room_ids ), '%s' ) );
+        $room_query = $wpdb->prepare(
+            "SELECT id, data FROM `{$database}`.wp_fafar_cf7crud_submissions WHERE object_name='place' AND id IN ({$placeholders})",
+            array_keys( $room_ids )
+        );
+        $room_rows = fafar_intranet_results( $room_query );
+        if ( null !== $room_rows ) {
+            foreach ( $room_rows as $room ) {
+                $data = json_decode( $room['data'], true );
+                $rooms[ $room['id'] ] = is_array( $data ) ? ( $data['number'] ?? '' ) : '';
+            }
+        }
+    }
+    foreach ( $people as &$person ) {
+        $person['room'] = $rooms[ $person['workplace_place'] ] ?? '';
+    }
+    unset( $person );
+    people_content_handler( $people, $show_room );
 }
 
-function people_content_handler($people)
+function people_content_handler($people, $show_room = false)
 {
     echo '<p class="dynamic-intro">Consulte os contatos e filtre por nome, setor ou e-mail.</p>
         <form class="dynamic-filters" data-table-filter="dynamic-people-results" role="search" aria-label="Pesquisar contatos">
@@ -72,9 +95,12 @@ function people_content_handler($people)
     $rows = '';
     foreach ( $people as $person ) {
         $email = sanitize_email( $person['user_email'] );
-        $rows .= '<tr data-filter-row><th scope="row">' . esc_html( $person['display_name'] ) . '</th><td>' . esc_html( $person['roles'][0] ?? '' ) . '</td><td><a href="' . esc_url( 'mailto:' . $email ) . '">' . esc_html( $email ) . '</a></td><td class="dynamic-nowrap">' . esc_html( $person['workplace_extension'] ) . '</td></tr>';
+        $rows .= '<tr data-filter-row><th scope="row">' . esc_html( $person['display_name'] ) . '</th><td>' . esc_html( $person['roles'][0] ?? '' ) . '</td><td><a href="' . esc_url( 'mailto:' . $email ) . '">' . esc_html( $email ) . '</a></td>';
+        if ( $show_room ) { $rows .= '<td class="dynamic-nowrap">' . esc_html( $person['room'] ?? '' ) . '</td>'; }
+        $rows .= '<td class="dynamic-nowrap">' . esc_html( $person['workplace_extension'] ) . '</td></tr>';
     }
-    fafar_dynamic_table( array( 'Nome', 'Setor', 'E-mail', 'Ramal' ), $rows, 'Diretório de contatos', 'dynamic-people-results', 'dynamic-people-table' );
+    $headings = $show_room ? array( 'Nome', 'Setor', 'E-mail', 'Sala', 'Ramal' ) : array( 'Nome', 'Setor', 'E-mail', 'Ramal' );
+    fafar_dynamic_table( $headings, $rows, 'Diretório de contatos', 'dynamic-people-results', 'dynamic-people-table' );
 }
 
 function parse_weekday_to_name($number)

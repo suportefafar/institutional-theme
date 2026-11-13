@@ -38,7 +38,7 @@ function fafar_dynamic_routes() {
         'corpo-administrativo-pfa' => 'corpo_administrativo_pfa_content_handler',
         'corpo-docente-act' => 'corpo_docente_act_content_handler',
         'corpo-docente-alm' => 'corpo_docente_alm_content_handler',
-        'corpo-docente-2' => 'corpo_docente_fas_content_handler',
+        'corpo-docente-fas' => 'corpo_docente_fas_content_handler',
         'corpo-docente-3' => 'corpo_docente_ppgact_content_handler',
         'corpo-docente-4' => 'corpo_docente_fafar_directory_content_handler',
         'corpo-docente-ppgca' => 'corpo_docente_ppgca_content_handler',
