@@ -14,7 +14,7 @@ $home = untrailingslashit( home_url( '/' ) );
 	<section class="student-guide-hero">
 		<p class="student-guide-kicker">Faculdade de Farmácia · UFMG</p>
 		<h1 id="student-guide-title">Comece por aqui</h1>
-		<p class="student-guide-lead">Bem-vinda, bem-vinde e bem-vindo à FAFAR! Reunimos neste espaço os serviços, orientações e lugares que ajudam você a viver a Universidade desde o primeiro dia.</p>
+		<p class="student-guide-lead">Bem-vindo à FAFAR! Reunimos neste espaço os serviços, orientações e lugares que ajudam você a viver a Universidade desde o primeiro dia.</p>
 		<a class="student-guide-hero-link" href="#primeiros-passos">Encontre o que você precisa <span aria-hidden="true">↓</span></a>
 		<div class="student-guide-orbit" aria-hidden="true"><span>FAFAR</span><i></i></div>
 	</section>
