@@ -65,7 +65,7 @@ function fafar_ementas_save_meta( $post_id ) {
 		'_fafar_ementa_codigo_validacao' => 'sanitize_text_field',
 	);
 	foreach ( $fields as $key => $sanitize ) {
-		$value = isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ? call_user_func( $sanitize, wp_unslash( $_POST[ $key ] ) ) : '';
+		$value = isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ? call_user_func( $sanitize, trim( wp_unslash( $_POST[ $key ] ) ) ) : '';
 		if ( '' === $value ) { delete_post_meta( $post_id, $key ); }
 		else { update_post_meta( $post_id, $key, $value ); }
 	}
