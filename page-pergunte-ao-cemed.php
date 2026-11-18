@@ -20,15 +20,16 @@ get_header();
 			<header class="entry-header"><?php the_title( '<h1 class="entry-title">', '</h1>' ); ?></header>
 			<div class="entry-content clear fafar-cemed-page">
 				<?php do_action( 'fafar_entry_content_before' ); ?>
+				<?php if ( ! is_wp_error( $result ) && isset( $_GET['enviada'] ) && '1' === $_GET['enviada'] ) : ?>
+					<?php $reference = isset( $_GET['referencia'] ) && is_scalar( $_GET['referencia'] ) ? sanitize_text_field( wp_unslash( $_GET['referencia'] ) ) : ''; ?>
+					<p class="fafar-cemed-message is-success" role="status">Sua pergunta foi recebida com sucesso. <?php if ( preg_match( '/^CEMEDUFMG-\d{10,}$/', $reference ) ) : ?>Código: <strong><?php echo esc_html( $reference ); ?></strong>.<?php endif; ?></p>
+					<p><a href="<?php echo esc_url( get_permalink() ); ?>">Voltar e fazer outra pergunta</a></p>
+				<?php else : ?>
 				<h2>Solicitação de informação — Cemed UFMG</h2>
 				<p>O Serviço de Informação sobre Medicamentos (SIM) do Cemed é um serviço gratuito e tem o objetivo de esclarecer dúvidas relacionadas a medicamentos para promoção do seu uso correto. Nossas orientações não substituem uma consulta ou avaliação presencial com um profissional de saúde.</p>
 				<p>Para que possamos atender a sua solicitação, pedimos que preencha o formulário a seguir, apresentando as informações de maneira clara e detalhada. Seus dados pessoais e de contato serão tratados de maneira confidencial. Após a resposta, a pergunta poderá ser revisada pela equipe e publicada sem esses dados, junto com a resposta, em uma página aberta a comentários.</p>
 				<p>Evite incluir nomes, documentos ou outros dados que identifiquem pacientes no texto da pergunta.</p>
 				<p class="fafar-cemed-alert"><strong>Atenção:</strong> não emitimos pareceres técnicos para fins judiciais e não atendemos solicitações relativas a monografias, dissertações, teses ou outros trabalhos acadêmicos ou similares.</p>
-				<?php if ( isset( $_GET['enviada'] ) && '1' === $_GET['enviada'] ) : ?>
-					<?php $reference = isset( $_GET['referencia'] ) && is_scalar( $_GET['referencia'] ) ? sanitize_text_field( wp_unslash( $_GET['referencia'] ) ) : ''; ?>
-					<p class="fafar-cemed-message is-success" role="status">Sua pergunta foi recebida com sucesso. <?php if ( preg_match( '/^CEMEDUFMG-\d{10,}$/', $reference ) ) : ?>Código: <strong><?php echo esc_html( $reference ); ?></strong>.<?php endif; ?></p>
-				<?php endif; ?>
 				<?php if ( is_wp_error( $result ) ) : ?>
 					<p class="fafar-cemed-message is-error" role="alert"><?php echo esc_html( $result->get_error_message() ); ?></p>
 				<?php endif; ?>
@@ -104,6 +105,7 @@ get_header();
 					<button type="submit">Enviar pergunta</button>
 					<p class="fafar-cemed-message is-error" data-cemed-submit-error role="alert" hidden></p>
 				</form>
+				<?php endif; ?>
 			</div>
 		</article>
 	<?php endwhile; ?>

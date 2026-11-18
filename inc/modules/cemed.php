@@ -9,8 +9,8 @@ define( 'FAFAR_CEMED_MANAGE_CAPABILITY', 'manage_cemed_questions' );
 
 add_action( 'init', 'fafar_cemed_register_post_type' );
 add_action( 'init', 'fafar_cemed_create_pages', 20 );
-add_action( 'template_redirect', 'fafar_cemed_redirect_old_management_url', 1 );
-add_action( 'template_redirect', 'fafar_cemed_protect_submissions_page' );
+add_action( 'init', 'fafar_cemed_retire_management_pages', 21 );
+add_action( 'template_redirect', 'fafar_cemed_remove_management_page', 1 );
 add_action( 'fafar_cemed_retry_notification', 'fafar_cemed_retry_notification', 10, 2 );
 add_action( 'wp_ajax_fafar_cemed_form_nonce', 'fafar_cemed_refresh_form_nonce' );
 add_action( 'wp_ajax_nopriv_fafar_cemed_form_nonce', 'fafar_cemed_refresh_form_nonce' );
@@ -119,14 +119,9 @@ function fafar_cemed_register_post_type() {
 	);
 }
 
-/** Migra a página antiga e cria apenas as URLs ausentes. */
+/** Cria apenas as páginas públicas necessárias. */
 function fafar_cemed_create_pages() {
-	$old_page = get_page_by_path( 'perguntas-cemed', OBJECT, 'page' );
-	$new_page = get_page_by_path( 'gerenciar-perguntas-cemed', OBJECT, 'page' );
-	if ( $old_page && ! $new_page ) {
-		wp_update_post( array( 'ID' => $old_page->ID, 'post_name' => 'gerenciar-perguntas-cemed', 'post_title' => 'Gerenciar Perguntas Cemed' ) );
-	}
-	foreach ( array( 'pergunte-ao-cemed' => 'Pergunte ao Cemed', 'gerenciar-perguntas-cemed' => 'Gerenciar Perguntas Cemed', 'feedback-pergunta-cemed' => 'Avaliação da Resposta Cemed' ) as $slug => $title ) {
+	foreach ( array( 'pergunte-ao-cemed' => 'Pergunte ao Cemed', 'feedback-pergunta-cemed' => 'Avaliação da Resposta Cemed' ) as $slug => $title ) {
 		if ( get_page_by_path( $slug, OBJECT, 'page' ) ) {
 			continue;
 		}
@@ -141,24 +136,22 @@ function fafar_cemed_create_pages() {
 	}
 }
 
-function fafar_cemed_redirect_old_management_url() {
-	$path = isset( $_SERVER['REQUEST_URI'] ) ? wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH ) : '';
-	if ( 'perguntas-cemed' === trim( (string) $path, '/' ) ) {
-		wp_safe_redirect( home_url( '/gerenciar-perguntas-cemed/' ), 301 );
-		exit;
+/** Retira do conteúdo publicado as páginas de gestão substituídas pelo painel. */
+function fafar_cemed_retire_management_pages() {
+	if ( get_option( 'fafar_cemed_management_pages_retired' ) ) { return; }
+	foreach ( array( 'perguntas-cemed', 'gerenciar-perguntas-cemed' ) as $slug ) {
+		$page = get_page_by_path( $slug, OBJECT, 'page' );
+		if ( $page && ! wp_trash_post( $page->ID ) ) { return; }
 	}
+	update_option( 'fafar_cemed_management_pages_retired', 1, false );
 }
 
-function fafar_cemed_protect_submissions_page() {
-	if ( ! is_page( 'gerenciar-perguntas-cemed' ) ) {
-		return;
+function fafar_cemed_remove_management_page() {
+	$path = isset( $_SERVER['REQUEST_URI'] ) ? wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH ) : '';
+	if ( in_array( trim( (string) $path, '/' ), array( 'perguntas-cemed', 'gerenciar-perguntas-cemed' ), true ) || is_page( array( 'perguntas-cemed', 'gerenciar-perguntas-cemed' ) ) ) {
+		nocache_headers();
+		wp_die( 'Esta página não está mais disponível.', '', array( 'response' => 410 ) );
 	}
-	nocache_headers();
-	if ( ! is_user_logged_in() ) {
-		auth_redirect();
-		exit;
-	}
-	if ( ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) ) { wp_die( 'Acesso negado.', '', array( 'response' => 403 ) ); }
 }
 
 /** Lê somente valores escalares, evitando arrays injetados nos campos. */
@@ -393,8 +386,11 @@ function fafar_cemed_build_notification( $post_id, $type ) {
 		if ( ! $recipients ) {
 			return new WP_Error( 'missing_recipients', 'Os destinatários do Cemed não estão configurados.' );
 		}
-		$url  = home_url( '/gerenciar-perguntas-cemed/' );
-		$body = '<p>Uma nova pergunta foi recebida pelo Cemed/UFMG.</p><p>Número de referência: <strong>' . esc_html( $code ) . '</strong>.</p><p>Solicitante: ' . esc_html( $data['nome'] ?? '—' ) . '.</p><p><a href="' . esc_url( $url ) . '">Acessar a página protegida de perguntas</a></p>';
+		$url  = admin_url( 'admin.php?page=cemed-perguntas' );
+		if ( in_array( wp_parse_url( $url, PHP_URL_HOST ), array( 'farmacia.ufmg.br', 'www.farmacia.ufmg.br' ), true ) ) {
+			$url = 'https://farmacia.ufmg.br/wp-admin/admin.php?page=cemed-perguntas';
+		}
+		$body = '<p>Uma nova pergunta foi recebida pelo Cemed/UFMG.</p><p>Número de referência: <strong>' . esc_html( $code ) . '</strong>.</p><p>Solicitante: ' . esc_html( $data['nome'] ?? '—' ) . '.</p><p><a href="' . esc_url( $url ) . '">Acessar a gestão de perguntas</a></p>';
 		return array( 'to' => $recipients, 'subject' => 'Cemed/UFMG — nova pergunta ' . $code, 'body' => $body, 'headers' => $headers );
 	}
 	if ( 'response' === $type ) {
@@ -738,6 +734,7 @@ function fafar_cemed_handle_feedback( $question, $token ) {
 /** Gestão das perguntas no painel administrativo. */
 add_action( 'admin_menu', function () {
 	add_menu_page( 'Gerenciar perguntas Cemed', 'Gerenciar perguntas Cemed', FAFAR_CEMED_MANAGE_CAPABILITY, 'cemed-perguntas', 'fafar_cemed_admin_page', 'dashicons-format-chat' );
+	add_submenu_page( 'cemed-perguntas', 'Gerenciar perguntas Cemed', 'Painel', FAFAR_CEMED_MANAGE_CAPABILITY, 'cemed-perguntas', 'fafar_cemed_admin_page' );
 } );
 add_action( 'admin_init', function () {
 	if ( ! isset( $_GET['page'] ) || 'cemed-perguntas' !== $_GET['page'] || ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) ) { return; }

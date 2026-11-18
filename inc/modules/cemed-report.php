@@ -22,10 +22,106 @@ function fafar_cemed_report_form() {
 				<tr><th scope="row"><label for="cemed-report-year">Ano</label></th><td><input id="cemed-report-year" name="ano" type="number" min="1900" max="9999" step="1" placeholder="Ex.: 2026"><p class="description">Com as datas, considera somente a interseção dos períodos.</p></td></tr>
 				<tr><th scope="row"><label for="cemed-report-topic">Tema</label></th><td><input class="regular-text" id="cemed-report-topic" name="tema" type="search"><p class="description">Busca o texto informado na pergunta e na resposta registrada.</p></td></tr>
 			</table>
-			<?php submit_button( 'Gerar relatório em PDF' ); ?>
+			<p class="submit"><button type="submit" name="formato" value="pdf" class="button button-primary">Gerar relatório em PDF</button> <button type="submit" name="formato" value="csv" class="button">Baixar perguntas em CSV</button></p>
+			<p>A planilha contém os dados individuais das perguntas selecionadas, sem estatísticas.</p>
 		</form>
 	</div>
 	<?php
+}
+
+/** Reúne os dados da pergunta para os formatos de relatório. */
+function fafar_cemed_report_question_data( $id ) {
+	$post = get_post( $id );
+	$row = array( 'ID' => $id, 'Data de recebimento' => $post->post_date, 'Pergunta' => $post->post_content );
+	foreach ( get_post_meta( $id ) as $key => $values ) {
+		if ( 0 !== strpos( $key, '_cemed_' ) || in_array( $key, array( '_cemed_feedback_token', '_cemed_legacy_history' ), true ) ) { continue; }
+		$value = count( $values ) === 1 ? maybe_unserialize( $values[0] ) : array_map( 'maybe_unserialize', $values );
+		if ( '_cemed_data' === $key && is_array( $value ) ) {
+			foreach ( $value as $field => $field_value ) { $row[ 'Solicitação: ' . $field ] = $field_value; }
+		} else { $row[ substr( $key, 7 ) ] = $value; }
+	}
+	return $row;
+}
+
+/** Rótulos legíveis compartilhados pelo PDF e pela planilha. */
+function fafar_cemed_report_field_label( $field ) {
+	$key = 0 === strpos( $field, 'Solicitação: ' ) ? substr( $field, strlen( 'Solicitação: ' ) ) : $field;
+	$labels = array( 'email' => 'E-mail', 'nome' => 'Nome', 'telefone' => 'Telefone', 'uf' => 'UF', 'municipio' => 'Município', 'profissional_saude' => 'Profissional de saúde', 'profissao_saude' => 'Profissão', 'profissao_saude_outro' => 'Outra profissão', 'paciente_especifico' => 'Paciente específico', 'idade_paciente' => 'Idade do paciente', 'sexo_paciente' => 'Sexo do paciente', 'genero_paciente' => 'Gênero do paciente', 'doencas_preexistentes' => 'Doenças preexistentes', 'condicoes_especiais' => 'Condições especiais', 'informacoes_adicionais' => 'Informações adicionais', 'cpf' => 'CPF', 'consentimento' => 'Consentimento', 'consentimento_em' => 'Data do consentimento', 'code' => 'Código', 'legacy_code' => 'Código anterior', 'resposta' => 'Resposta', 'status' => 'Situação', 'classificacao' => 'Classificação' );
+	return $labels[ $key ] ?? ucfirst( str_replace( '_', ' ', $key ) );
+}
+
+/** Exporta uma linha por pergunta, incluindo os dados e metadados registrados. */
+function fafar_cemed_report_write_csv( $output, $ids ) {
+	$rows = array();
+	$columns = array( 'ID', 'Data de recebimento', 'Pergunta' );
+	foreach ( $ids as $id ) {
+		$row = fafar_cemed_report_question_data( $id );
+		$columns = array_values( array_unique( array_merge( $columns, array_keys( $row ) ) ) );
+		$rows[] = $row;
+	}
+	fwrite( $output, "\xEF\xBB\xBF" );
+	fputcsv( $output, array_map( 'fafar_cemed_report_field_label', $columns ), ';', '"', '' );
+	foreach ( $rows as $row ) {
+		$cells = array();
+		foreach ( $columns as $column ) {
+			$value = $row[ $column ] ?? '';
+			if ( is_array( $value ) || is_object( $value ) ) { $value = wp_json_encode( $value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ); }
+			$value = (string) $value;
+			if ( preg_match( '/^[\s\x00-\x1f]*[=+@\-\t\r]/u', $value ) ) { $value = "'" . $value; }
+			$cells[] = $value;
+		}
+		fputcsv( $output, $cells, ';', '"', '' );
+	}
+}
+
+function fafar_cemed_report_csv( $ids ) {
+	nocache_headers();
+	header( 'Content-Type: text/csv; charset=UTF-8' );
+	header( 'Content-Disposition: attachment; filename="perguntas-cemed.csv"' );
+	$output = fopen( 'php://output', 'w' );
+	fafar_cemed_report_write_csv( $output, $ids );
+	fclose( $output );
+	exit;
+}
+
+/** Formata listas e estruturas para leitura no PDF. */
+function fafar_cemed_report_display_value( $value ) {
+	if ( ! is_array( $value ) && ! is_object( $value ) ) { return (string) $value; }
+	$items = array();
+	foreach ( (array) $value as $key => $item ) {
+		$text = fafar_cemed_report_display_value( $item );
+		if ( '' !== $text ) { $items[] = is_string( $key ) ? ucfirst( str_replace( '_', ' ', $key ) ) . ': ' . $text : $text; }
+	}
+	return implode( '; ', $items );
+}
+
+/** Quebra texto pela largura das letras da fonte Helvetica (em pontos). */
+function fafar_cemed_report_wrap( $text, $bold = false ) {
+	$widths = array(278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584);
+	$lines = array();
+	foreach ( explode( "\n", $text ) as $paragraph ) {
+		$line = ''; $width = 0; $last_space = false;
+		for ( $i = 0, $length = strlen( $paragraph ); $i < $length; ++$i ) {
+			$char = $paragraph[$i];
+			$code = ord( $char );
+			// Acentos usam a largura da letra base; símbolos recebem margem conservadora.
+			if ( $code > 126 ) {
+				$base = iconv( 'Windows-1252', 'ASCII//TRANSLIT', $char );
+				$code = $base && strlen( $base ) === 1 ? ord( $base ) : 87;
+			}
+			$width += ( $widths[ $code - 32 ] ?? 944 ) * ( $bold ? 12 : 10 ) / 1000;
+			$line .= $char;
+			if ( ' ' === $char ) { $last_space = strlen( $line ) - 1; }
+			if ( $width > 495 ) {
+				$cut = false !== $last_space && $last_space > 0 ? $last_space : strlen( $line ) - 1;
+				$lines[] = trim( substr( $line, 0, $cut ) );
+				$i -= strlen( $line ) - $cut;
+				$line = ''; $width = 0; $last_space = false;
+			}
+		}
+		$lines[] = trim( $line );
+	}
+	return $lines;
 }
 
 /** Produz um PDF textual paginado com as fontes padrão do formato. */
@@ -33,26 +129,33 @@ function fafar_cemed_report_pdf( $lines ) {
 	$pages = array();
 	$page = array();
 	foreach ( $lines as $line ) {
+		if ( is_array( $line ) && isset( $line['break'] ) ) {
+			if ( $page ) { $pages[] = $page; $page = array(); }
+			continue;
+		}
+		$heading = is_array( $line );
+		if ( $heading ) { $line = $line['heading']; }
 		$encoded = iconv( 'UTF-8', 'Windows-1252//TRANSLIT', $line );
 		if ( false === $encoded ) { $encoded = '?'; }
-		foreach ( explode( "\n", wordwrap( $encoded, 90, "\n", true ) ) as $part ) {
+		if ( $heading && count( $page ) > 47 ) { $pages[] = $page; $page = array(); }
+		foreach ( fafar_cemed_report_wrap( $encoded, $heading ) as $part ) {
 			if ( count( $page ) >= 52 ) { $pages[] = $page; $page = array(); }
-			$page[] = $part;
+			$page[] = array( 'text' => $part, 'heading' => $heading );
 		}
 	}
 	if ( $page ) { $pages[] = $page; }
-	$objects = array( 1 => '<< /Type /Catalog /Pages 2 0 R >>', 3 => '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>' );
+	$objects = array( 1 => '<< /Type /Catalog /Pages 2 0 R >>', 3 => '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>', 4 => '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>' );
 	$kids = array();
 	foreach ( $pages as $index => $page_lines ) {
-		$page_id = 4 + $index * 2; $content_id = $page_id + 1;
+		$page_id = 5 + $index * 2; $content_id = $page_id + 1;
 		$kids[] = $page_id . ' 0 R';
 		$stream = "BT\n/F1 10 Tf\n45 800 Td\n14 TL\n";
 		foreach ( $page_lines as $line ) {
-			$line = str_replace( array( '\\', '(', ')' ), array( '\\\\', '\\(', '\\)' ), $line );
-			$stream .= '(' . $line . ") Tj\nT*\n";
+			$text = str_replace( array( '\\', '(', ')' ), array( '\\\\', '\\(', '\\)' ), $line['text'] );
+			$stream .= ( $line['heading'] ? '/F2 11 Tf' : '/F1 10 Tf' ) . "\n(" . $text . ") Tj\nT*\n";
 		}
-		$stream .= "ET\n";
-		$objects[ $page_id ] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents $content_id 0 R >>";
+		$stream .= "ET\n0.5 G 45 48 m 550 48 l S\nBT /F1 8 Tf 0.4 g 45 32 Td (Cemed / UFMG) Tj 440 0 Td (" . ( $index + 1 ) . ' / ' . count( $pages ) . ") Tj ET\n";
+		$objects[ $page_id ] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents $content_id 0 R >>";
 		$objects[ $content_id ] = '<< /Length ' . strlen( $stream ) . ">>\nstream\n" . $stream . 'endstream';
 	}
 	$objects[2] = '<< /Type /Pages /Count ' . count( $kids ) . ' /Kids [' . implode( ' ', $kids ) . '] >>';
@@ -65,9 +168,36 @@ function fafar_cemed_report_pdf( $lines ) {
 	return $pdf . "trailer\n<< /Size $size /Root 1 0 R >>\nstartxref\n$xref\n%%EOF\n";
 }
 
+/** Seção individual do PDF, sem campos vazios ou histórico legado. */
+function fafar_cemed_report_detail_lines( $ids ) {
+	$lines = array();
+	$lines[] = array( 'break' => true );
+	$lines[] = array( 'heading' => 'PERGUNTAS E INFORMAÇÕES COMPLETAS' );
+	if ( ! $ids ) { $lines[] = 'Nenhuma pergunta encontrada.'; }
+
+	foreach ( $ids as $index => $id ) {
+		if ( $index > 0 ) { $lines[] = array( 'break' => true ); }
+		$lines[] = '';
+		$lines[] = array( 'heading' => 'Pergunta ' . ( $index + 1 ) );
+		$lines[] = '____________________________________________________________';
+		foreach ( fafar_cemed_report_question_data( $id ) as $field => $value ) {
+			$value = fafar_cemed_report_display_value( $value );
+			$value = preg_replace( '~<(?:br\s*/?|/(?:p|div|li|h[1-6]))>~i', "\n", (string) $value );
+			$value = html_entity_decode( wp_strip_all_tags( $value ), ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+			if ( '' === trim( $value ) ) { continue; }
+			$lines[] = array( 'heading' => fafar_cemed_report_field_label( $field ) );
+			$lines[] = str_replace( array( "\r\n", "\r" ), "\n", $value );
+			$lines[] = '';
+		}
+	}
+	return $lines;
+}
+
 function fafar_cemed_report_download() {
 	if ( ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) ) { wp_die( 'Acesso negado.' ); }
 	check_admin_referer( 'fafar_cemed_report' );
+	$format = isset( $_GET['formato'] ) && is_string( $_GET['formato'] ) ? sanitize_key( wp_unslash( $_GET['formato'] ) ) : 'pdf';
+	if ( ! in_array( $format, array( 'pdf', 'csv' ), true ) ) { wp_die( 'Formato inválido.' ); }
 	$values = array();
 	foreach ( array( 'de', 'ate', 'ano', 'tema' ) as $key ) {
 		if ( isset( $_GET[$key] ) && ! is_scalar( $_GET[$key] ) ) { wp_die( 'Filtro inválido.' ); }
@@ -88,7 +218,7 @@ function fafar_cemed_report_download() {
 		$date_query[] = $range;
 	}
 	if ( $values['ano'] ) { $date_query[] = array( 'year' => (int) $values['ano'] ); }
-	$args = array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true, 'orderby' => 'none', 'date_query' => $date_query );
+	$args = array( 'post_type' => 'cemed_pergunta', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true, 'orderby' => array( 'date' => 'DESC', 'ID' => 'DESC' ), 'date_query' => $date_query, 'suppress_filters' => false );
 	if ( $values['tema'] ) {
 		global $wpdb;
 		$like = '%' . $wpdb->esc_like( $values['tema'] ) . '%';
@@ -100,6 +230,7 @@ function fafar_cemed_report_download() {
 	$ids = get_posts( $args );
 	if ( isset( $filter ) ) { remove_filter( 'posts_where', $filter ); }
 	if ( $ids ) { update_meta_cache( 'post', $ids ); }
+	if ( 'csv' === $format ) { fafar_cemed_report_csv( $ids ); }
 	$categories = array_fill_keys( fafar_cemed_answer_classification_options(), 0 ); $categories['Sem classificação'] = 0;
 	$professions = array_fill_keys( array( 'Dentista', 'Farmacêutico', 'Médico', 'Enfermeiro', 'Outro', 'Não é profissional de saúde', 'Não informado' ), 0 );
 	$states = array(); $known_states = fafar_ppgcf_brazilian_states();
@@ -119,13 +250,14 @@ function fafar_cemed_report_download() {
 		$states[$uf] = ( $states[$uf] ?? 0 ) + 1;
 	}
 	ksort( $states );
-	$lines = array( 'Relatório de perguntas Cemed', 'Gerado em: ' . wp_date( 'd/m/Y H:i' ), 'Data de recebimento: ' . ( $values['de'] ? date_i18n( 'd/m/Y', strtotime( $values['de'] . ' 12:00:00' ) ) : 'sem início' ) . ' até ' . ( $values['ate'] ? date_i18n( 'd/m/Y', strtotime( $values['ate'] . ' 12:00:00' ) ) : 'sem fim' ), 'Ano: ' . ( $values['ano'] ?: 'todos' ), 'Tema: ' . ( $values['tema'] ?: 'todos' ), 'Total de perguntas: ' . count( $ids ), '', 'CLASSIFICAÇÕES DAS RESPOSTAS', 'Uma pergunta pode pertencer a mais de uma classificação.' );
+	$lines = array( array( 'heading' => 'Relatório de perguntas Cemed' ), 'Gerado em: ' . wp_date( 'd/m/Y H:i' ), 'Data de recebimento: ' . ( $values['de'] ? date_i18n( 'd/m/Y', strtotime( $values['de'] . ' 12:00:00' ) ) : 'sem início' ) . ' até ' . ( $values['ate'] ? date_i18n( 'd/m/Y', strtotime( $values['ate'] . ' 12:00:00' ) ) : 'sem fim' ), 'Ano: ' . ( $values['ano'] ?: 'todos' ), 'Tema: ' . ( $values['tema'] ?: 'todos' ), 'Total de perguntas: ' . count( $ids ), '', array( 'heading' => 'CLASSIFICAÇÕES DAS RESPOSTAS' ), 'Uma pergunta pode pertencer a mais de uma classificação.' );
 	foreach ( $categories as $name => $count ) { $lines[] = $name . ': ' . $count; }
-	$lines[] = ''; $lines[] = 'PROFISSÃO DO SOLICITANTE';
+	$lines[] = ''; $lines[] = array( 'heading' => 'PROFISSÃO DO SOLICITANTE' );
 	foreach ( $professions as $name => $count ) { $lines[] = $name . ': ' . $count; }
-	$lines[] = ''; $lines[] = 'ESTADO DO SOLICITANTE';
+	$lines[] = ''; $lines[] = array( 'heading' => 'ESTADO DO SOLICITANTE' );
 	if ( ! $states ) { $lines[] = 'Nenhuma pergunta encontrada.'; }
 	foreach ( $states as $uf => $count ) { $lines[] = ( isset( $known_states[$uf] ) ? $uf . ' - ' . $known_states[$uf] : $uf ) . ': ' . $count; }
+	$lines = array_merge( $lines, fafar_cemed_report_detail_lines( $ids ) );
 	$pdf = fafar_cemed_report_pdf( $lines );
 	nocache_headers(); header( 'Content-Type: application/pdf' ); header( 'Content-Disposition: attachment; filename="relatorio-perguntas-cemed.pdf"' ); header( 'Content-Length: ' . strlen( $pdf ) );
 	echo $pdf; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- PDF binário gerado no servidor.
