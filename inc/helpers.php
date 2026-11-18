@@ -25,7 +25,26 @@ function institutional_fafar_get_category() {
      * The category with the lowest ID (first in the sorted list) is the one
      * that WordPress will use in the permalink structure.
      */
-    $sorted_categories = wp_list_sort( $categories, [ 'term_id' => 'ASC' ] );
+    $sorted_categories = institutional_fafar_cemed_category_first( wp_list_sort( $categories, [ 'term_id' => 'ASC' ] ) );
 
     return $sorted_categories[0];
 }
+
+/** Prefer the CEMED section when a post belongs to multiple categories. */
+function institutional_fafar_cemed_category_first( $categories ) {
+    foreach ( $categories as $index => $category ) {
+        if ( 'cemed' === $category->slug ) {
+            unset( $categories[ $index ] );
+            array_unshift( $categories, $category );
+            break;
+        }
+    }
+    return array_values( $categories );
+}
+add_filter( 'get_the_categories', 'institutional_fafar_cemed_category_first' );
+
+function institutional_fafar_cemed_permalink_category( $category, $categories ) {
+    $ordered = institutional_fafar_cemed_category_first( $categories );
+    return ! empty( $ordered ) && 'cemed' === $ordered[0]->slug ? $ordered[0] : $category;
+}
+add_filter( 'post_link_category', 'institutional_fafar_cemed_permalink_category', 10, 2 );
