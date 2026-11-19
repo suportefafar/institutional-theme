@@ -184,7 +184,7 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 					$data = is_array( $data ) ? $data : array();
 					$status = get_post_meta( $question_id, '_cemed_status', true );
 					$status = isset( $status_labels[ $status ] ) ? $status : 'nova';
-					$answer = get_post_meta( $question_id, '_cemed_resposta', true );
+					$answer = fafar_cemed_answer_for_editor( $question_id );
 					$classifications = get_post_meta( $question_id, '_cemed_classificacao', true );
 					$classifications = is_array( $classifications ) ? $classifications : array();
 					$classifications_other = get_post_meta( $question_id, '_cemed_classificacao_outro', true );
@@ -248,15 +248,7 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
                                         <p><a href="<?php echo esc_url( $external_url ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $external_url ); ?></a></p>
                                     </div>
                                 <?php endif; ?>
-                                <?php $external_answer = get_post_meta( $question_id, '_cemed_external_answer', true ); ?>
-                                <?php if ( $external_answer ) : ?>
-                                    <section class="notice notice-info inline">
-                                        <h3>Resposta redigida externamente</h3>
-                                        <div><?php echo wp_kses_post( $external_answer ); ?></div>
-                                        <?php if ( $external_url ) : ?><p><button type="button" class="button" data-cemed-use-external="<?php echo esc_attr( $question_id ); ?>">Usar esta resposta no editor</button></p><?php endif; ?>
-                                        <textarea hidden data-cemed-external-text="<?php echo esc_attr( $question_id ); ?>"><?php echo esc_textarea( $external_answer ); ?></textarea>
-                                    </section>
-                                <?php endif; ?>
+
 								<dl>
 									<dt>Nome</dt><dd><?php echo esc_html( $data['nome'] ?? '—' ); ?></dd>
 									<dt>E-mail</dt><dd><?php if ( ! empty( $data['email'] ) && is_email( $data['email'] ) ) : ?><a href="mailto:<?php echo esc_attr( $data['email'] ); ?>"><?php echo esc_html( $data['email'] ); ?></a><?php else : ?>—<?php endif; ?></dd>
@@ -319,7 +311,7 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 										<?php wp_editor( $public_question, 'cemed-public-question-' . $question_id, array( 'textarea_name' => 'cemed_public_question', 'textarea_rows' => 5, 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold,italic,bullist,numlist,link', 'toolbar2' => '', 'menubar' => false ) ) ); ?>
 										<p class="fafar-cemed-help">Revise este texto antes de publicar. O nome, o CPF, o e-mail e os demais campos pessoais não entram no post.</p>
 										<label for="cemed-resposta-<?php echo esc_attr( $question_id ); ?>">Resposta</label>
-										<?php wp_editor( $answer, 'cemed-resposta-' . $question_id, array( 'textarea_name' => 'cemed_resposta', 'textarea_rows' => 6, 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold,italic,bullist,numlist,link', 'toolbar2' => '', 'menubar' => false ) ) ); ?>
+										<?php wp_editor( $answer, 'cemed-resposta-' . $question_id, array( 'textarea_name' => 'cemed_resposta', 'textarea_rows' => 12, 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold,italic,bullist,numlist,link', 'toolbar2' => '', 'menubar' => false ) ) ); ?>
 						<div class="fafar-cemed-manage-field">
 							<span class="fafar-cemed-label" id="cemed-classificacao-label-<?php echo esc_attr( $question_id ); ?>">Classifique a solicitação (se necessário, mais de uma opção pode ser selecionada):</span>
 							<div class="fafar-cemed-choices is-stacked" role="group" aria-labelledby="cemed-classificacao-label-<?php echo esc_attr( $question_id ); ?>">

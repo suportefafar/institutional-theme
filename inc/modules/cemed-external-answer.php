@@ -10,6 +10,12 @@ function fafar_cemed_external_answer_open( $id ) {
 		&& ! get_post_meta( $id, '_cemed_public_post_id', true );
 }
 
+/** Exibe no editor a redação externa mais recente enquanto o link estiver ativo. */
+function fafar_cemed_answer_for_editor( $id ) {
+	$external = get_post_meta( $id, '_cemed_external_answer', true );
+	return $external && fafar_cemed_external_answer_open( $id ) ? $external : get_post_meta( $id, '_cemed_resposta', true );
+}
+
 /** Somente a equipe pode obter ou criar o link. */
 function fafar_cemed_external_answer_url( $id ) {
 	if ( ! current_user_can( FAFAR_CEMED_MANAGE_CAPABILITY ) || ! fafar_cemed_external_answer_open( $id ) ) { return ''; }

@@ -17,9 +17,17 @@ $answer = $question ? get_post_meta( $question->ID, '_cemed_external_answer', tr
 if ( $question && is_wp_error( $result ) ) { $answer = fafar_cemed_post_value( 'cemed_external_answer' ); }
 wp_enqueue_style( 'fafar-cemed', get_stylesheet_directory_uri() . '/assets/css/cemed.css', array( 'fafar-theme' ), filemtime( get_stylesheet_directory() . '/assets/css/cemed.css' ) );
 if ( $question ) { wp_enqueue_editor(); }
-get_header();
 ?>
-<main id="primary" class="content-area">
+<!doctype html>
+<html <?php language_attributes(); ?>>
+<head>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php wp_head(); ?>
+</head>
+<body <?php body_class( 'ffds-root fafar-site fafar-cemed-writing-page' ); ?>>
+<?php wp_body_open(); ?>
+<main id="main-content" class="fafar-cemed-writing-layout" tabindex="-1">
 	<article class="fafar-cemed-page entry-content">
 		<h1>Redigir resposta ao Cemed</h1>
 		<?php if ( ! $question ) : ?>
@@ -28,13 +36,15 @@ get_header();
 			<p>Escreva e salve sua resposta para revisão pela equipe do Cemed. Você pode atualizá-la enquanto este link estiver disponível.</p>
 			<?php if ( true === $result ) : ?><p class="fafar-cemed-message is-success" role="status">Resposta salva com sucesso. A equipe do Cemed fará a revisão e o envio.</p><?php endif; ?>
 			<?php if ( is_wp_error( $result ) ) : ?><p class="fafar-cemed-message is-error" role="alert"><?php echo esc_html( $result->get_error_message() ); ?></p><?php endif; ?>
-			<form class="fafar-cemed-form" method="post" action="<?php echo esc_url( add_query_arg( 'codigo', $token, get_permalink() ) ); ?>">
+			<form class="fafar-cemed-form fafar-cemed-external-form" method="post" action="<?php echo esc_url( add_query_arg( 'codigo', $token, get_permalink() ) ); ?>">
 				<?php wp_nonce_field( 'cemed_external_' . $token, 'cemed_external_nonce', false ); ?>
 				<label for="cemed-external-answer">Resposta</label>
-				<?php wp_editor( $answer, 'cemed-external-answer', array( 'textarea_name' => 'cemed_external_answer', 'textarea_rows' => 14, 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold,italic,bullist,numlist,blockquote,link,unlink,undo,redo', 'toolbar2' => '', 'menubar' => false, 'paste_as_text' => true ) ) ); ?>
-				<p><button type="submit">Salvar resposta</button></p>
+				<?php wp_editor( $answer, 'cemed-external-answer', array( 'textarea_name' => 'cemed_external_answer', 'textarea_rows' => 14, 'media_buttons' => false, 'quicktags' => false, 'tinymce' => array( 'toolbar1' => 'bold,italic,bullist,numlist,link', 'toolbar2' => '', 'menubar' => false, 'paste_as_text' => true ) ) ); ?>
+				<div class="fafar-cemed-external-actions"><button type="submit">Salvar resposta</button></div>
 			</form>
 		<?php endif; ?>
 	</article>
 </main>
-<?php get_footer(); ?>
+<?php wp_footer(); ?>
+</body>
+</html>

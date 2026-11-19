@@ -25,6 +25,7 @@ try {
 	$draft = get_post_meta( $id, '_cemed_external_answer', true );
 	check_external( str_contains( $draft, '<strong>' ) && ! str_contains( $draft, '<img' ) && ! str_contains( $draft, '<iframe' ), 'formatação preservada e HTML perigoso removido' );
 	check_external( '' === get_post_meta( $id, '_cemed_resposta', true ), 'visitante não altera a resposta oficial' );
+	check_external( $draft === fafar_cemed_answer_for_editor( $id ), 'editor apresenta diretamente a resposta externa' );
 	check_external( ! array_key_exists( 'external_token', fafar_cemed_report_question_data( $id ) ), 'relatórios não expõem o token externo' );
 	$_POST['cemed_external_answer'] = '<p>Nova versão</p>';
 	check_external( true === fafar_cemed_save_external_answer( $token ), 'link permite atualizar a redação' );
@@ -55,6 +56,7 @@ try {
 			if ( 'redirect-test' !== $error->getMessage() ) { throw $error; }
 		} finally { remove_filter( 'wp_redirect', $stop_redirect ); }
 		check_external( null === fafar_cemed_external_answer_question( $active_token ) && get_post_meta( $id, '_cemed_external_closed', true ), $action . ' encerra definitivamente o link externo' );
+		check_external( '<p>Resposta aprovada</p>' === fafar_cemed_answer_for_editor( $id ), $action . ' mantém no editor a resposta aprovada' );
 	}
 } finally {
 	$published = get_post_meta( $id, '_cemed_public_post_id', true );

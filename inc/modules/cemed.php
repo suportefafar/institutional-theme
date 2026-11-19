@@ -666,6 +666,7 @@ function fafar_cemed_manage_question() {
 	if ( get_post_meta( $post_id, '_cemed_status', true ) !== $status ) {
 		return new WP_Error( 'save', 'Não foi possível salvar a situação da pergunta.' );
 	}
+	delete_post_meta( $post_id, '_cemed_external_answer' );
 	update_post_meta( $post_id, '_cemed_atualizada_em', current_time( 'mysql' ) );
 	update_post_meta( $post_id, '_cemed_atualizada_por', get_current_user_id() );
 	if ( in_array( $action, array( 'respond_user', 'publish' ), true ) ) {
