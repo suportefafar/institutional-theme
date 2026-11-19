@@ -6,7 +6,7 @@ define( 'FAFAR_SEO_LOADED', true );
 
 if ( ! function_exists( 'fafar_seo_excluded_pages' ) ) {
 	function fafar_seo_excluded_pages() {
-		return array( 'pagina-de-teste', 'inscricao-teste', 'inscricao-ppgcf-teste', 'inscricao-ppgact-teste', 'candidatos-ppgcf', 'candidatos-ppgact', 'gerenciar-perguntas-cemed', 'feedback-pergunta-cemed' );
+		return array( 'pagina-de-teste', 'inscricao-teste', 'inscricao-ppgcf-teste', 'inscricao-ppgact-teste', 'candidatos-ppgcf', 'candidatos-ppgact', 'gerenciar-perguntas-cemed', 'feedback-pergunta-cemed', 'redigir-resposta-cemed' );
 	}
 }
 

@@ -32,6 +32,20 @@
     updateFields();
   });
 
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-cemed-use-external]');
+    if (!button || !window.confirm('Substituir o texto atual do editor pela resposta externa?')) return;
+    var id = button.getAttribute('data-cemed-use-external');
+    var source = document.querySelector('[data-cemed-external-text="' + id + '"]');
+    var editorId = 'cemed-resposta-' + id;
+    var textarea = document.getElementById(editorId);
+    if (!source || !textarea) return;
+    textarea.value = source.value;
+    var editor = window.tinymce && window.tinymce.get(editorId);
+    if (editor) { editor.setContent(source.value); editor.save(); editor.focus(); }
+    textarea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
   document.addEventListener('submit', function (event) {
     var form = event.target.closest('[data-cemed-delete-post]');
     if (form && !window.confirm(form.getAttribute('data-confirm'))) {

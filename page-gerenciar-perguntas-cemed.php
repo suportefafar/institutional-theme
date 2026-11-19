@@ -240,6 +240,23 @@ if ( empty( $fafar_cemed_admin ) ) { get_header(); }
 								<?php else : ?>
 									<p class="fafar-cemed-pending"><strong>Post ainda não criado.</strong> <?php echo 'respondida' === $status ? 'A pergunta consta como respondida.' : 'Esta pergunta está em acompanhamento.'; ?> <a href="#cemed-responder-<?php echo esc_attr( $question_id ); ?>">Ir para a resposta e publicação ↓</a></p>
 								<?php endif; ?>
+                                <?php $external_url = fafar_cemed_external_answer_url( $question_id ); ?>
+                                <?php if ( $external_url ) : ?>
+                                    <div class="notice notice-info inline">
+                                        <p><strong>Redação externa da resposta</strong></p>
+                                        <p>Compartilhe este link com a pessoa responsável pela redação. Ele permite apenas salvar uma resposta para revisão e será encerrado após o envio ou a publicação pela equipe.</p>
+                                        <p><a href="<?php echo esc_url( $external_url ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $external_url ); ?></a></p>
+                                    </div>
+                                <?php endif; ?>
+                                <?php $external_answer = get_post_meta( $question_id, '_cemed_external_answer', true ); ?>
+                                <?php if ( $external_answer ) : ?>
+                                    <section class="notice notice-info inline">
+                                        <h3>Resposta redigida externamente</h3>
+                                        <div><?php echo wp_kses_post( $external_answer ); ?></div>
+                                        <?php if ( $external_url ) : ?><p><button type="button" class="button" data-cemed-use-external="<?php echo esc_attr( $question_id ); ?>">Usar esta resposta no editor</button></p><?php endif; ?>
+                                        <textarea hidden data-cemed-external-text="<?php echo esc_attr( $question_id ); ?>"><?php echo esc_textarea( $external_answer ); ?></textarea>
+                                    </section>
+                                <?php endif; ?>
 								<dl>
 									<dt>Nome</dt><dd><?php echo esc_html( $data['nome'] ?? '—' ); ?></dd>
 									<dt>E-mail</dt><dd><?php if ( ! empty( $data['email'] ) && is_email( $data['email'] ) ) : ?><a href="mailto:<?php echo esc_attr( $data['email'] ); ?>"><?php echo esc_html( $data['email'] ); ?></a><?php else : ?>—<?php endif; ?></dd>

@@ -121,7 +121,7 @@ function fafar_cemed_register_post_type() {
 
 /** Cria apenas as páginas públicas necessárias. */
 function fafar_cemed_create_pages() {
-	foreach ( array( 'pergunte-ao-cemed' => 'Pergunte ao Cemed', 'feedback-pergunta-cemed' => 'Avaliação da Resposta Cemed' ) as $slug => $title ) {
+	foreach ( array( 'pergunte-ao-cemed' => 'Pergunte ao Cemed', 'feedback-pergunta-cemed' => 'Avaliação da Resposta Cemed', 'redigir-resposta-cemed' => 'Redigir resposta ao Cemed' ) as $slug => $title ) {
 		if ( get_page_by_path( $slug, OBJECT, 'page' ) ) {
 			continue;
 		}
@@ -668,6 +668,10 @@ function fafar_cemed_manage_question() {
 	}
 	update_post_meta( $post_id, '_cemed_atualizada_em', current_time( 'mysql' ) );
 	update_post_meta( $post_id, '_cemed_atualizada_por', get_current_user_id() );
+	if ( in_array( $action, array( 'respond_user', 'publish' ), true ) ) {
+		update_post_meta( $post_id, '_cemed_external_closed', 1 );
+		delete_post_meta( $post_id, '_cemed_external_token' );
+	}
 	if ( 'publish' === $action ) {
 		fafar_cemed_process_notification( $post_id, 'response' );
 	} elseif ( 'respond_user' === $action ) {
@@ -767,3 +771,5 @@ function fafar_cemed_management_url() {
 }
 
 require_once __DIR__ . '/cemed-report.php';
+
+require_once __DIR__ . '/cemed-external-answer.php';

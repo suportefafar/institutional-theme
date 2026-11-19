@@ -34,7 +34,7 @@ function fafar_cemed_report_question_data( $id ) {
 	$post = get_post( $id );
 	$row = array( 'ID' => $id, 'Data de recebimento' => $post->post_date, 'Pergunta' => $post->post_content );
 	foreach ( get_post_meta( $id ) as $key => $values ) {
-		if ( 0 !== strpos( $key, '_cemed_' ) || in_array( $key, array( '_cemed_feedback_token', '_cemed_legacy_history' ), true ) ) { continue; }
+		if ( 0 !== strpos( $key, '_cemed_' ) || in_array( $key, array( '_cemed_feedback_token', '_cemed_legacy_history', '_cemed_external_token' ), true ) ) { continue; }
 		$value = count( $values ) === 1 ? maybe_unserialize( $values[0] ) : array_map( 'maybe_unserialize', $values );
 		if ( '_cemed_data' === $key && is_array( $value ) ) {
 			foreach ( $value as $field => $field_value ) { $row[ 'Solicitação: ' . $field ] = $field_value; }
