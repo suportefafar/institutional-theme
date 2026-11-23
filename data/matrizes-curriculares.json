@@ -4062,5 +4062,2055 @@
       "pratica": 300,
       "requisitos": "PFA029, ALM027, ACT005, FAS013"
     }
+  ],
+  "biomedicina-20189": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "ACT080",
+      "nome": "INTRODUÇÃO À BIOMEDICINA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF142",
+      "nome": "CITOLOGIA E HISTOLOGIA F",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIG157",
+      "nome": "GENÉTICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FIB034",
+      "nome": "BIOFISICA B",
+      "total": 30,
+      "teorica": 24,
+      "pratica": 6,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI291",
+      "nome": "QUÍMICA INORGÂNICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "FIB035",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 78,
+      "pratica": 12,
+      "requisitos": "MOF142, FIB034, MOF009"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI207",
+      "nome": "QUIMICA ORGANICA I F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI208",
+      "nome": "QUIMICA ANALITICA F",
+      "total": 105,
+      "teorica": 60,
+      "pratica": 45,
+      "requisitos": "QUI291"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "BIQ058",
+      "nome": "BIOLOGIA MOLECULAR F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "FAR036",
+      "nome": "FARMACOLOGIA BÁSICA BIOMEDICINA",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "BIQ050, FIB034, FIB035"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "MIC120",
+      "nome": "MICROBIOLOGIA BÁSICA - BIOMEDICINA",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAG011",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ602, FIB035"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAR026",
+      "nome": "PARASITOLOGIA HUMANA F",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "MOF142, BIQ602"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT017",
+      "nome": "BIOLOGIA MOLECULAR APLICADA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "BIG157, BIQ058"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT602",
+      "nome": "CITOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "PAG011"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT605",
+      "nome": "IMUNOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT613",
+      "nome": "BIOQUIMICA CLINICA I",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT010",
+      "nome": "BACTERIOLOGIA CLINICA",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "MIC120"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT077",
+      "nome": "BIOQUÍMICA CLÍNICA II",
+      "total": 105,
+      "teorica": 60,
+      "pratica": 45,
+      "requisitos": "ACT613"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT081",
+      "nome": "TOXICOLOGIA AMBIENTAL",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FAR036"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "FAS028",
+      "nome": "EPIDEMIOLOGIA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "EST083"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT016",
+      "nome": "RADIOISOTOPOS EM DIAGNOSTICO",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "QUI291"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT045",
+      "nome": "HEMATOLOGIA CLINICA",
+      "total": 105,
+      "teorica": 45,
+      "pratica": 60,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT072",
+      "nome": "MICOLOGIA CLINICA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "MIC120"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ALM027",
+      "nome": "BROMATOLOGIA",
+      "total": 75,
+      "teorica": 60,
+      "pratica": 15,
+      "requisitos": "QUI208"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAS028"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT018",
+      "nome": "GESTAO DA QUALIDADE NO LAB. CLINICO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT077"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT026",
+      "nome": "ETICA E LEGISLACAO BIOMEDICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT082",
+      "nome": "ATIVIDADE INTEGRADORA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT077, ACT045"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT606",
+      "nome": "PARASITOLOGIA CLINICA",
+      "total": 75,
+      "teorica": 15,
+      "pratica": 60,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT083",
+      "nome": "ESTÁGIO EM CIÊNCIAS BIOMÉDICAS I",
+      "total": 225,
+      "teorica": 30,
+      "pratica": 195,
+      "requisitos": "ACT010, ACT077, ACT045"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "ACT084",
+      "nome": "ESTÁGIO EM CIÊNCIAS BIOMÉDICAS II",
+      "total": 210,
+      "teorica": 30,
+      "pratica": 180,
+      "requisitos": "ACT010, ACT077, ACT045"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT085",
+      "nome": "ESTAGIO EM CIÊNCIAS BIOMÉDICAS III",
+      "total": 210,
+      "teorica": 30,
+      "pratica": 180,
+      "requisitos": "ACT010, ACT077, ACT045"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT086",
+      "nome": "MONOGRAFIA DE CONCLUSÃO DE CURSO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT018, ACT082, ACT606"
+    }
+  ],
+  "biomedicina-20181": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "ACT080",
+      "nome": "INTRODUÇÃO À BIOMEDICINA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF142",
+      "nome": "CITOLOGIA E HISTOLOGIA F",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIG157",
+      "nome": "GENÉTICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FIB034",
+      "nome": "BIOFISICA B",
+      "total": 30,
+      "teorica": 24,
+      "pratica": 6,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI291",
+      "nome": "QUÍMICA INORGÂNICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "FIB035",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 78,
+      "pratica": 12,
+      "requisitos": "MOF142, FIB034, MOF009"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI207",
+      "nome": "QUIMICA ORGANICA I F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI208",
+      "nome": "QUIMICA ANALITICA F",
+      "total": 105,
+      "teorica": 60,
+      "pratica": 45,
+      "requisitos": "QUI291"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "BIQ058",
+      "nome": "BIOLOGIA MOLECULAR F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "FAR036",
+      "nome": "FARMACOLOGIA BÁSICA BIOMEDICINA",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "BIQ050, FIB034, FIB035"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "MIC120",
+      "nome": "MICROBIOLOGIA BÁSICA - BIOMEDICINA",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAG011",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ602, FIB035"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAR026",
+      "nome": "PARASITOLOGIA HUMANA F",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "MOF142, BIQ602"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT017",
+      "nome": "BIOLOGIA MOLECULAR APLICADA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "BIG157, BIQ058"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT602",
+      "nome": "CITOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "PAG011"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT605",
+      "nome": "IMUNOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT613",
+      "nome": "BIOQUIMICA CLINICA I",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT010",
+      "nome": "BACTERIOLOGIA CLINICA",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "MIC120"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT077",
+      "nome": "BIOQUÍMICA CLÍNICA II",
+      "total": 105,
+      "teorica": 60,
+      "pratica": 45,
+      "requisitos": "ACT613"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT081",
+      "nome": "TOXICOLOGIA AMBIENTAL",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FAR036"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "FAS028",
+      "nome": "EPIDEMIOLOGIA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "EST083"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT016",
+      "nome": "RADIOISOTOPOS EM DIAGNOSTICO",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "QUI291"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT045",
+      "nome": "HEMATOLOGIA CLINICA",
+      "total": 105,
+      "teorica": 45,
+      "pratica": 60,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT072",
+      "nome": "MICOLOGIA CLINICA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "MIC120"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ALM027",
+      "nome": "BROMATOLOGIA",
+      "total": 75,
+      "teorica": 60,
+      "pratica": 15,
+      "requisitos": "QUI208"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "FAS028"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT018",
+      "nome": "GESTAO DA QUALIDADE NO LAB. CLINICO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT077"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT026",
+      "nome": "ETICA E LEGISLACAO BIOMEDICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT082",
+      "nome": "ATIVIDADE INTEGRADORA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT077, ACT045"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT606",
+      "nome": "PARASITOLOGIA CLINICA",
+      "total": 75,
+      "teorica": 15,
+      "pratica": 60,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT083",
+      "nome": "ESTÁGIO EM CIÊNCIAS BIOMÉDICAS I",
+      "total": 225,
+      "teorica": 30,
+      "pratica": 195,
+      "requisitos": "ACT010, ACT077, ACT045"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "ACT084",
+      "nome": "ESTÁGIO EM CIÊNCIAS BIOMÉDICAS II",
+      "total": 210,
+      "teorica": 30,
+      "pratica": 180,
+      "requisitos": "ACT010, ACT077, ACT045"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT085",
+      "nome": "ESTAGIO EM CIÊNCIAS BIOMÉDICAS III",
+      "total": 210,
+      "teorica": 30,
+      "pratica": 180,
+      "requisitos": "ACT010, ACT077, ACT045"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT086",
+      "nome": "MONOGRAFIA DE CONCLUSÃO DE CURSO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT018, ACT082, ACT606"
+    }
+  ],
+  "biomedicina-20162": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MAT130",
+      "nome": "MATEMATICA",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "UNI030",
+      "nome": "INTRODUCAO A BIOMEDICINA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ058",
+      "nome": "BIOLOGIA MOLECULAR F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FIS093",
+      "nome": "FUNDAMENTOS DE FISICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "MOF034",
+      "nome": "CITOLOGIA E HISTOLOGIA F",
+      "total": 105,
+      "teorica": 30,
+      "pratica": 75,
+      "requisitos": "MOF009"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BIG028",
+      "nome": "GENETICA F",
+      "total": 60,
+      "teorica": 40,
+      "pratica": 20,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "FIB034",
+      "nome": "BIOFISICA B",
+      "total": 30,
+      "teorica": 24,
+      "pratica": 6,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "MIC120",
+      "nome": "MICROBIOLOGIA BÁSICA - BIOMEDICINA",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI205",
+      "nome": "QUIMICA INORGANICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI207",
+      "nome": "QUIMICA ORGANICA I F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "FIB035",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 78,
+      "pratica": 12,
+      "requisitos": "MOF034, BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAR015",
+      "nome": "PARASITOLOGIA HUMANA F",
+      "total": 60,
+      "teorica": 15,
+      "pratica": 45,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI208",
+      "nome": "QUIMICA ANALITICA F",
+      "total": 105,
+      "teorica": 60,
+      "pratica": 45,
+      "requisitos": "QUI205"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT017",
+      "nome": "BIOLOGIA MOLECULAR APLICADA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "BIG028, BIQ058"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT605",
+      "nome": "IMUNOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAR024",
+      "nome": "FARMACOLOGIA BASICA F",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "PAG011",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT026",
+      "nome": "ETICA E LEGISLACAO BIOMEDICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT046",
+      "nome": "ATIVIDADE INTEGRADORA A",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "MOF034, QUI208, BIG028"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT602",
+      "nome": "CITOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "MOF034, PAG011"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT613",
+      "nome": "BIOQUIMICA CLINICA I",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT010",
+      "nome": "BACTERIOLOGIA CLINICA",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT072",
+      "nome": "MICOLOGIA CLINICA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "MIC120"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT601",
+      "nome": "BIOQUIMICA CLINICA II",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "ACT613"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT016",
+      "nome": "RADIOISOTOPOS EM DIAGNOSTICO",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "QUI205"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT045",
+      "nome": "HEMATOLOGIA CLINICA",
+      "total": 105,
+      "teorica": 45,
+      "pratica": 60,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT047",
+      "nome": "ATIVIDADE INTEGRADORA B",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "ACT046"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT606",
+      "nome": "PARASITOLOGIA CLINICA",
+      "total": 75,
+      "teorica": 15,
+      "pratica": 60,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT018",
+      "nome": "GESTAO DA QUALIDADE NO LAB. CLINICO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT601"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT053",
+      "nome": "TREINAMENTO PROFSSIONAL A",
+      "total": 75,
+      "teorica": 0,
+      "pratica": 75,
+      "requisitos": "ACT010, ACT045, ACT601"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "ACT054",
+      "nome": "TREINAMENTO PROFISSIONAL B",
+      "total": 300,
+      "teorica": 0,
+      "pratica": 300,
+      "requisitos": "ACT010, ACT045, ACT601"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT032",
+      "nome": "TRAB. INTEGRALIZADOR MULTIDISCIPLINAR BM",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT045"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT055",
+      "nome": "TREINAMENTO PROFISSIONAL C",
+      "total": 270,
+      "teorica": 0,
+      "pratica": 270,
+      "requisitos": "ACT010, ACT045, ACT601"
+    }
+  ],
+  "biomedicina-20131": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MAT130",
+      "nome": "MATEMATICA",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "UNI030",
+      "nome": "INTRODUCAO A BIOMEDICINA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ058",
+      "nome": "BIOLOGIA MOLECULAR F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FIS093",
+      "nome": "FUNDAMENTOS DE FISICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "MOF034",
+      "nome": "CITOLOGIA E HISTOLOGIA F",
+      "total": 105,
+      "teorica": 30,
+      "pratica": 75,
+      "requisitos": "MOF009"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BIG028",
+      "nome": "GENETICA F",
+      "total": 60,
+      "teorica": 40,
+      "pratica": 20,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "FIB034",
+      "nome": "BIOFISICA B",
+      "total": 30,
+      "teorica": 24,
+      "pratica": 6,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "MIC014",
+      "nome": "MICROBIOLOGIA BASICA F",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI205",
+      "nome": "QUIMICA INORGANICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI207",
+      "nome": "QUIMICA ORGANICA I F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "FIB035",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 78,
+      "pratica": 12,
+      "requisitos": "MOF034, BIQ050"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAR015",
+      "nome": "PARASITOLOGIA HUMANA F",
+      "total": 60,
+      "teorica": 15,
+      "pratica": 45,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI208",
+      "nome": "QUIMICA ANALITICA F",
+      "total": 105,
+      "teorica": 60,
+      "pratica": 45,
+      "requisitos": "QUI205"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT017",
+      "nome": "BIOLOGIA MOLECULAR APLICADA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "BIQ058"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT605",
+      "nome": "IMUNOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAR024",
+      "nome": "FARMACOLOGIA BASICA F",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "PAG011",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT026",
+      "nome": "ETICA E LEGISLACAO BIOMEDICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT046",
+      "nome": "ATIVIDADE INTEGRADORA A",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "MOF034, QUI208, BIG028"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT602",
+      "nome": "CITOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "MOF034, PAG011"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT613",
+      "nome": "BIOQUIMICA CLINICA I",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT601",
+      "nome": "BIOQUIMICA CLINICA II",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "ACT613"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT607",
+      "nome": "MICROBIOLOGIA CLINICA",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT610",
+      "nome": "MICOLOGIA CLINICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "MIC014"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT016",
+      "nome": "RADIOISOTOPOS EM DIAGNOSTICO",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "QUI205"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT045",
+      "nome": "HEMATOLOGIA CLINICA",
+      "total": 105,
+      "teorica": 45,
+      "pratica": 60,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT047",
+      "nome": "ATIVIDADE INTEGRADORA B",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "ACT046"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT606",
+      "nome": "PARASITOLOGIA CLINICA",
+      "total": 75,
+      "teorica": 15,
+      "pratica": 60,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT018",
+      "nome": "GESTAO DA QUALIDADE NO LAB. CLINICO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT601"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT053",
+      "nome": "TREINAMENTO PROFSSIONAL A",
+      "total": 75,
+      "teorica": 0,
+      "pratica": 75,
+      "requisitos": "ACT607, ACT045, ACT601"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "ACT054",
+      "nome": "TREINAMENTO PROFISSIONAL B",
+      "total": 300,
+      "teorica": 0,
+      "pratica": 300,
+      "requisitos": "ACT607, ACT045, ACT601"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT032",
+      "nome": "TRAB. INTEGRALIZADOR MULTIDISCIPLINAR BM",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT045"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT055",
+      "nome": "TREINAMENTO PROFISSIONAL C",
+      "total": 270,
+      "teorica": 0,
+      "pratica": 270,
+      "requisitos": "ACT607, ACT045, ACT601"
+    }
+  ],
+  "biomedicina-20101X": [
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "BIQ050",
+      "nome": "BIOQUIMICA CELULAR F",
+      "total": 75,
+      "teorica": 75,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MAT130",
+      "nome": "MATEMATICA",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "MOF009",
+      "nome": "ANATOMIA HUMANA BASICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI203",
+      "nome": "QUIMICA GERAL F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "QUI204",
+      "nome": "QUIMICA GERAL EXPERIMENTAL F",
+      "total": 30,
+      "teorica": 0,
+      "pratica": 30,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 1,
+      "tipo": "DIG",
+      "codigo": "UNI030",
+      "nome": "INTRODUCAO A BIOMEDICINA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "BIQ602",
+      "nome": "IMUNOLOGIA BASICA",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "EST083",
+      "nome": "BIOESTATISTICA BASICA F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "FIS093",
+      "nome": "FUNDAMENTOS DE FISICA F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "MOF034",
+      "nome": "CITOLOGIA E HISTOLOGIA F",
+      "total": 105,
+      "teorica": 30,
+      "pratica": 75,
+      "requisitos": "MOF009"
+    },
+    {
+      "periodo": 2,
+      "tipo": "DIG",
+      "codigo": "QUI205",
+      "nome": "QUIMICA INORGANICA F",
+      "total": 45,
+      "teorica": 45,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "BIG028",
+      "nome": "GENETICA F",
+      "total": 60,
+      "teorica": 40,
+      "pratica": 20,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "FIB035",
+      "nome": "FISIOLOGIA F",
+      "total": 90,
+      "teorica": 78,
+      "pratica": 12,
+      "requisitos": "MOF034"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "MIC014",
+      "nome": "MICROBIOLOGIA BASICA F",
+      "total": 75,
+      "teorica": 30,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 3,
+      "tipo": "DIG",
+      "codigo": "QUI207",
+      "nome": "QUIMICA ORGANICA I F",
+      "total": 60,
+      "teorica": 60,
+      "pratica": 0,
+      "requisitos": "QUI203"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "BIG053",
+      "nome": "CITOGENETICA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAG011",
+      "nome": "PATOLOGIA GERAL F",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "PAR015",
+      "nome": "PARASITOLOGIA HUMANA F",
+      "total": 60,
+      "teorica": 15,
+      "pratica": 45,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 4,
+      "tipo": "DIG",
+      "codigo": "QUI208",
+      "nome": "QUIMICA ANALITICA F",
+      "total": 105,
+      "teorica": 60,
+      "pratica": 45,
+      "requisitos": "QUI205"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT046",
+      "nome": "ATIVIDADE INTEGRADORA A",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "PAR015"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "ACT602",
+      "nome": "CITOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "MOF034"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAR024",
+      "nome": "FARMACOLOGIA BASICA F",
+      "total": 60,
+      "teorica": 45,
+      "pratica": 15,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 5,
+      "tipo": "DIG",
+      "codigo": "FAS012",
+      "nome": "POLITICAS DE SAUDE",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT025",
+      "nome": "TREINAMENTO PROFISSIONAL A",
+      "total": 15,
+      "teorica": 0,
+      "pratica": 15,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT047",
+      "nome": "ATIVIDADE INTEGRADORA B",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "ACT602"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT605",
+      "nome": "IMUNOLOGIA CLINICA",
+      "total": 60,
+      "teorica": 30,
+      "pratica": 30,
+      "requisitos": "BIQ602"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "ACT613",
+      "nome": "BIOQUIMICA CLINICA I",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 6,
+      "tipo": "DIG",
+      "codigo": "BIQ058",
+      "nome": "BIOLOGIA MOLECULAR F",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "BIQ050"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT017",
+      "nome": "BIOLOGIA MOLECULAR APLICADA",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "BIQ058"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT048",
+      "nome": "ATIVIDADE INTEGRADORA C",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT601",
+      "nome": "BIOQUIMICA CLINICA II",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "ACT613"
+    },
+    {
+      "periodo": 7,
+      "tipo": "DIG",
+      "codigo": "ACT607",
+      "nome": "MICROBIOLOGIA CLINICA",
+      "total": 90,
+      "teorica": 45,
+      "pratica": 45,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT026",
+      "nome": "ETICA E LEGISLACAO BIOMEDICA",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "-"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT045",
+      "nome": "HEMATOLOGIA CLINICA",
+      "total": 105,
+      "teorica": 45,
+      "pratica": 60,
+      "requisitos": "FIB035"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT606",
+      "nome": "PARASITOLOGIA CLINICA",
+      "total": 75,
+      "teorica": 15,
+      "pratica": 60,
+      "requisitos": "ACT605"
+    },
+    {
+      "periodo": 8,
+      "tipo": "DIG",
+      "codigo": "ACT610",
+      "nome": "MICOLOGIA CLINICA",
+      "total": 45,
+      "teorica": 15,
+      "pratica": 30,
+      "requisitos": "MIC014"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT016",
+      "nome": "RADIOISOTOPOS EM DIAGNOSTICO",
+      "total": 45,
+      "teorica": 30,
+      "pratica": 15,
+      "requisitos": "QUI205"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT018",
+      "nome": "GESTAO DA QUALIDADE NO LAB. CLINICO",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT601"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT027",
+      "nome": "TOXICOLOGIA ANALITICA",
+      "total": 90,
+      "teorica": 30,
+      "pratica": 60,
+      "requisitos": "FAR024"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT028",
+      "nome": "TREINAMENTO PROFISSIONAL B",
+      "total": 60,
+      "teorica": 0,
+      "pratica": 60,
+      "requisitos": "ACT045"
+    },
+    {
+      "periodo": 9,
+      "tipo": "DIG",
+      "codigo": "ACT029",
+      "nome": "ATIVIDADE INTEGRADORA D",
+      "total": 15,
+      "teorica": 15,
+      "pratica": 0,
+      "requisitos": "ACT045"
+    },
+    {
+      "periodo": 10,
+      "tipo": "DIG",
+      "codigo": "ACT030",
+      "nome": "TREINAMENTO PROFISSIONAL C",
+      "total": 300,
+      "teorica": 0,
+      "pratica": 300,
+      "requisitos": "ACT028"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT031",
+      "nome": "TREINAMENTO PROFISSIONAL D",
+      "total": 270,
+      "teorica": 0,
+      "pratica": 270,
+      "requisitos": "ACT030"
+    },
+    {
+      "periodo": 11,
+      "tipo": "DIG",
+      "codigo": "ACT032",
+      "nome": "TRAB. INTEGRALIZADOR MULTIDISCIPLINAR BM",
+      "total": 30,
+      "teorica": 30,
+      "pratica": 0,
+      "requisitos": "ACT045"
+    }
   ]
 }

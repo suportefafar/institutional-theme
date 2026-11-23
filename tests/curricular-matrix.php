@@ -38,6 +38,16 @@ foreach ( $data as $key => $entries ) {
 		matrix_check( 'PFA029, PFA608, PFA031, ALM027, ACT005, FAS013' === $codes['FAF094']['requisitos'], 'Multiline prerequisites must be imported completely.' );
 		matrix_check( 75 === $codes['MOF142']['total'], 'Historical hours must come from the historical document.' );
 	}
+	if ( 'biomedicina-20131' === $key ) {
+		matrix_check( 'MOF034, QUI208, BIG028' === $codes['ACT046']['requisitos'], 'Biomedicine multiline prerequisites must remain complete.' );
+		matrix_check( 'ACT607, ACT045, ACT601' === $codes['ACT053']['requisitos'], 'The 2013 training prerequisites must use the 2013 version.' );
+	}
+	if ( 'biomedicina-20162' === $key ) {
+		matrix_check( 'ACT010, ACT045, ACT601' === $codes['ACT053']['requisitos'], 'The 2016 training prerequisites must use the 2016 version.' );
+	}
+	if ( 0 === strpos( $key, 'biomedicina-' ) ) {
+		matrix_check( 11 === $last_period, 'Historical biomedicine matrices must include period 11.' );
+	}
 }
 
 $html = matrix_render( 'da-matriz-curricular-far' );
@@ -54,8 +64,18 @@ foreach ( array_slice( $sets[0], 2 ) as $historical_set ) {
 }
 
 $html = matrix_render( 'da-matriz-curricular-bio' );
-matrix_check( 1 === substr_count( $html, 'class="curriculum-set"' ), 'Biomedicine must keep its current matrix.' );
+matrix_check( 6 === substr_count( $html, 'class="curriculum-set"' ), 'All six biomedicine matrices must render.' );
 matrix_check( false !== strpos( $html, 'N-20262.pdf' ), 'Biomedicine official document changed.' );
-matrix_check( false === strpos( $html, 'id="curriculum-version"' ), 'Biomedicine must not display pharmacy versions.' );
+matrix_check( false !== strpos( $html, 'id="curriculum-version"' ), 'Biomedicine needs a version selector.' );
+matrix_check( false === strpos( $html, 'id="curriculum-course"' ), 'Biomedicine has only the evening shift.' );
+matrix_check( false !== strpos( $html, '<option value="11">11º período</option>' ), 'Biomedicine period 11 must be selectable.' );
+foreach ( array( '20262', '20189', '20181', '20162', '20131', '20101X' ) as $version ) {
+	matrix_check( false !== strpos( $html, '<option value="' . $version . '">N-' . $version . '</option>' ), "Missing biomedicine version: $version" );
+}
+matrix_check( false !== strpos( $html, 'Matriz-Curricular-BiomedicinaN-20189.pdf' ), 'The 20189 version must use its official PDF.' );
 matrix_check( false !== strpos( $html, 'curriculum-bibliography' ), 'Biomedicine bibliography must remain available.' );
-echo "PASS: curriculum data, historical hours and prerequisites, six pharmacy versions, official documents, and biomedicine.\n";
+preg_match_all( '/<section class="curriculum-set".*?(?=<section class="curriculum-set"|<p class="curriculum-empty")/s', $html, $sets );
+foreach ( array_slice( $sets[0], 1 ) as $historical_set ) {
+	matrix_check( false === strpos( $historical_set, 'curriculum-bibliography' ), 'Current biomedicine bibliography must not be attributed to historical versions.' );
+}
+echo "PASS: curriculum data, historical hours and prerequisites, six versions per course, and official documents.\n";
