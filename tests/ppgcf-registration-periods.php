@@ -95,6 +95,20 @@ $master_files=fafar_ppgcf_required_files(['NivelDaVaga'=>'Mestrado']);
 $doctor_files=fafar_ppgcf_required_files(['NivelDaVaga'=>'Doutorado']);
 check(!in_array('ArquivoProjetoTese',$master_files,true) && in_array('ArquivoProjetoTese',$doctor_files,true),'Documentos de doutorado exigidos no mestrado.');
 echo "PASS: uploads e submissão do mestrado encerrado bloqueados mesmo com doutorado aberto.\n";
+$GLOBALS['now']=new DateTimeImmutable('2026-11-06T10:00',wp_timezone());
+$GLOBALS['options'][$key]=saved();
+$GLOBALS['options'][$key]['test']=$GLOBALS['options'][$key]['production'];
+foreach(['production','test'] as $context) foreach(fafar_ppgcf_candidate_levels() as $level) {
+    foreach(['Ampla concorrência','Estrangeiro','Reserva para autodeclarados negros','Pessoas indígenas','Pessoas quilombolas','Pessoas trans e travestis','Pessoas com deficiência'] as $type) {
+        $data=array_fill_keys(fafar_ppgcf_required_fields(['TipoDaVaga'=>$type]),'Teste');
+        $data=array_merge($data,['NivelDaVaga'=>$level,'TipoDaVaga'=>$type,'Sexo'=>'Feminino','Email'=>'teste@example.test','Estado'=>'MG']);
+        $files=array_fill_keys(fafar_ppgcf_required_files($data),'test-upload-token');
+        unset($files['ArquivoPublicacoesAtividades']);
+        $_POST=['schedule_context'=>$context,'nonce'=>'ppgcf_form_'.$context,'candidate_data'=>json_encode($data),'uploaded_files'=>json_encode($files)];
+        expect_json(fn()=>fafar_ppgcf_submit_form(),'required_upload','ArquivoPublicacoesAtividades');
+    }
+}
+echo "PASS: comprovantes das publicações/atividades exigidos no mestrado e doutorado, em todos os tipos de vaga e nos dois formulários.\n";
 settings_request(saved());
 check(fafar_ppgcf_save_registration_schedules_from_request()===true,'Não salvou configuração.');
 check($GLOBALS['options'][$key]===saved(),'Quatro períodos não foram persistidos de forma independente.');
@@ -158,9 +172,15 @@ foreach($timeline as [$time,$expected,$status]) {
     $xml=xpath($html);$actual=[];
     foreach($xml->query('//input[@name="NivelDaVaga"]') as $node) { $actual[]=$node->getAttribute('value'); }
     check($actual===$expected,'Formulário exibe nível fora do período em '.$time);
-    if($expected) check($xml->query('//input[@name="NivelDaVaga" and @checked]')->length===1,'Nenhum nível inicialmente selecionado.');
+    if($expected) {
+        check($xml->query('//input[@name="NivelDaVaga" and @checked]')->length===1,'Nenhum nível inicialmente selecionado.');
+        check($xml->query('//input[@name="ArquivoPublicacoesAtividades" and @type="file" and @required and @accept=".pdf,application/pdf" and not(ancestor::*[@data-condition])]')->length===1,'Comprovantes do currículo devem ser obrigatórios e comuns a todos os níveis.');
+    }
 }
 $GLOBALS['now']=new DateTimeImmutable('2026-11-06T10:00',wp_timezone());
+$GLOBALS['options'][$key]['test']=$GLOBALS['options'][$key]['production'];
+$xml=xpath(render_template('page-inscricao-ppgcf-teste.php'));
+check($xml->query('//input[@name="ArquivoPublicacoesAtividades" and @required and not(ancestor::*[@data-condition])]')->length===1,'Formulário de testes deve exigir os mesmos comprovantes.');
 $html=render_template('page-candidatos-ppgcf.php');$xml=xpath($html);
 check($xml->query('//input[@type="checkbox"]')->length===4,'Faltam checkboxes.');
 check($xml->query('//input[@type="datetime-local"]')->length===8,'Faltam oito campos de data/hora.');

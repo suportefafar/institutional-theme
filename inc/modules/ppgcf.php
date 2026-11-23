@@ -889,6 +889,7 @@ function fafar_ppgcf_required_files( $data ) {
 		'ArquivoFoto',
 		'ArquivoCertidaoNascimentoCasadoSeparacao',
 		'ArquivoLattes',
+		'ArquivoPublicacoesAtividades',
 		'ArquivoHistoricoGraduacao',
 		'ArquivoCertidaoQuitacaoEleitoral',
 		'ArquivoComprovanteResidencia',
