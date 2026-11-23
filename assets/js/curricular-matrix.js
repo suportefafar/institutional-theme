@@ -3,16 +3,27 @@
   if (!form) return;
   const search = document.querySelector('#curriculum-search');
   const course = document.querySelector('#curriculum-course');
+  const version = document.querySelector('#curriculum-version');
   const period = document.querySelector('#curriculum-period');
   const sets = [...document.querySelectorAll('.curriculum-set')];
   const status = document.querySelector('.curriculum-status');
   const empty = document.querySelector('.curriculum-empty');
+  const documents = [...document.querySelectorAll('.curriculum-sources, .curriculum-bibliography-intro[data-version]')];
+  const isActive = set => (!course || set.dataset.course === course.value) && (!version || set.dataset.version === version.value);
   const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
   function update() {
     let count = 0;
+    const activeSet = sets.find(isActive);
+    const availablePeriods = activeSet ? [...activeSet.querySelectorAll('.curriculum-period')].map(section => section.dataset.period) : [];
+    [...period.options].forEach(option => {
+      option.disabled = option.value !== '' && !availablePeriods.includes(option.value);
+      option.hidden = option.disabled;
+    });
+    if (period.selectedOptions[0]?.disabled) period.value = '';
+    documents.forEach(item => { item.hidden = !!version && item.dataset.version !== version.value; });
     const terms = normalize(search.value).split(/\s+/).filter(Boolean);
     sets.forEach(set => {
-      const active = !course || set.dataset.course === course.value;
+      const active = isActive(set);
       set.hidden = !active;
       set.querySelectorAll('.curriculum-period').forEach(section => {
         let visible = 0;
@@ -53,8 +64,8 @@
     graph.replaceChildren(graphColumn('Pré-requisitos', required), graphColumn('Disciplina escolhida', [current], true), graphColumn('Abre caminho para', next));
   }
   function setupGraph() {
-    const active = sets.find(set => !course || set.dataset.course === course.value);
-    activities = [...active.querySelectorAll('.curriculum-row')].map(row => ({code: row.dataset.code, name: row.dataset.name, requisites: row.dataset.requisites, period: row.closest('.curriculum-period').dataset.period}));
+    const active = sets.find(isActive);
+    activities = active ? [...active.querySelectorAll('.curriculum-row')].map(row => ({code: row.dataset.code, name: row.dataset.name, requisites: row.dataset.requisites, period: row.closest('.curriculum-period').dataset.period})) : [];
     const previous = picker.value;
     picker.replaceChildren(...activities.map(item => { const option = document.createElement('option'); option.value = item.code; option.textContent = `${item.period}º período · ${item.name} (${item.code})`; return option; }));
     if (activities.some(item => item.code === previous)) picker.value = previous;
@@ -63,6 +74,7 @@
   }
   picker.addEventListener('change', drawGraph);
   if (course) course.addEventListener('change', setupGraph);
+  if (version) version.addEventListener('change', setupGraph);
   form.addEventListener('reset', () => setTimeout(setupGraph, 0));
   setupGraph();
   form.addEventListener('input', update);
